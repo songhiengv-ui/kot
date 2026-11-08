@@ -101,6 +101,7 @@ describe('sentences from the brief', () => {
   it('withdrawal = transfer to cash', () => {
     expect(one('ដកលុយពី ACLEDA ១០០ដុល្លារ')).toMatchObject({ type: 'transfer', amount: 10000, currency: 'USD', accountHint: 'acleda', toAccountHint: 'cash', flags: [] })
     expect(one('withdraw $50 ABA')).toMatchObject({ type: 'transfer', accountHint: 'aba', toAccountHint: 'cash' })
+    expect(one('ដក លុយ ពី ABA ម្ភៃ ដុល្លារ')).toMatchObject({ type: 'transfer', amount: 2000, accountHint: 'aba', toAccountHint: 'cash' })
   })
   it('transfer ABA → ACLEDA', () => {
     expect(one('ផ្ទេរ ១០០ ដុល្លារ ពី ABA ទៅ ACLEDA')).toMatchObject({ type: 'transfer', amount: 10000, currency: 'USD', accountHint: 'aba', toAccountHint: 'acleda' })

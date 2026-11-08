@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { extractConfig, extractWithAI, reconcile } from './extract'
+import { extractConfig, extractWithAI, parseVoice, reconcile } from './extract'
 import { parseCapture } from './parse'
 
 // Mocked model output only — no network.
@@ -114,5 +114,22 @@ describe('extractConfig', () => {
     expect(extractConfig({ STT_API_KEY: 'g', ANTHROPIC_API_KEY: 'a' })).toMatchObject({ provider: 'anthropic', key: 'a' })
     expect(extractConfig({ EXTRACT_PROVIDER: 'gemini', EXTRACT_API_KEY: 'e', STT_API_KEY: 'g' })).toMatchObject({ provider: 'gemini', key: 'e' })
     expect(extractConfig({}).key).toBe('')
+  })
+})
+
+describe('parseVoice', () => {
+  it('asks the model even when the local parse looks confident, and uses its clean note', async () => {
+    let calls = 0
+    const r = await parseVoice('អឺ ញ៉ាំបាយព្រឹក អស់ មួយម៉ឺនពីរពាន់ រៀល', 'personal', async () => { calls++; return model({ amount: '12000', currency: 'KHR', category: 'food', note: 'បាយព្រឹក' }) })
+    expect(calls).toBe(1)
+    expect(r).toMatchObject({ usedAI: true, candidates: [{ amount: 12000, currency: 'KHR', category: 'food', note: 'បាយព្រឹក', flags: [] }] })
+  })
+  it('a spoken withdrawal the model leaves without a destination goes to cash', async () => {
+    const r = await parseVoice('ដក លុយ ពី ABA ម្ភៃ ដុល្លារ', 'personal', async () => model({ type: 'transfer', amount: '20', currency: 'USD', account: 'aba', toAccount: null }))
+    expect(r.candidates).toMatchObject([{ type: 'transfer', amount: 2000, currency: 'USD', accountHint: 'aba', toAccountHint: 'cash', flags: [] }])
+  })
+  it('model off or failing → local parse', async () => {
+    const r = await parseVoice('កាហ្វេ ៥ដុល្លារ', 'personal', async () => null)
+    expect(r).toMatchObject({ usedAI: false, candidates: [{ amount: 500, currency: 'USD' }] })
   })
 })

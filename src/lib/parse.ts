@@ -37,6 +37,8 @@ const CATEGORY_WORDS: [string, RegExp][] = [
 export const ACCOUNT_WORDS: [AccountKind, RegExp][] = [
   ['aba', /\baba\b|អេប៊ីអេ/i], ['acleda', /acleda|អេស៊ីលីដា/i], ['wing', /\bwing\b|វីង/i], ['cash', /\bcash\b|សាច់ប្រាក់|លុយសុទ្ធ/i],
 ]
+/** Cash withdrawal; Chirp transcripts put spaces between words ("ដក លុយ"). */
+export const WITHDRAW_RE = /withdr[ae]w|ដក\s*(លុយ|ប្រាក់)/i
 const TRANSFER_RE = /transfer|move|withdraw|ផ្ទេរ|ដក/i
 const INCOME_RE = /received|receive|salary|sold|sale|income|earn|got paid|ទទួល|លក់|ប្រាក់ខែ|ចំណូល/i
 const FILLER_RE = /\b(received|receive|spent|spend|paid|pay|for|on|today|i|bought|buy|got|sold|my|from|to|via|with|by|transfer|move|and)\b|ថ្ងៃនេះ|ខ្ញុំ|ចំណាយ|ចាយ|ទិញ|បាន|តាម|ពី|ទៅ|ផ្ទេរ|ដុល្លារ|រៀល/gi
@@ -159,7 +161,7 @@ export function parseOne(raw: string, mode: 'personal' | 'business' = 'personal'
   const hints = ACCOUNT_WORDS.map(([k, re]) => { const m = re.exec(s); return m ? { k, i: m.index } : null })
     .filter((h): h is { k: AccountKind; i: number } => !!h).sort((a, b) => a.i - b.i).map(h => h.k)
   // withdrawing from one named bank/wallet = transfer to cash. (No "deposit" twin: ដាក់លុយ is also a phone top-up.)
-  if (hints.length === 1 && hints[0] !== 'cash' && /withdr[ae]w|ដក(លុយ|ប្រាក់)/i.test(s)) hints.push('cash')
+  if (hints.length === 1 && hints[0] !== 'cash' && WITHDRAW_RE.test(s)) hints.push('cash')
   const type: TxType = TRANSFER_RE.test(s) && hints.length >= 2 ? 'transfer' : INCOME_RE.test(s) ? 'income' : 'expense'
   const category = type === 'transfer' ? 'transfer'
     : CATEGORY_WORDS.find(([, re]) => re.test(s))?.[0] ?? (type === 'income' ? (mode === 'business' ? 'sales' : 'salary') : 'other')

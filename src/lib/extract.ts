@@ -6,7 +6,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod'
 import { z } from 'zod'
 import { decimal, scale } from './money'
-import { ACCOUNT_WORDS, amountHits, applyBare, normalizeNumbers, splitItems, type AmountHit, type Candidate } from './parse'
+import { ACCOUNT_WORDS, amountHits, applyBare, normalizeNumbers, parseCapture, splitItems, WITHDRAW_RE, type AmountHit, type Candidate } from './parse'
 
 export type Mode = 'personal' | 'business'
 export type Source = 'text' | 'voice'
@@ -69,6 +69,7 @@ export function reconcile(text: string, mode: Mode, raw: unknown): Candidate[] |
       note: it.note.replace(/\s+/g, ' ').trim().slice(0, 60),
       accountHint: hint(it.account), toAccountHint: transfer ? hint(it.toAccount) : null,
     }
+    if (transfer && c.accountHint && c.accountHint !== 'cash' && !c.toAccountHint && WITHDRAW_RE.test(s)) c.toAccountHint = 'cash'  // same rule as lib/parse
     if (transfer && c.accountHint && c.accountHint === c.toAccountHint) c.flags.push('same')
     const x = it.amount === null ? null : decimal(it.amount)
     // a priced reading beats a bare one: "ទឹក ៣ ដប ៣ពាន់" → 3,000 is ៣ពាន់, not ៣ (bottles) × 1,000
@@ -143,4 +144,11 @@ export async function extractWithAI(text: string, mode: Mode, source: Source, ca
   } catch {
     return null
   }
+}
+
+/** Voice: transcripts carry fillers, number words and mishearings the local parser can't tell it got wrong, so the model
+ *  always reads them (typed text still goes local-first). Same reconcile guard; local parse when the model is off or fails. */
+export async function parseVoice(text: string, mode: Mode, call: typeof callModel = callModel): Promise<{ candidates: Candidate[]; usedAI: boolean }> {
+  const ai = await extractWithAI(text, mode, 'voice', call)
+  return ai ? { candidates: ai, usedAI: true } : { candidates: parseCapture(text, mode), usedAI: false }
 }

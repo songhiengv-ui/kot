@@ -3,8 +3,7 @@
 // Chirp rejects API keys (tested: HTTP 401 "API keys are not supported by this API").
 import { v2 } from '@google-cloud/speech'
 import { createClient } from '@supabase/supabase-js'
-import { extractWithAI } from './extract'
-import { needsAI, parseCapture } from './parse'
+import { parseVoice } from './extract'
 import { limited } from './ratelimit'
 import type { RelayDeps, SpeechStream } from './chirp-relay'
 
@@ -40,11 +39,7 @@ export function chirpDeps(): RelayDeps {
       },
     },
     // same pipeline as typed text and the Gemini path
-    parse: async (text, mode) => {
-      const local = parseCapture(text, mode)
-      const ai = needsAI(text, local) ? await extractWithAI(text, mode, 'voice') : null
-      return { candidates: ai ?? local, usedAI: !!ai }
-    },
+    parse: (text, mode) => parseVoice(text, mode),
     limited: user => limited(`chirp:${user}`, 12),
   }
 }

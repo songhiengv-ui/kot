@@ -1,7 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { extractWithAI } from '@/lib/extract'
-import { needsAI, parseCapture } from '@/lib/parse'
+import { parseVoice } from '@/lib/extract'
 import { limited } from '@/lib/ratelimit'
 import { transcribe, wavInfo } from '@/lib/stt'
 
@@ -39,11 +38,9 @@ export async function POST(request: Request) {
     return Response.json({ error: stt.reason, model: stt.model, timings }, { status })
   }
 
-  // Same pipeline as typed text: deterministic first, AI only when the local parse can't place the amounts.
   const t1 = performance.now()
-  const local = parseCapture(stt.text, mode)
-  const ai = needsAI(stt.text, local) ? await extractWithAI(stt.text, mode, 'voice') : null
+  const { candidates, usedAI } = await parseVoice(stt.text, mode)
   timings.extract_ms = Math.round(performance.now() - t1)
   timings.server_ms = Math.round(performance.now() - t0)
-  return Response.json({ transcript: stt.text, candidates: ai ?? local, usedAI: !!ai, model: stt.model, timings })
+  return Response.json({ transcript: stt.text, candidates, usedAI, model: stt.model, timings })
 }
