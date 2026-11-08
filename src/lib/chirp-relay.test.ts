@@ -62,6 +62,23 @@ describe('chirp relay', () => {
     expect(c.closed()).toBe(true)
   })
 
+  it('a second "start" while verifying fails without opening a second stream; idle sockets time out', async () => {
+    const st = fakeStream(), c = fakeWs()
+    let opened = 0
+    relay(c.ws, deps(st, { open: () => { opened++; return st.s } }))
+    const first = c.text({ type: 'start', token: 'good', mode: 'personal' })
+    await c.text({ type: 'start', token: 'good', mode: 'personal' })
+    await first
+    expect(opened).toBe(0)
+    expect(c.out).toEqual([{ type: 'error', reason: 'bad_request' }])
+
+    const idle = fakeWs()
+    relay(idle.ws, deps(fakeStream(), { authTimeoutMs: 5 }))
+    await new Promise(r => setTimeout(r, 20))
+    expect(idle.out).toEqual([{ type: 'error', reason: 'unauthorized' }])
+    expect(idle.closed()).toBe(true)
+  })
+
   it('rejects a bad token before opening any Chirp stream', async () => {
     let opened = false
     const st = fakeStream(), c = fakeWs()

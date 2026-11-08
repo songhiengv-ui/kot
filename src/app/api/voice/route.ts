@@ -22,7 +22,10 @@ export async function POST(request: Request) {
 
   const mode = new URL(request.url).searchParams.get('mode')
   if (mode !== 'personal' && mode !== 'business') return Response.json({ error: 'invalid_mode' }, { status: 400 })
-  if (Number(request.headers.get('content-length') ?? 0) > MAX_BYTES) return Response.json({ error: 'too_large' }, { status: 413 })
+  // Content-Length required: the HTTP parser stops the body at it, so a chunked upload can't outgrow the cap. Browsers always send it for a Blob body.
+  const length = Number(request.headers.get('content-length'))
+  if (!length) return Response.json({ error: 'length_required' }, { status: 411 })
+  if (length > MAX_BYTES) return Response.json({ error: 'too_large' }, { status: 413 })
   const audio = await request.arrayBuffer()
   if (audio.byteLength > MAX_BYTES) return Response.json({ error: 'too_large' }, { status: 413 })
   const info = wavInfo(audio)
