@@ -1,0 +1,9 @@
+# never upload local secrets or test/design artifacts
+.env*
+!.env.example
+.playwright-mcp
+test-results
+playwright-report
+design
+e2e
+supabase/tests
