@@ -172,7 +172,7 @@ function ToastView({ t, onClose, undoLabel, retryLabel }: { t: Toast | null; onC
     <div role="status" aria-live="polite" className="fixed inset-x-4 bottom-[calc(100px+env(safe-area-inset-bottom))] md:bottom-8 z-[85] flex justify-center pointer-events-none">
       <div className="pointer-events-auto flex items-center gap-3 py-2 pl-4 pr-2 rounded-2xl bg-ink text-bg text-sm shadow-[0_12px_30px_-10px_rgba(0,0,0,.4)] animate-rise max-w-full">
         <span className="icon text-[19px] text-[#9CCBB8]" aria-hidden>{t.icon}</span>
-        <span className="truncate">{t.msg}</span>
+        <span className="min-w-0 line-clamp-2">{t.msg}</span>
         {t.undo && <button onClick={async () => { onClose(); await t.undo!() }} className="min-h-11 px-3 rounded-xl bg-[#2C2E29] text-[#CFE3D8] font-medium shrink-0">{undoLabel}</button>}
         {t.retry && <button onClick={() => { onClose(); t.retry!() }} className="min-h-11 px-3 rounded-xl bg-[#2C2E29] text-[#CFE3D8] font-medium shrink-0">{retryLabel}</button>}
       </div>
