@@ -1,0 +1,138 @@
+// Strings ported from the design's T dictionary. Add every key to both languages.
+const en = {
+  tagline: 'Spend.\nSay it.\nSaved.', obSub: 'All your banks and cash in one place — just speak Khmer.',
+  email: 'Email', emailPh: 'you@example.com', sendCode: 'Send code', codeSent: 'We sent a 6-digit code to', code: 'Code', verify: 'Sign in',
+  google: 'Continue with Google', or: 'or', changeEmail: 'Use another email', authErr: 'Couldn’t sign in. Try again.', codeErr: 'That code didn’t work.',
+  personal: 'Personal', business: 'Business', greetMorning: 'Good morning', greet: 'Hello',
+  tracked: 'Total tracked · all accounts', accounts: 'Accounts', seeAll: 'See all', add: 'Add', recent: 'Recent · all accounts',
+  qVoice: 'Speak', qAdd: 'Add', qXfer: 'Transfer', qAccts: 'Accounts',
+  tabHome: 'Home', tabTx: 'Activity', tabAccts: 'Accounts', tabInsights: 'Insights', tabSettings: 'Settings',
+  inLbl: 'In', outLbl: 'Out', netLbl: 'Net', cashFlow: 'Cash flow', d30: '30d',
+  overviewNote: 'Manually tracked · transfers between accounts aren’t spending', overviewNoteBiz: 'Cash flow, not profit · transfers excluded',
+  emptyT: 'Nothing recorded yet', emptyS: 'Tap Add and type “20k lunch cash”.',
+  expense: 'Expense', income: 'Income', transfer: 'Transfer', today: 'Today', yesterday: 'Yesterday',
+  manual: 'Manual', preferred: 'Default', manualNote: 'These balances are calculated from what you record. Kat is not connected to your bank.',
+  addAcct: 'Add account', newAcct: 'New account', name: 'Name', namePh: 'e.g. ABA Savings', startBal: 'Current balance', color: 'Color',
+  afNote: 'Enter today’s balance. After that, we calculate it from the transactions you record.', save: 'Save', saving: 'Saving…',
+  textPh: '5$ coffee ABA, 20k lunch…', tryThese: 'Try', needAmt: 'Add an amount, like 5k or 2$',
+  whichCur: 'Riel or dollars?', whichAcct: 'Which account?', whichTo: 'Transfer to which account?', sameAcct: 'Choose two different accounts',
+  amountUnclear: 'Amount unclear — check it', assumedRiel: 'read as riel', xferNote: 'Transfer — not counted as spending or income',
+  undo: 'Undo', undone: 'Undone', saved: 'saved', saveFailed: 'Not saved — check your connection and try again', retry: 'Retry',
+  voiceSoon: 'Voice capture is coming next. Type it for now — same result.',
+  modeT: 'Mode', modeSep: 'Accounts and records stay separate', personalSub: 'Daily spending and savings', bizSub: 'Sales, shop costs and cash flow',
+  language: 'Language', rate: 'Exchange rate', rateSub: 'Only used for approximate (≈) totals. Original amounts never change.',
+  kmDigits: 'Khmer numerals', kmDigitsSub: 'Show ១២៣ instead of 123', signOut: 'Sign out',
+  privacy: 'Kat is not a bank and never asks for banking passwords.',
+  yourData: 'Your data', exportCsv: 'Download my records (CSV)', exportSub: 'Every record in both notebooks, for Excel or Google Sheets.', exportFail: 'Couldn’t prepare the file — try again.',
+  deleteAcct: 'Delete my account', deleteSub: 'Removes your accounts and records for good. This can’t be undone.', deleteType: 'Type DELETE to confirm', deleteWord: 'DELETE', deleteGo: 'Delete everything', deleteFail: 'Couldn’t delete — check your connection and try again.', offline: 'Offline', soon: 'Coming soon',
+  insightsSoon: 'Spending by category, account and week — arriving in the next milestone.', loading: 'Loading…', error: 'Something went wrong.',
+  cashKind: 'Cash', cashDrawer: 'Cash drawer', noTx: 'No transactions yet', at: 'at', search: 'Search note, category or account', all: 'All',
+  listening: 'Listening…', processing: 'Understanding…', sayIt: 'Say what you spent', sayEx: 'e.g. “ចាយ ៥ ដុល្លារ ទិញកាហ្វេ តាម ABA”',
+  tapStop: 'Tap when you’re done · max 30 s', saveAll: 'Confirm & save', resolveFirst: 'Answer the questions above', tapToFix: 'Tap the item to change anything',
+  found: 'Found', items: 'item(s)', heard: 'Heard', recordAgain: 'Record again', stop: 'Stop', cancel: 'Cancel', typeInstead: 'Type instead', tryAgain: 'Try again',
+  vConsentT: 'Your voice is turned into text by Google', vConsentS: 'The recording is sent to Google Gemini to write down what you said, then discarded. Kat does not keep the audio or the transcript. You can always type instead.',
+  vConsentOk: 'Allow and record', askMic: 'Allow the microphone when your browser asks',
+  vErr_denied: 'Microphone is off', vErr_deniedS: 'Allow the microphone in this site’s settings (the icon next to the address bar), then try again.',
+  vErr_nomic: 'No microphone found', vErr_nomicS: 'Connect a microphone, or type it instead.',
+  vErr_busy: 'Microphone is in use', vErr_busyS: 'Another app or a call is using it. Close it and try again.',
+  vErr_unsupported: 'Voice isn’t supported in this browser', vErr_unsupportedS: 'Try the latest Chrome or Safari, or type it instead.',
+  vErr_insecure: 'Voice needs a secure (https) page', vErr_insecureS: 'Open Kat over https to use the microphone.',
+  vErr_interrupted: 'Recording stopped', vErr_interruptedS: 'The microphone was interrupted (a call or another app). Try again.',
+  vErr_offline: 'Voice needs internet', vErr_offlineS: 'Type it instead — saving also needs a connection.',
+  vErr_empty: 'Didn’t catch that', vErr_emptyS: 'Try again a little closer to the phone, or type it instead.',
+  vErr_stt: 'Voice service is busy', vErr_sttS: 'Try again in a moment, or type it instead.',
+  byCat: 'By category', byAcct: 'Spending by account', inOut: 'In vs out', quickT: 'Quick answers', noData: 'No records in this period',
+  notProfit: 'Cash flow, not accounting profit — stock on hand and other costs aren’t counted.', spendingLbl: 'Spending', salesLbl: 'Sales',
+  days7: '7 days', days30: '30 days', fromRecords: 'From your records',
+  edit: 'Edit', amount: 'Amount', checkTitle: 'Check', repeat: 'Tap to log again', aiChecking: 'Reading a longer sentence…', aiUsed: 'AI-assisted — check each amount before saving', rejected: 'Not saved — check the amount and accounts', editTitle: 'Details', newXfer: 'Transfer money', fromAcct: 'From', toAcct: 'To', account: 'Account', category: 'Category',
+  noteOpt: 'Note (optional)', date: 'Date', del: 'Delete', deleted: 'Deleted', updated: 'Updated', saveXfer: 'Save transfer',
+  editAcct: 'Edit account', archive: 'Archive', unarchive: 'Restore', archived: 'Archived', notInTotal: 'not counted in your total', setDefault: 'Make default',
+  allAccts: 'All accounts', allCats: 'All categories', noAcctTx: 'No transactions yet', totalSame: 'Total balance unchanged',
+  rateLbl: 'Rate', curLocked: 'Currency is fixed once an account exists.', needAmtShort: 'Enter an amount',
+}
+type Dict = typeof en
+const km: Dict = {
+  tagline: 'ចាយ។\nនិយាយ។\nរួចរាល់។', obSub: 'ធនាគារ និងសាច់ប្រាក់ទាំងអស់ នៅកន្លែងតែមួយ — គ្រាន់តែនិយាយជាភាសាខ្មែរ។',
+  email: 'អ៊ីមែល', emailPh: 'you@example.com', sendCode: 'ផ្ញើលេខកូដ', codeSent: 'យើងបានផ្ញើលេខកូដ ៦ ខ្ទង់ទៅ', code: 'លេខកូដ', verify: 'ចូល',
+  google: 'បន្តជាមួយ Google', or: 'ឬ', changeEmail: 'ប្រើអ៊ីមែលផ្សេង', authErr: 'មិនអាចចូលបានទេ។ សូមព្យាយាមម្ដងទៀត។', codeErr: 'លេខកូដមិនត្រឹមត្រូវ។',
+  personal: 'ផ្ទាល់ខ្លួន', business: 'អាជីវកម្ម', greetMorning: 'អរុណសួស្តី', greet: 'សួស្តី',
+  tracked: 'សមតុល្យសរុប · គ្រប់គណនី', accounts: 'គណនី', seeAll: 'មើលទាំងអស់', add: 'បន្ថែម', recent: 'ថ្មីៗ · គ្រប់គណនី',
+  qVoice: 'និយាយ', qAdd: 'បន្ថែម', qXfer: 'ផ្ទេរ', qAccts: 'គណនី',
+  tabHome: 'ទំព័រដើម', tabTx: 'ប្រតិបត្តិការ', tabAccts: 'គណនី', tabInsights: 'សង្ខេប', tabSettings: 'ការកំណត់',
+  inLbl: 'ចូល', outLbl: 'ចេញ', netLbl: 'សល់', cashFlow: 'លំហូរសាច់ប្រាក់', d30: '៣០ថ្ងៃ',
+  overviewNote: 'កត់ដោយដៃ · ការផ្ទេររវាងគណនីមិនរាប់ជាចំណាយ', overviewNoteBiz: 'លំហូរសាច់ប្រាក់ មិនមែនប្រាក់ចំណេញទេ · ការផ្ទេរមិនរាប់បញ្ចូល',
+  emptyT: 'មិនទាន់មានកំណត់ត្រា', emptyS: 'ចុច បន្ថែម ហើយវាយ «បាយ ២០ពាន់ សាច់ប្រាក់»។',
+  expense: 'ចំណាយ', income: 'ចំណូល', transfer: 'ផ្ទេរប្រាក់', today: 'ថ្ងៃនេះ', yesterday: 'ម្សិលមិញ',
+  manual: 'កត់ដោយដៃ', preferred: 'គណនីដើម', manualNote: 'សមតុល្យទាំងនេះ គណនាពីអ្វីដែលអ្នកបានកត់ត្រា។ កត់ មិនភ្ជាប់ទៅធនាគាររបស់អ្នកទេ។',
+  addAcct: 'បន្ថែមគណនី', newAcct: 'គណនីថ្មី', name: 'ឈ្មោះ', namePh: 'ឧ. ABA សន្សំ', startBal: 'សមតុល្យដំបូង', color: 'ពណ៌',
+  afNote: 'បញ្ចូលសមតុល្យបច្ចុប្បន្នរបស់អ្នក។ ពេលក្រោយ យើងគណនាពីប្រតិបត្តិការដែលអ្នកកត់។', save: 'រក្សាទុក', saving: 'កំពុងរក្សាទុក…',
+  textPh: '5$ កាហ្វេ ABA, 20k បាយ…', tryThese: 'សាកល្បង', needAmt: 'បន្ថែមចំនួនទឹកប្រាក់ ឧ. 5k ឬ 2$',
+  whichCur: 'រៀល ឬដុល្លារ?', whichAcct: 'គណនីណា?', whichTo: 'ផ្ទេរទៅគណនីណា?', sameAcct: 'សូមជ្រើសគណនីពីរផ្សេងគ្នា',
+  amountUnclear: 'ចំនួនមិនច្បាស់ — សូមពិនិត្យ', assumedRiel: 'យល់ថាជារៀល', xferNote: 'ការផ្ទេរ — មិនរាប់ជាចំណាយ ឬចំណូលទេ',
+  undo: 'ត្រឡប់', undone: 'បានត្រឡប់វិញ', saved: 'បានរក្សាទុក', saveFailed: 'មិនទាន់រក្សាទុក — ពិនិត្យអ៊ីនធឺណិត ហើយព្យាយាមម្ដងទៀត', retry: 'ព្យាយាមម្ដងទៀត',
+  voiceSoon: 'ការកត់ដោយសំឡេង នឹងមកដល់ឆាប់ៗ។ ឥឡូវសូមវាយបញ្ចូល — លទ្ធផលដូចគ្នា។',
+  modeT: 'របៀប', modeSep: 'គណនី និងប្រតិបត្តិការ រក្សាទុកដាច់ពីគ្នា', personalSub: 'ចំណាយប្រចាំថ្ងៃ និងសន្សំ', bizSub: 'ការលក់ ចំណាយហាង និងលំហូរសាច់ប្រាក់',
+  language: 'ភាសា', rate: 'អត្រាប្ដូរប្រាក់', rateSub: 'ប្រើសម្រាប់តែសរុបប៉ាន់ស្មាន (≈)។ ចំនួនដើមមិនផ្លាស់ប្ដូរ។',
+  kmDigits: 'លេខខ្មែរ', kmDigitsSub: 'បង្ហាញ ១២៣ ជំនួស 123', signOut: 'ចាកចេញ',
+  privacy: 'កត់ មិនមែនជាធនាគារ ហើយមិនដែលសុំលេខសម្ងាត់ធនាគារទេ។',
+  yourData: 'ទិន្នន័យរបស់អ្នក', exportCsv: 'ទាញយកកំណត់ត្រា (CSV)', exportSub: 'កំណត់ត្រាទាំងអស់ក្នុងសៀវភៅទាំងពីរ សម្រាប់ Excel ឬ Google Sheets។', exportFail: 'មិនអាចរៀបចំឯកសារបានទេ — សូមព្យាយាមម្ដងទៀត។',
+  deleteAcct: 'លុបគណនីរបស់ខ្ញុំ', deleteSub: 'លុបគណនី និងកំណត់ត្រារបស់អ្នកជាអចិន្ត្រៃយ៍។ មិនអាចត្រឡប់វិញបានទេ។', deleteType: 'វាយពាក្យ លុប ដើម្បីបញ្ជាក់', deleteWord: 'លុប', deleteGo: 'លុបទាំងអស់', deleteFail: 'មិនអាចលុបបានទេ — សូមពិនិត្យអ៊ីនធឺណិត ហើយព្យាយាមម្ដងទៀត។', offline: 'គ្មានអ៊ីនធឺណិត', soon: 'ឆាប់ៗនេះ',
+  insightsSoon: 'ចំណាយតាមប្រភេទ គណនី និងសប្ដាហ៍ — នឹងមកដល់នៅដំណាក់កាលបន្ទាប់។', loading: 'កំពុងផ្ទុក…', error: 'មានបញ្ហាអ្វីមួយ។',
+  cashKind: 'សាច់ប្រាក់', cashDrawer: 'ថតលុយហាង', noTx: 'មិនទាន់មានប្រតិបត្តិការ', at: 'អត្រា', search: 'ស្វែងរកកំណត់ចំណាំ ប្រភេទ ឬគណនី', all: 'ទាំងអស់',
+  listening: 'កំពុងស្ដាប់…', processing: 'កំពុងស្វែងយល់…', sayIt: 'និយាយពីអ្វីដែលអ្នកបានចាយ', sayEx: 'ឧ. «ចាយ ៥ ដុល្លារ ទិញកាហ្វេ តាម ABA»',
+  tapStop: 'ចុចពេលនិយាយចប់ · យូរបំផុត ៣០ វិនាទី', saveAll: 'បញ្ជាក់ និងរក្សាទុក', resolveFirst: 'សូមឆ្លើយសំណួរខាងលើ', tapToFix: 'ចុចលើធាតុ ដើម្បីកែអ្វីក៏បាន',
+  found: 'រកឃើញ', items: 'ប្រតិបត្តិការ', heard: 'បានឮ', recordAgain: 'ថតម្ដងទៀត', stop: 'ឈប់', cancel: 'បោះបង់', typeInstead: 'វាយបញ្ចូលវិញ', tryAgain: 'ព្យាយាមម្ដងទៀត',
+  vConsentT: 'សំឡេងរបស់អ្នក ត្រូវបានប្ដូរជាអក្សរដោយ Google', vConsentS: 'ការថតសំឡេងត្រូវបានផ្ញើទៅ Google Gemini ដើម្បីសរសេរអ្វីដែលអ្នកនិយាយ បន្ទាប់មកត្រូវបានលុបចោល។ កត់ មិនរក្សាទុកសំឡេង ឬអត្ថបទនោះទេ។ អ្នកអាចវាយបញ្ចូលជំនួសបានជានិច្ច។',
+  vConsentOk: 'យល់ព្រម ហើយថត', askMic: 'សូមអនុញ្ញាតមីក្រូហ្វូន ពេលកម្មវិធីរុករកសួរ',
+  vErr_denied: 'មីក្រូហ្វូនត្រូវបានបិទ', vErr_deniedS: 'សូមអនុញ្ញាតមីក្រូហ្វូនក្នុងការកំណត់គេហទំព័រ (រូបតំណាងក្បែររបារអាសយដ្ឋាន) ហើយព្យាយាមម្ដងទៀត។',
+  vErr_nomic: 'រកមិនឃើញមីក្រូហ្វូន', vErr_nomicS: 'សូមភ្ជាប់មីក្រូហ្វូន ឬវាយបញ្ចូលវិញ។',
+  vErr_busy: 'មីក្រូហ្វូនកំពុងជាប់ប្រើ', vErr_busyS: 'កម្មវិធីផ្សេង ឬការហៅទូរស័ព្ទកំពុងប្រើវា។ សូមបិទ ហើយព្យាយាមម្ដងទៀត។',
+  vErr_unsupported: 'កម្មវិធីរុករកនេះមិនគាំទ្រសំឡេងទេ', vErr_unsupportedS: 'សូមប្រើ Chrome ឬ Safari ចុងក្រោយ ឬវាយបញ្ចូលវិញ។',
+  vErr_insecure: 'សំឡេងត្រូវការទំព័រសុវត្ថិភាព (https)', vErr_insecureS: 'សូមបើក កត់ តាម https ដើម្បីប្រើមីក្រូហ្វូន។',
+  vErr_interrupted: 'ការថតបានឈប់', vErr_interruptedS: 'មីក្រូហ្វូនត្រូវបានរំខាន (ការហៅ ឬកម្មវិធីផ្សេង)។ សូមព្យាយាមម្ដងទៀត។',
+  vErr_offline: 'សំឡេងត្រូវការអ៊ីនធឺណិត', vErr_offlineS: 'សូមវាយបញ្ចូលវិញ — ការរក្សាទុកក៏ត្រូវការអ៊ីនធឺណិតដែរ។',
+  vErr_empty: 'ស្ដាប់មិនបានច្បាស់', vErr_emptyS: 'សូមនិយាយម្ដងទៀតឲ្យជិតទូរស័ព្ទ ឬវាយបញ្ចូលវិញ។',
+  vErr_stt: 'សេវាសំឡេងកំពុងរវល់', vErr_sttS: 'សូមព្យាយាមម្ដងទៀតបន្តិចទៀត ឬវាយបញ្ចូលវិញ។',
+  byCat: 'តាមប្រភេទ', byAcct: 'ចំណាយតាមគណនី', inOut: 'ចូល និងចេញ', quickT: 'ចម្លើយរហ័ស', noData: 'មិនមានកំណត់ត្រាក្នុងរយៈពេលនេះ',
+  notProfit: 'នេះជាលំហូរសាច់ប្រាក់ មិនមែនប្រាក់ចំណេញគណនេយ្យទេ — ស្តុកនៅសល់ និងថ្លៃដើមផ្សេងទៀត មិនត្រូវបានគណនាទេ។', spendingLbl: 'ចំណាយ', salesLbl: 'ការលក់',
+  days7: '៧ ថ្ងៃ', days30: '៣០ ថ្ងៃ', fromRecords: 'ពីកំណត់ត្រារបស់អ្នក',
+  edit: 'កែ', amount: 'ចំនួនទឹកប្រាក់', checkTitle: 'ពិនិត្យ', repeat: 'ចុចម្ដង កត់ម្ដងទៀត', aiChecking: 'កំពុងអានប្រយោគវែង…', aiUsed: 'ជំនួយដោយ AI — សូមពិនិត្យចំនួនមុនរក្សាទុក', rejected: 'មិនទាន់រក្សាទុក — សូមពិនិត្យចំនួន និងគណនី', editTitle: 'ព័ត៌មានលម្អិត', newXfer: 'ផ្ទេរប្រាក់', fromAcct: 'ពីគណនី', toAcct: 'ទៅគណនី', account: 'គណនី', category: 'ប្រភេទ',
+  noteOpt: 'កំណត់ចំណាំ (មិនចាំបាច់)', date: 'កាលបរិច្ឆេទ', del: 'លុប', deleted: 'បានលុប', updated: 'បានកែប្រែ', saveXfer: 'ផ្ទេរ',
+  editAcct: 'កែគណនី', archive: 'ទុកចោល', unarchive: 'យកមកវិញ', archived: 'បានទុកចោល', notInTotal: 'លែងរាប់ក្នុងសរុប', setDefault: 'ធ្វើជាគណនីដើម',
+  allAccts: 'គ្រប់គណនី', allCats: 'គ្រប់ប្រភេទ', noAcctTx: 'មិនទាន់មានប្រតិបត្តិការ', totalSame: 'សរុបទាំងអស់មិនប្រែប្រួល',
+  rateLbl: 'អត្រា', curLocked: 'រូបិយប័ណ្ណមិនអាចប្ដូរបានទេ បន្ទាប់ពីបង្កើតគណនី។', needAmtShort: 'សូមបញ្ចូលចំនួន',
+}
+export const dict = { en, km }
+export type Lang = keyof typeof dict
+export type T = Dict
+
+export const KINDS = {
+  aba: { km: 'ធនាគារ ABA', en: 'ABA Bank', name: 'ABA', mark: 'ABA', color: '#33506E', icon: '' },
+  acleda: { km: 'ធនាគារ ACLEDA', en: 'ACLEDA Bank', name: 'ACLEDA', mark: 'AC', color: '#8A6A3A', icon: '' },
+  wing: { km: 'Wing', en: 'Wing', name: 'Wing', mark: 'W', color: '#5E7A3A', icon: '' },
+  cash: { km: 'សាច់ប្រាក់', en: 'Cash wallet', name: 'Cash', mark: '', color: '#4A4B45', icon: 'payments' },
+  other: { km: 'ធនាគារផ្សេង', en: 'Other bank', name: 'Bank', mark: '', color: '#7A4E5E', icon: 'account_balance' },
+  custom: { km: 'កាបូបផ្ទាល់ខ្លួន', en: 'Custom wallet', name: 'Wallet', mark: '', color: '#2E6B5B', icon: 'wallet' },
+} as const
+export const CATS_PERSONAL = ['food', 'coffee', 'transport', 'fuel', 'groceries', 'shopping', 'bills', 'phone', 'rent', 'salary', 'sales', 'other']
+export const CATS_BUSINESS = ['sales', 'stock', 'delivery', 'rent', 'wages', 'bills', 'transport', 'other']
+export const COLORS = ['#33506E', '#8A6A3A', '#5E7A3A', '#4A4B45', '#7A4E5E', '#2E6B5B']
+
+export const CATS: Record<string, { icon: string; km: string; en: string }> = {
+  food: { icon: 'restaurant', km: 'អាហារ', en: 'Food' }, coffee: { icon: 'local_cafe', km: 'កាហ្វេ និងភេសជ្ជៈ', en: 'Coffee & drinks' },
+  transport: { icon: 'two_wheeler', km: 'ធ្វើដំណើរ', en: 'Transport' }, fuel: { icon: 'local_gas_station', km: 'សាំង', en: 'Fuel' },
+  groceries: { icon: 'shopping_basket', km: 'ផ្សារ', en: 'Groceries' }, shopping: { icon: 'shopping_bag', km: 'ទិញឥវ៉ាន់', en: 'Shopping' },
+  bills: { icon: 'bolt', km: 'វិក្កយបត្រ', en: 'Bills' }, phone: { icon: 'smartphone', km: 'ទូរស័ព្ទ', en: 'Phone' },
+  rent: { icon: 'home', km: 'ថ្លៃជួល', en: 'Rent' }, stock: { icon: 'inventory_2', km: 'ស្តុកទំនិញ', en: 'Stock' },
+  delivery: { icon: 'local_shipping', km: 'ដឹកជញ្ជូន', en: 'Delivery' }, wages: { icon: 'badge', km: 'ប្រាក់ឈ្នួល', en: 'Wages' },
+  salary: { icon: 'payments', km: 'ប្រាក់ខែ', en: 'Salary' }, sales: { icon: 'storefront', km: 'លក់', en: 'Sales' },
+  other: { icon: 'more_horiz', km: 'ផ្សេងៗ', en: 'Other' }, transfer: { icon: 'swap_horiz', km: 'ផ្ទេរ', en: 'Transfer' },
+}
+
+// Browsers ship incomplete Khmer Intl data, so dates use the design's own names.
+const KM_M = ['មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ']
+const KM_W = ['អាទិត្យ', 'ច័ន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍']
+export function formatDate(d: Date, lang: Lang, style: 'long' | 'short', dig: (s: string | number) => string) {
+  if (lang === 'en') return d.toLocaleDateString('en-GB', style === 'long' ? { weekday: 'long', day: 'numeric', month: 'long' } : { weekday: 'short', day: 'numeric', month: 'short' })
+  return style === 'long' ? `ថ្ងៃ${KM_W[d.getDay()]} ទី${dig(d.getDate())} ${KM_M[d.getMonth()]}` : `${KM_W[d.getDay()]} ${dig(d.getDate())} ${KM_M[d.getMonth()]}`
+}

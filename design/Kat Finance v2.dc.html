@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Kantumruy+Pro:wght@300;400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#E7E4DC}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Geist','Kantumruy Pro',system-ui,sans-serif;color:#191A17;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:#2E6B5B;text-decoration:none}a:hover{color:#1F4F42}
+input::placeholder{color:#A6A79E}
+::-webkit-scrollbar{display:none}
+@keyframes kwave{0%,100%{transform:scaleY(.12)}50%{transform:scaleY(var(--h))}}
+@keyframes kblink{0%,100%{opacity:.2}50%{opacity:.9}}
+@keyframes kup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes kfade{from{opacity:0}to{opacity:1}}
+@keyframes krise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes kring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.9);opacity:0}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:48px;padding:24px">
+
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+<div style="width:230px;display:flex;flex-direction:column;gap:16px;max-height:860px;overflow-y:auto">
+  <div>
+    <div style="font-size:22px;font-weight:600;letter-spacing:-0.4px">កត់ Kat · v2</div>
+    <div style="font-size:13px;color:#6E6F66;margin-top:2px">All your banks and cash in one place — just speak Khmer.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:1px">
+    <div style="font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:1px;color:#8C8D84;text-transform:uppercase;padding:0 10px 6px">Jump to</div>
+    <sc-for list="{{ guide }}" as="g" hint-placeholder-count="14">
+      <div onClick="{{ g.go }}" style="display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:10px;cursor:pointer;font-size:13.5px;color:#3B3C36" style-hover="background:#DCD8CE">
+        <span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;color:#6E6F66">{{ g.icon }}</span>{{ g.label }}
+      </div>
+    </sc-for>
+  </div>
+  <div style="font-size:12px;color:#8C8D84;line-height:1.5;padding:0 10px">Voice recognition is simulated. Balances are entered manually — no bank is connected.</div>
+</div>
+</sc-if>
+
+<div style="zoom:{{ scale }}">
+<div style="width:410px;height:864px;border-radius:60px;background:#1B1C19;padding:10px;box-shadow:0 40px 80px -30px rgba(40,36,28,.45),0 0 0 1px rgba(0,0,0,.2)">
+<div style="position:relative;width:390px;height:844px;border-radius:50px;overflow:hidden;background:#F4F2EC">
+
+  <div style="position:absolute;top:0;left:0;right:0;height:50px;z-index:95;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 36px;color:{{ statusColor }};pointer-events:none">
+    <div style="font-size:15px;font-weight:600">9:41</div>
+    <div style="position:absolute;left:50%;top:11px;transform:translateX(-50%);width:120px;height:34px;border-radius:20px;background:#000"></div>
+    <div style="display:flex;gap:4px;align-items:center">
+      <span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1">signal_cellular_alt</span>
+      <span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1">{{ wifiIcon }}</span>
+      <span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">battery_full</span>
+    </div>
+  </div>
+
+  <sc-if value="{{ isOnb }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:90;background:#F4F2EC;display:flex;flex-direction:column;padding:72px 28px 40px;animation:kfade .4s">
+    <sc-if value="{{ obStep0 }}">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:12px;background:#2E6B5B;color:#F4F2EC;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">mic</span></div>
+        <div style="font-size:18px;font-weight:600">កត់</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px">
+        <div style="font-size:44px;line-height:1.22;font-weight:500;letter-spacing:-1px;white-space:pre-line">{{ t.tagline }}</div>
+        <div style="font-size:16px;color:#5F6159;max-width:300px;text-wrap:pretty">{{ t.obSub }}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ obAccts }}" as="oa" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:6px;padding:5px 10px 5px 5px;border-radius:99px;background:#FFFFFF;font-size:13px"><span style="width:20px;height:20px;border-radius:10px;background:{{ oa.color }}"></span>{{ oa.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="font-size:13px;color:#8C8D84;margin-bottom:10px">{{ t.chooseLang }}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div onClick="{{ setLangKm }}" style="padding:16px;border-radius:18px;background:#FFFFFF;cursor:pointer;border:1.5px solid {{ obKmBorder }}"><div style="font-size:17px;font-weight:500">ខ្មែរ</div><div style="font-size:12px;color:#8C8D84">Khmer</div></div>
+        <div onClick="{{ setLangEn }}" style="padding:16px;border-radius:18px;background:#FFFFFF;cursor:pointer;border:1.5px solid {{ obEnBorder }}"><div style="font-size:17px;font-weight:500">English</div><div style="font-size:12px;color:#8C8D84">អង់គ្លេស</div></div>
+      </div>
+      <div onClick="{{ obNext }}" style="height:56px;border-radius:18px;background:#191A17;color:#F4F2EC;display:grid;place-items:center;font-size:16px;font-weight:500;cursor:pointer">{{ t.cont }}</div>
+    </sc-if>
+    <sc-if value="{{ obStep1 }}">
+      <div onClick="{{ obBack }}" style="width:40px;height:40px;border-radius:20px;display:grid;place-items:center;cursor:pointer;margin-left:-8px"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">arrow_back</span></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px">
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <div style="padding:12px 16px;border-radius:20px 20px 20px 6px;background:#191A17;color:#F4F2EC;font-size:16px">«ចំណាយ ៥ ដុល្លារ ទិញបាយ តាម ABA»</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:#FFFFFF;width:100%">
+            <div style="width:40px;height:40px;border-radius:12px;background:#F0EEE7;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1;color:#5F6159">restaurant</span></div>
+            <div style="flex:1"><div style="font-size:15px;font-weight:500">{{ t.obFood }}</div><div style="font-size:12.5px;color:#8C8D84;display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:4px;background:#33506E"></span>ABA · {{ t.expense }}</div></div>
+            <div style="font-size:16px;font-weight:500">$5.00</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:30px;font-weight:500;letter-spacing:-0.6px;line-height:1.3">{{ t.obMicT }}</div>
+          <div style="font-size:15.5px;color:#5F6159;margin-top:8px;text-wrap:pretty">{{ t.obMicS }}</div>
+        </div>
+      </div>
+      <div onClick="{{ obAllow }}" style="height:56px;border-radius:18px;background:#191A17;color:#F4F2EC;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:500;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">mic</span>{{ t.allowMic }}</div>
+      <div onClick="{{ obSkip }}" style="height:52px;display:grid;place-items:center;font-size:15px;color:#5F6159;cursor:pointer;margin-top:4px">{{ t.notNow }}</div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <div style="position:absolute;inset:0;overflow-y:auto;padding:58px 0 124px">
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:0 20px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;padding-top:6px">
+        <div>
+          <div style="font-size:13px;color:#8C8D84">{{ dateLong }}</div>
+          <div style="font-size:22px;font-weight:600;letter-spacing:-0.3px">{{ t.greet }}</div>
+        </div>
+        <div onClick="{{ goSettings }}" style="width:40px;height:40px;border-radius:20px;background:#E3EDE8;color:#2E6B5B;display:grid;place-items:center;font-size:16px;font-weight:600;cursor:pointer">ស</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div onClick="{{ openModes }}" style="display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:99px;background:#FFFFFF;cursor:pointer;box-shadow:0 0 0 1px #E6E3DA">
+          <div style="width:28px;height:28px;border-radius:14px;background:{{ modeTile }};color:#FFFFFF;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1">{{ modeIcon }}</span></div>
+          <div style="font-size:14px;font-weight:500">{{ modeName }}</div>
+          <span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;color:#8C8D84">unfold_more</span>
+        </div>
+        <sc-if value="{{ offline }}">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#8A5A12;background:#F6EAD3;padding:6px 10px;border-radius:99px"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1">cloud_off</span>{{ offlineText }}</div>
+        </sc-if>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:26px;padding:20px 18px 16px;box-shadow:0 1px 2px rgba(30,28,20,.04)">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:13.5px;color:#5F6159">{{ t.tracked }}</div>
+          <div onClick="{{ flipTotalCur }}" style="display:flex;align-items:center;gap:3px;font-size:12px;color:#5F6159;background:#F0EEE7;padding:4px 8px;border-radius:8px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:14px;line-height:1">sync_alt</span>{{ totalCurLabel }}</div>
+        </div>
+        <div style="font-size:42px;font-weight:500;letter-spacing:-1.6px;line-height:1.1;margin-top:4px;font-variant-numeric:tabular-nums">{{ totalBal }}</div>
+        <div style="font-size:12.5px;color:#8C8D84;margin-top:4px">{{ totalBreak }}</div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid #F0EEE7">
+          <sc-for list="{{ flows }}" as="fl" hint-placeholder-count="3">
+            <div style="min-width:0">
+              <div style="font-size:12px;color:#8C8D84;display:flex;align-items:center;gap:4px"><span style="width:7px;height:7px;border-radius:4px;background:{{ fl.dot }}"></span>{{ fl.label }}</div>
+              <div style="font-size:15.5px;font-weight:500;color:{{ fl.color }};font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ fl.amt }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:11.5px;color:#A6A79E;margin-top:12px;display:flex;align-items:center;gap:5px"><span style="font-family:'Material Symbols Rounded';font-size:14px;line-height:1">edit_note</span>{{ overviewNote }}</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:15px;font-weight:600">{{ t.accounts }}</div>
+          <div onClick="{{ goAccounts }}" style="font-size:13px;color:#2E6B5B;cursor:pointer">{{ t.seeAll }}</div>
+        </div>
+        <div style="display:flex;gap:10px;overflow-x:auto;margin:0 -20px;padding:0 20px 2px">
+          <sc-for list="{{ acctCards }}" as="a" hint-placeholder-count="4">
+            <div onClick="{{ a.open }}" style="flex:none;width:150px;height:112px;border-radius:20px;background:{{ a.color }};color:#FFFFFF;padding:14px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer" style-active="transform:scale(.97)">
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:10.5px;font-weight:600;letter-spacing:.3px">
+                  <sc-if value="{{ a.hasIcon }}"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1">{{ a.icon }}</span></sc-if>
+                  <sc-if value="{{ a.noIcon }}">{{ a.mark }}</sc-if>
+                </div>
+                <div style="font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.name }}</div>
+              </div>
+              <div>
+                <div style="font-size:11px;opacity:.7">{{ a.curLabel }}</div>
+                <div style="font-size:18px;font-weight:500;letter-spacing:-0.3px;font-variant-numeric:tabular-nums;white-space:nowrap">{{ a.bal }}</div>
+              </div>
+            </div>
+          </sc-for>
+          <div onClick="{{ newAcct }}" style="flex:none;width:96px;height:112px;border-radius:20px;border:1.5px dashed #CFCBC0;color:#6E6F66;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-size:12.5px">
+            <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">add</span>{{ t.add }}
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+        <sc-for list="{{ quick }}" as="qa" hint-placeholder-count="4">
+          <div onClick="{{ qa.go }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 2px 10px;border-radius:18px;background:{{ qa.bg }};color:{{ qa.fg }};cursor:pointer;text-align:center" style-active="transform:scale(.96)">
+            <span style="font-family:'Material Symbols Rounded';font-size:23px;line-height:1">{{ qa.icon }}</span>
+            <span style="font-size:11.5px;line-height:1.3">{{ qa.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ hasRepeats }}">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:#8C8D84;display:flex;align-items:center;gap:6px"><span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1">bolt</span>{{ t.repeat }}</div>
+        <div style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px 2px">
+          <sc-for list="{{ repeats }}" as="q" hint-placeholder-count="4">
+            <div onClick="{{ q.go }}" style="flex:none;display:flex;align-items:center;gap:8px;padding:9px 14px 9px 10px;border-radius:14px;background:#FFFFFF;box-shadow:0 0 0 1px #E6E3DA;cursor:pointer;font-size:14px" style-active="transform:scale(.96)">
+              <span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;color:#5F6159">{{ q.icon }}</span>
+              <span>{{ q.label }}</span><span style="color:#8C8D84;font-variant-numeric:tabular-nums">{{ q.amt }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ hasCatMix }}">
+      <div onClick="{{ goInsights }}" style="background:#FFFFFF;border-radius:24px;padding:16px 18px;cursor:pointer">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <div style="font-size:15px;font-weight:600">{{ catMixTitle }}</div>
+          <div style="font-size:13px;color:#5F6159;font-variant-numeric:tabular-nums">{{ catMixTotal }}</div>
+        </div>
+        <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px;margin:12px 0">
+          <sc-for list="{{ catMix }}" as="cm" hint-placeholder-count="4"><div style="width:{{ cm.w }}%;background:{{ cm.color }}"></div></sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px">
+          <sc-for list="{{ catMix }}" as="cm" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;min-width:0"><span style="width:8px;height:8px;border-radius:2px;background:{{ cm.color }};flex:none"></span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ cm.label }}</span><span style="color:#8C8D84;font-variant-numeric:tabular-nums">{{ cm.pct }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <div style="background:#FFFFFF;border-radius:24px;padding:14px 12px 8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:0 6px 6px">
+          <div>
+            <div style="font-size:15px;font-weight:600">{{ t.recent }}</div>
+            <div style="font-size:12.5px;color:#8C8D84;display:flex;align-items:center;gap:6px;flex-wrap:wrap">{{ todayLine }}<sc-if value="{{ hasInsight }}"><span style="display:inline-flex;align-items:center;gap:3px;color:#2E6B5B"><span style="font-family:'Material Symbols Rounded';font-size:14px;line-height:1">{{ insightIcon }}</span>{{ insightText }}</span></sc-if></div>
+          </div>
+          <div onClick="{{ goTx }}" style="font-size:13px;color:#2E6B5B;cursor:pointer">{{ t.seeAll }}</div>
+        </div>
+        <sc-for list="{{ recentRows }}" as="r" hint-placeholder-count="5">
+          <div onClick="{{ r.open }}" style="display:flex;align-items:center;gap:12px;padding:9px 6px;border-radius:14px;cursor:pointer;background:{{ r.bg }};transition:background 1.2s" style-hover="background:#F7F6F2">
+            <div style="width:40px;height:40px;border-radius:12px;background:{{ r.tileBg }};color:{{ r.tileFg }};display:grid;place-items:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1">{{ r.icon }}</span></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</div>
+              <div style="font-size:12.5px;color:#8C8D84;display:flex;gap:5px;align-items:center;white-space:nowrap;overflow:hidden"><span style="width:7px;height:7px;border-radius:4px;background:{{ r.dot }};flex:none"></span>{{ r.sub }}<sc-if value="{{ r.pending }}"><span style="font-family:'Material Symbols Rounded';font-size:14px;line-height:1;color:#B7791F">cloud_upload</span></sc-if></div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;color:{{ r.amtColor }};white-space:nowrap">{{ r.amt }}</div>
+              <sc-if value="{{ r.hasConv }}"><div style="font-size:11px;color:#A6A79E;white-space:nowrap">{{ r.conv }}</div></sc-if>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ noTx }}">
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:28px 16px 20px">
+            <div style="width:64px;height:64px;border-radius:32px;background:#E3EDE8;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:30px;line-height:1;color:#2E6B5B">graphic_eq</span></div>
+            <div style="font-size:18px;font-weight:500">{{ t.emptyT }}</div>
+            <div style="font-size:14px;color:#5F6159;max-width:260px;text-wrap:pretty">{{ t.emptyS }}</div>
+            <div onClick="{{ loadSample }}" style="font-size:14px;color:#2E6B5B;cursor:pointer;padding:6px">{{ t.loadSample }}</div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isTx }}">
+    <div style="padding:6px 20px 0;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:28px;font-weight:600;letter-spacing:-0.6px">{{ t.tabTx }}</div>
+        <div onClick="{{ openModes }}" style="display:flex;align-items:center;gap:6px;padding:6px 10px 6px 12px;border-radius:99px;background:#FFFFFF;box-shadow:0 0 0 1px #E6E3DA;font-size:13px;cursor:pointer">{{ modeName }}<span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1;color:#8C8D84">unfold_more</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;height:46px;padding:0 14px;border-radius:14px;background:#FFFFFF;box-shadow:0 0 0 1px #E6E3DA">
+        <span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;color:#8C8D84">search</span>
+        <input value="{{ q }}" onChange="{{ onQ }}" placeholder="{{ t.search }}" style="flex:1;border:none;outline:none;background:transparent;font:inherit;font-size:15px;color:#191A17"></input>
+        <sc-if value="{{ hasQ }}"><span onClick="{{ clearQ }}" style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;color:#8C8D84;cursor:pointer">close</span></sc-if>
+      </div>
+      <div style="display:flex;gap:6px;overflow-x:auto;margin:0 -20px;padding:0 20px">
+        <sc-for list="{{ typeFilters }}" as="f" hint-placeholder-count="4">
+          <div onClick="{{ f.go }}" style="flex:none;display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:99px;font-size:13.5px;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};box-shadow:0 0 0 1px {{ f.ring }}"><span style="width:7px;height:7px;border-radius:4px;background:{{ f.dot }}"></span>{{ f.label }}</div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:6px;overflow-x:auto;margin:-6px -20px 0;padding:0 20px">
+        <sc-for list="{{ acctFilters }}" as="f" hint-placeholder-count="5">
+          <div onClick="{{ f.go }}" style="flex:none;display:flex;align-items:center;gap:6px;padding:6px 12px 6px 8px;border-radius:10px;font-size:13px;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};box-shadow:0 0 0 1px {{ f.ring }}"><span style="width:14px;height:14px;border-radius:5px;background:{{ f.dot }}"></span>{{ f.label }}</div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:6px;overflow-x:auto;margin:-6px -20px 0;padding:0 20px">
+        <sc-for list="{{ catFilters }}" as="f" hint-placeholder-count="6">
+          <div onClick="{{ f.go }}" style="flex:none;display:flex;align-items:center;gap:5px;padding:6px 11px 6px 8px;border-radius:10px;font-size:13px;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};box-shadow:0 0 0 1px {{ f.ring }}"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1">{{ f.icon }}</span>{{ f.label }}</div>
+        </sc-for>
+      </div>
+      <sc-for list="{{ groups }}" as="gp" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 4px">
+            <div style="font-size:13.5px;font-weight:600">{{ gp.label }} <span style="font-weight:400;color:#8C8D84">{{ gp.sub }}</span></div>
+            <div style="font-size:12.5px;color:#8C8D84;font-variant-numeric:tabular-nums">{{ gp.total }}</div>
+          </div>
+          <div style="background:#FFFFFF;border-radius:22px;padding:6px 12px">
+            <sc-for list="{{ gp.rows }}" as="r" hint-placeholder-count="3">
+              <div onClick="{{ r.open }}" style="display:flex;align-items:center;gap:12px;padding:9px 6px;border-radius:14px;cursor:pointer;background:{{ r.bg }};transition:background 1.2s" style-hover="background:#F7F6F2">
+                <div style="width:40px;height:40px;border-radius:12px;background:{{ r.tileBg }};color:{{ r.tileFg }};display:grid;place-items:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1">{{ r.icon }}</span></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</div>
+                  <div style="font-size:12.5px;color:#8C8D84;display:flex;gap:5px;align-items:center;white-space:nowrap;overflow:hidden"><span style="width:7px;height:7px;border-radius:4px;background:{{ r.dot }};flex:none"></span>{{ r.sub }}<sc-if value="{{ r.pending }}"><span style="font-family:'Material Symbols Rounded';font-size:14px;line-height:1;color:#B7791F">cloud_upload</span></sc-if></div>
+                </div>
+                <div style="text-align:right">
+                  <div style="font-size:15px;font-weight:500;font-variant-numeric:tabular-nums;color:{{ r.amtColor }};white-space:nowrap">{{ r.amt }}</div>
+                  <sc-if value="{{ r.hasConv }}"><div style="font-size:11px;color:#A6A79E;white-space:nowrap">{{ r.conv }}</div></sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ noResults }}"><div style="text-align:center;padding:48px 20px;color:#8C8D84;font-size:15px">{{ t.noResults }}</div></sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isAccounts }}">
+    <div style="padding:6px 20px 0;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:28px;font-weight:600;letter-spacing:-0.6px">{{ t.accounts }}</div>
+        <div onClick="{{ openModes }}" style="display:flex;align-items:center;gap:6px;padding:6px 10px 6px 12px;border-radius:99px;background:#FFFFFF;box-shadow:0 0 0 1px #E6E3DA;font-size:13px;cursor:pointer">{{ modeName }}<span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1;color:#8C8D84">unfold_more</span></div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:16px;background:#ECE9E1;font-size:13px;color:#5F6159;line-height:1.5">
+        <span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1.2;color:#5F6159">shield_person</span><span style="text-wrap:pretty">{{ t.manualNote }}</span>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#8C8D84">{{ t.tracked }}</div>
+        <div style="font-size:32px;font-weight:500;letter-spacing:-1px;font-variant-numeric:tabular-nums">{{ totalBal }}</div>
+        <div style="font-size:12.5px;color:#8C8D84">{{ totalBreak }}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ acctList }}" as="a" hint-placeholder-count="4">
+          <div onClick="{{ a.open }}" style="display:flex;align-items:center;gap:14px;padding:14px;border-radius:22px;background:#FFFFFF;cursor:pointer" style-active="transform:scale(.99)">
+            <div style="width:46px;height:46px;border-radius:15px;background:{{ a.color }};color:#FFFFFF;display:grid;place-items:center;flex:none;font-size:12px;font-weight:600">
+              <sc-if value="{{ a.hasIcon }}"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">{{ a.icon }}</span></sc-if>
+              <sc-if value="{{ a.noIcon }}">{{ a.mark }}</sc-if>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:15.5px;font-weight:500;display:flex;align-items:center;gap:6px">{{ a.name }}<sc-if value="{{ a.preferred }}"><span style="font-size:10.5px;font-weight:500;color:#2E6B5B;background:#E3EDE8;padding:1px 6px;border-radius:6px">{{ t.preferred }}</span></sc-if></div>
+              <div style="font-size:12.5px;color:#8C8D84">{{ a.kindLabel }} · {{ a.curLabel }}</div>
+              <div style="font-size:12px;color:#8C8D84;margin-top:3px;font-variant-numeric:tabular-nums"><span style="color:#2E6B5B">↓ {{ a.in30 }}</span>  ·  ↑ {{ a.out30 }}</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap">{{ a.bal }}</div>
+              <div style="font-size:11px;color:#A6A79E">{{ t.manual }}</div>
+            </div>
+          </div>
+        </sc-for>
+        <div onClick="{{ newAcct }}" style="display:flex;align-items:center;justify-content:center;gap:8px;height:56px;border-radius:20px;border:1.5px dashed #CFCBC0;color:#3B3C36;cursor:pointer;font-size:15px"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">add</span>{{ t.addAcct }}</div>
+      </div>
+      <div onClick="{{ openTransfer }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:20px;background:#FFFFFF;cursor:pointer">
+        <div style="width:40px;height:40px;border-radius:12px;background:#E4E8F1;color:#4A5E86;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1">swap_horiz</span></div>
+        <div style="flex:1"><div style="font-size:15px;font-weight:500">{{ t.transfer }}</div><div style="font-size:12.5px;color:#8C8D84">{{ t.transferSub }}</div></div>
+        <span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;color:#B5B6AD">chevron_right</span>
+      </div>
+      <div onClick="{{ openImport }}" style="display:flex;align-items:center;gap:12px;padding:14px;border-radius:20px;background:#FFFFFF;cursor:pointer">
+        <div style="width:40px;height:40px;border-radius:12px;background:#F0EEE7;color:#5F6159;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1">upload_file</span></div>
+        <div style="flex:1"><div style="font-size:15px;font-weight:500;display:flex;align-items:center;gap:6px">{{ t.importT }}<span style="font-size:10.5px;color:#8A5A12;background:#F6EAD3;padding:1px 6px;border-radius:6px">{{ t.soon }}</span></div><div style="font-size:12.5px;color:#8C8D84">{{ t.importSub }}</div></div>
+        <span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;color:#B5B6AD">chevron_right</span>
+      </div>
+      <sc-if value="{{ hasArchived }}">
+        <div onClick="{{ toggleArchived }}" style="font-size:13.5px;color:#5F6159;display:flex;align-items:center;gap:4px;cursor:pointer;padding:0 4px">{{ archivedLabel }}<span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1">{{ archivedIcon }}</span></div>
+        <sc-if value="{{ showArchived }}">
+          <sc-for list="{{ archList }}" as="a" hint-placeholder-count="1">
+            <div onClick="{{ a.open }}" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:#ECE9E1;cursor:pointer;opacity:.8">
+              <div style="width:34px;height:34px;border-radius:11px;background:{{ a.color }};opacity:.6"></div>
+              <div style="flex:1;font-size:14.5px">{{ a.name }}</div>
+              <div style="font-size:14px;color:#6E6F66;font-variant-numeric:tabular-nums">{{ a.bal }}</div>
+            </div>
+          </sc-for>
+        </sc-if>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isInsights }}">
+    <div style="padding:6px 20px 0;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:28px;font-weight:600;letter-spacing:-0.6px">{{ t.tabInsights }}</div>
+        <div onClick="{{ openModes }}" style="display:flex;align-items:center;gap:6px;padding:6px 10px 6px 12px;border-radius:99px;background:#FFFFFF;box-shadow:0 0 0 1px #E6E3DA;font-size:13px;cursor:pointer">{{ modeName }}<span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1;color:#8C8D84">unfold_more</span></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:10px">
+        <div style="display:flex;padding:3px;border-radius:12px;background:#E9E6DE;flex:1">
+          <sc-for list="{{ periods }}" as="p" hint-placeholder-count="2">
+            <div onClick="{{ p.go }}" style="flex:1;text-align:center;padding:7px 0;border-radius:9px;font-size:13.5px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};box-shadow:{{ p.shadow }}">{{ p.label }}</div>
+          </sc-for>
+        </div>
+        <div style="display:flex;padding:3px;border-radius:12px;background:#E9E6DE">
+          <sc-for list="{{ curs }}" as="p" hint-placeholder-count="3">
+            <div onClick="{{ p.go }}" style="min-width:40px;padding:7px 8px;text-align:center;border-radius:9px;font-size:13.5px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};box-shadow:{{ p.shadow }}">{{ p.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:24px;font-weight:500;letter-spacing:-0.5px;line-height:1.3;text-wrap:pretty">{{ insHead }}</div>
+        <sc-if value="{{ hasInsSub }}"><div style="font-size:14px;color:{{ insSubColor }};margin-top:6px;display:flex;align-items:center;gap:4px"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1">{{ insSubIcon }}</span>{{ insSub }}</div></sc-if>
+        <div style="font-size:12px;color:#8C8D84;margin-top:6px">{{ insCurNote }}</div>
+      </div>
+
+      <div style="background:#191A17;color:#EDEBE5;border-radius:24px;padding:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:13px;color:#B5BDB0;display:flex;align-items:center;gap:6px"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1">auto_awesome</span>{{ t.askT }}</div>
+          <div style="font-size:10.5px;font-family:ui-monospace,monospace;color:#C9A35B;letter-spacing:.5px">{{ t.demoTag }}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ asks }}" as="ak" hint-placeholder-count="5">
+            <div onClick="{{ ak.go }}" style="padding:7px 11px;border-radius:12px;font-size:13px;cursor:pointer;background:{{ ak.bg }};color:{{ ak.fg }}">{{ ak.label }}</div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ hasAnswer }}">
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid #2C2E29;animation:krise .3s">
+            <div style="font-size:18px;line-height:1.45;text-wrap:pretty">{{ answer }}</div>
+            <div style="font-size:12px;color:#8D9689;margin-top:6px">{{ answerFoot }}</div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ insCards }}" as="ic" hint-placeholder-count="3">
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:20px;background:#FFFFFF">
+            <div style="width:36px;height:36px;border-radius:11px;background:{{ ic.bg }};color:{{ ic.fg }};display:grid;place-items:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1">{{ ic.icon }}</span></div>
+            <div style="flex:1;font-size:14.5px;line-height:1.5;text-wrap:pretty;padding-top:2px">{{ ic.text }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:24px;padding:18px 16px 14px">
+        <div style="font-size:13px;color:#8C8D84;margin-bottom:14px">{{ chartTitle }}</div>
+        <div style="display:flex;align-items:flex-end;gap:8px;height:140px">
+          <sc-for list="{{ bars }}" as="b" hint-placeholder-count="7">
+            <div style="flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px">
+              <div style="font-size:10.5px;color:#5F6159;font-variant-numeric:tabular-nums;white-space:nowrap">{{ b.val }}</div>
+              <div style="width:100%;max-width:30px;height:{{ b.h }}%;min-height:4px;border-radius:8px;background:{{ b.color }};transition:height .5s cubic-bezier(.2,.8,.2,1)"></div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <sc-for list="{{ bars }}" as="b" hint-placeholder-count="7"><div style="flex:1;text-align:center;font-size:11px;color:{{ b.lblColor }}">{{ b.label }}</div></sc-for>
+        </div>
+      </div>
+
+      <sc-if value="{{ hasCats }}">
+      <div style="background:#FFFFFF;border-radius:24px;padding:18px 16px 10px">
+        <div style="font-size:13px;color:#8C8D84;margin-bottom:6px">{{ t.byCat }}</div>
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0">
+            <div style="width:36px;height:36px;border-radius:11px;background:#F0EEE7;display:grid;place-items:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;color:#5F6159">{{ c.icon }}</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span>{{ c.label }}</span><span style="font-variant-numeric:tabular-nums;font-weight:500">{{ c.amt }}</span></div>
+              <div style="height:5px;border-radius:3px;background:#F0EEE7"><div style="height:100%;width:{{ c.w }}%;background:#2E6B5B;border-radius:3px;opacity:{{ c.op }}"></div></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ hasByAcct }}">
+      <div style="background:#FFFFFF;border-radius:24px;padding:18px 16px 10px">
+        <div style="font-size:13px;color:#8C8D84;margin-bottom:6px">{{ t.byAcct }}</div>
+        <sc-for list="{{ byAcct }}" as="c" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0">
+            <div style="width:36px;height:36px;border-radius:11px;background:{{ c.color }};color:#FFFFFF;display:grid;place-items:center;flex:none;font-size:11px;font-weight:600">{{ c.mark }}</div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span>{{ c.label }}</span><span style="font-variant-numeric:tabular-nums;font-weight:500">{{ c.amt }}</span></div>
+              <div style="height:5px;border-radius:3px;background:#F0EEE7"><div style="height:100%;width:{{ c.w }}%;background:{{ c.color }};border-radius:3px"></div></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <div style="background:#FFFFFF;border-radius:24px;padding:18px 16px;display:flex;flex-direction:column;gap:14px">
+        <div style="font-size:13px;color:#8C8D84">{{ ioTitle }}</div>
+        <sc-for list="{{ ioRows }}" as="io" hint-placeholder-count="2">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;font-size:14px"><span>{{ io.label }}</span><span style="font-weight:500;font-variant-numeric:tabular-nums">{{ io.amt }}</span></div>
+            <div style="height:8px;border-radius:4px;background:#F0EEE7;overflow:hidden"><div style="height:100%;width:{{ io.w }}%;background:{{ io.color }};border-radius:4px;transition:width .5s"></div></div>
+          </div>
+        </sc-for>
+        <div style="display:flex;justify-content:space-between;font-size:14.5px;padding-top:10px;border-top:1px solid #F0EEE7"><span>{{ ioNetLabel }}</span><span style="font-weight:600;color:{{ ioNetColor }};font-variant-numeric:tabular-nums">{{ ioNet }}</span></div>
+        <div style="font-size:12px;color:#8C8D84;text-wrap:pretty">{{ ioFoot }}</div>
+      </div>
+
+      <sc-for list="{{ goals }}" as="gl" hint-placeholder-count="2">
+        <div style="background:#FFFFFF;border-radius:24px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:500"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;color:#5F6159">{{ gl.icon }}</span>{{ gl.title }}</div>
+            <div style="font-size:10.5px;font-family:ui-monospace,monospace;color:#A6A79E">{{ t.demoTag }}</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:#5F6159;margin:10px 0 6px;font-variant-numeric:tabular-nums"><span>{{ gl.left }}</span><span>{{ gl.right }}</span></div>
+          <div style="height:8px;border-radius:4px;background:#F0EEE7;overflow:hidden"><div style="height:100%;width:{{ gl.w }}%;background:{{ gl.color }};border-radius:4px"></div></div>
+          <div style="font-size:12.5px;color:#8C8D84;margin-top:8px">{{ gl.foot }}</div>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isSettings }}">
+    <div style="padding:6px 20px 0;display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div onClick="{{ goHome }}" style="width:36px;height:36px;border-radius:18px;display:grid;place-items:center;cursor:pointer;margin-left:-8px"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">arrow_back</span></div>
+        <div style="font-size:28px;font-weight:600;letter-spacing:-0.6px">{{ t.tabSettings }}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:22px;background:#FFFFFF">
+        <div style="width:52px;height:52px;border-radius:26px;background:#E3EDE8;color:#2E6B5B;display:grid;place-items:center;font-size:20px;font-weight:600">ស</div>
+        <div style="flex:1"><div style="font-size:16px;font-weight:500">{{ t.userName }}</div><div style="font-size:13px;color:#8C8D84">+855 12 345 678</div></div>
+      </div>
+      <div style="background:#FFFFFF;border-radius:22px;padding:4px 16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F0EEE7">
+          <div style="font-size:15px">{{ t.language }}</div>
+          <div style="display:flex;padding:3px;border-radius:10px;background:#F0EEE7">
+            <div onClick="{{ setLangKm }}" style="padding:5px 12px;border-radius:8px;font-size:13.5px;cursor:pointer;background:{{ segKm.bg }};box-shadow:{{ segKm.shadow }}">ខ្មែរ</div>
+            <div onClick="{{ setLangEn }}" style="padding:5px 12px;border-radius:8px;font-size:13.5px;cursor:pointer;background:{{ segEn.bg }};box-shadow:{{ segEn.shadow }}">English</div>
+          </div>
+        </div>
+        <div style="padding:12px 0;border-bottom:1px solid #F0EEE7">
+          <div style="font-size:15px">{{ t.rate }}</div>
+          <div style="font-size:12.5px;color:#8C8D84;margin-bottom:8px">{{ t.rateSub }}</div>
+          <div style="display:flex;gap:6px">
+            <sc-for list="{{ rates }}" as="rt" hint-placeholder-count="3">
+              <div onClick="{{ rt.go }}" style="padding:6px 11px;border-radius:10px;font-size:13px;cursor:pointer;background:{{ rt.bg }};color:{{ rt.fg }};font-variant-numeric:tabular-nums">{{ rt.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <sc-for list="{{ toggles }}" as="tg" hint-placeholder-count="3">
+          <div onClick="{{ tg.go }}" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F0EEE7;cursor:pointer">
+            <div style="flex:1"><div style="font-size:15px">{{ tg.label }}</div><div style="font-size:12.5px;color:#8C8D84">{{ tg.sub }}</div></div>
+            <div style="width:46px;height:28px;border-radius:14px;background:{{ tg.bg }};padding:3px;transition:background .2s;flex:none"><div style="width:22px;height:22px;border-radius:11px;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.2);transform:translateX({{ tg.x }}px);transition:transform .2s cubic-bezier(.2,.8,.2,1)"></div></div>
+          </div>
+        </sc-for>
+        <div onClick="{{ openModes }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;cursor:pointer">
+          <div style="font-size:15px">{{ t.modeT }}</div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:14px;color:#8C8D84">{{ modeName }}<span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1">chevron_right</span></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;padding:14px 16px;border-radius:18px;background:#ECE9E1;font-size:13px;color:#5F6159;line-height:1.5">
+        <span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1.2">lock</span><span style="text-wrap:pretty">{{ t.privacy }}</span>
+      </div>
+      <div style="background:#FFFFFF;border-radius:22px;padding:4px 16px">
+        <sc-for list="{{ actions }}" as="a" hint-placeholder-count="3">
+          <div onClick="{{ a.go }}" style="display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #F0EEE7;cursor:pointer">
+            <span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1;color:#5F6159">{{ a.icon }}</span>
+            <div style="flex:1;font-size:15px">{{ a.label }}</div>
+            <span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1;color:#B5B6AD">chevron_right</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="text-align:center;font-size:12px;color:#A6A79E">កត់ · v2.0 prototype</div>
+    </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ showDock }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:20;background:rgba(244,242,236,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid #E6E3DA;display:flex;align-items:flex-start;justify-content:space-around;padding:8px 8px 28px">
+    <sc-for list="{{ tabsL }}" as="tb" hint-placeholder-count="2">
+      <div onClick="{{ tb.go }}" style="display:flex;flex-direction:column;align-items:center;gap:2px;width:64px;padding:4px 0;cursor:pointer;color:{{ tb.color }}">
+        <span style="font-family:'Material Symbols Rounded';font-size:23px;line-height:1;font-variation-settings:'FILL' {{ tb.fill }}">{{ tb.icon }}</span>
+        <span style="font-size:10.5px;font-weight:500;white-space:nowrap">{{ tb.label }}</span>
+      </div>
+    </sc-for>
+    <div onClick="{{ micGo }}" style="width:64px;height:64px;margin-top:-26px;border-radius:32px;background:#191A17;color:#F4F2EC;display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 24px -8px rgba(25,26,23,.55),0 0 0 5px #F4F2EC;flex:none" style-active="transform:scale(.94)">
+      <span style="font-family:'Material Symbols Rounded';font-size:30px;line-height:1;font-variation-settings:'FILL' 1">mic</span>
+    </div>
+    <sc-for list="{{ tabsR }}" as="tb" hint-placeholder-count="2">
+      <div onClick="{{ tb.go }}" style="display:flex;flex-direction:column;align-items:center;gap:2px;width:64px;padding:4px 0;cursor:pointer;color:{{ tb.color }}">
+        <span style="font-family:'Material Symbols Rounded';font-size:23px;line-height:1;font-variation-settings:'FILL' {{ tb.fill }}">{{ tb.icon }}</span>
+        <span style="font-size:10.5px;font-weight:500;white-space:nowrap">{{ tb.label }}</span>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ toastOpen }}">
+  <div style="position:absolute;left:16px;right:16px;bottom:110px;z-index:85;display:flex;justify-content:center;pointer-events:none">
+    <div style="pointer-events:auto;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 16px;border-radius:16px;background:#191A17;color:#F4F2EC;font-size:14px;box-shadow:0 12px 30px -10px rgba(0,0,0,.4);animation:krise .3s cubic-bezier(.2,.8,.2,1);max-width:100%">
+      <span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;color:#9CCBB8">{{ toastIcon }}</span>
+      <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ toastMsg }}</span>
+      <sc-if value="{{ toastHasUndo }}"><div onClick="{{ toastUndo }}" style="padding:6px 12px;border-radius:10px;background:#2C2E29;color:#CFE3D8;font-weight:500;cursor:pointer;flex:none">{{ t.undo }}</div></sc-if>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ modeOpen }}">
+  <div onClick="{{ closeModes }}" style="position:absolute;inset:0;z-index:60;background:rgba(25,26,23,.35);animation:kfade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:61;background:#F4F2EC;border-radius:30px 30px 0 0;padding:10px 16px 34px;animation:kup .32s cubic-bezier(.2,.8,.2,1)">
+    <div style="width:38px;height:5px;border-radius:3px;background:#D6D3CA;margin:0 auto 14px"></div>
+    <div style="font-size:20px;font-weight:600;padding:0 4px">{{ t.modeT }}</div>
+    <div style="font-size:13px;color:#8C8D84;padding:2px 4px 14px">{{ t.modeSep }}</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{ modeCards }}" as="w" hint-placeholder-count="2">
+        <div onClick="{{ w.go }}" style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:22px;background:#FFFFFF;cursor:pointer;box-shadow:0 0 0 {{ w.ringW }}px #2E6B5B">
+          <div style="width:46px;height:46px;border-radius:15px;background:{{ w.tile }};color:#FFFFFF;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">{{ w.icon }}</span></div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:16px;font-weight:500">{{ w.name }}</div>
+            <div style="font-size:12.5px;color:#8C8D84">{{ w.sub }}</div>
+            <div style="font-size:13.5px;margin-top:4px;font-variant-numeric:tabular-nums">{{ w.stat }}</div>
+          </div>
+          <sc-if value="{{ w.active }}"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1;color:#2E6B5B;font-variation-settings:'FILL' 1">check_circle</span></sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ textOpen }}">
+  <div onClick="{{ closeText }}" style="position:absolute;inset:0;z-index:60;background:rgba(25,26,23,.35);animation:kfade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:61;background:#F4F2EC;border-radius:30px 30px 0 0;padding:10px 16px 30px;animation:kup .32s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:14px">
+    <div style="width:38px;height:5px;border-radius:3px;background:#D6D3CA;margin:0 auto"></div>
+    <div style="display:flex;align-items:center;gap:10px;height:60px;padding:0 8px 0 18px;border-radius:20px;background:#FFFFFF;box-shadow:0 0 0 1.5px #2E6B5B">
+      <input ref="{{ textRef }}" value="{{ text }}" onChange="{{ onText }}" onKeyDown="{{ onTextKey }}" placeholder="{{ t.textPh }}" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font:inherit;font-size:18px;color:#191A17"></input>
+      <div onClick="{{ textSave }}" style="width:44px;height:44px;border-radius:14px;background:{{ textBtnBg }};color:#FFFFFF;display:grid;place-items:center;cursor:pointer;transition:background .2s"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">arrow_upward</span></div>
+    </div>
+    <sc-if value="{{ hasTextItems }}">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ textItems }}" as="it" hint-placeholder-count="1">
+          <div style="background:#FFFFFF;border-radius:18px;padding:12px 14px;animation:kfade .2s">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:38px;height:38px;border-radius:12px;background:{{ it.tileBg }};color:{{ it.tileFg }};display:grid;place-items:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">{{ it.icon }}</span></div>
+              <div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.title }}</div><div style="font-size:12.5px;color:#8C8D84;display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:4px;background:{{ it.dot }}"></span>{{ it.sub }}</div></div>
+              <div style="font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;color:{{ it.amtColor }}">{{ it.amt }}</div>
+            </div>
+            <sc-if value="{{ it.flag }}">
+              <div style="display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid #F0EEE7;flex-wrap:wrap">
+                <span style="font-size:13px;color:#8A5A12">{{ it.flagText }}</span>
+                <sc-for list="{{ it.options }}" as="o" hint-placeholder-count="2">
+                  <div onClick="{{ o.go }}" style="padding:6px 12px;border-radius:10px;background:#F6EAD3;color:#6B450C;font-size:13.5px;font-weight:500;cursor:pointer">{{ o.label }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{ showTextAccts }}">
+          <div style="display:flex;gap:6px;overflow-x:auto;margin:0 -16px;padding:0 16px">
+            <sc-for list="{{ textAccts }}" as="f" hint-placeholder-count="4">
+              <div onClick="{{ f.go }}" style="flex:none;display:flex;align-items:center;gap:6px;padding:6px 12px 6px 8px;border-radius:10px;font-size:13px;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};box-shadow:0 0 0 1px {{ f.ring }}"><span style="width:14px;height:14px;border-radius:5px;background:{{ f.dot }}"></span>{{ f.label }}</div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+    <sc-if value="{{ textNeedAmt }}"><div style="font-size:13px;color:#8C8D84;padding:0 6px">{{ t.needAmt }}</div></sc-if>
+    <div>
+      <div style="font-size:12.5px;color:#8C8D84;padding:0 4px 8px">{{ t.tryThese }}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ textSuggestions }}" as="sg" hint-placeholder-count="5">
+          <div onClick="{{ sg.go }}" style="padding:8px 13px;border-radius:12px;background:#FFFFFF;box-shadow:0 0 0 1px #E6E3DA;font-size:14px;cursor:pointer">{{ sg.label }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ voiceOpen }}">
+  <div style="position:absolute;inset:0;z-index:50;background:#131511;color:#EDEBE5;display:flex;flex-direction:column;padding:56px 20px 36px;animation:kfade .25s">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div onClick="{{ closeVoice }}" style="width:42px;height:42px;border-radius:21px;background:#22251F;display:grid;place-items:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">close</span></div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#8D9689;font-family:ui-monospace,monospace"><span style="width:6px;height:6px;border-radius:3px;background:#C9A35B"></span>{{ t.sim }}</div>
+      <div style="font-size:13px;color:#8D9689;padding:0 4px">{{ modeName }}</div>
+    </div>
+    <div style="display:flex;gap:6px;overflow-x:auto;margin:14px -20px 0;padding:0 20px">
+      <sc-for list="{{ scenarios }}" as="sc" hint-placeholder-count="6">
+        <div onClick="{{ sc.go }}" style="flex:none;padding:6px 11px;border-radius:99px;font-size:12.5px;cursor:pointer;background:{{ sc.bg }};color:{{ sc.fg }}">{{ sc.label }}</div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ vCapture }}">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:0 4px">
+        <div style="font-size:14px;color:#9CCBB8">{{ vStatus }}</div>
+        <sc-if value="{{ hasWords }}"><div style="font-size:28px;line-height:1.45;letter-spacing:-0.2px;color:{{ vWordsColor }};transition:color .4s;text-wrap:pretty">{{ vWords }}</div></sc-if>
+        <sc-if value="{{ noWords }}">
+          <div style="font-size:28px;line-height:1.4">{{ t.sayIt }}</div>
+          <div style="font-size:15px;color:#6F786C">{{ t.sayEx }}</div>
+        </sc-if>
+      </div>
+      <div style="display:flex;justify-content:center;height:80px;align-items:center">{{ wave }}</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:28px;margin-top:22px">
+        <div onClick="{{ typeInstead }}" style="width:48px;height:48px;border-radius:24px;background:#22251F;display:grid;place-items:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">keyboard</span></div>
+        <div onClick="{{ stopVoice }}" style="position:relative;width:78px;height:78px;border-radius:39px;background:#EDEBE5;display:grid;place-items:center;cursor:pointer">
+          {{ ring }}
+          <div style="width:24px;height:24px;border-radius:7px;background:#C2483B"></div>
+        </div>
+        <div onClick="{{ closeVoice }}" style="width:48px;height:48px;border-radius:24px;background:#22251F;display:grid;place-items:center;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">delete</span></div>
+      </div>
+      <div style="font-size:13px;color:#8D9689;text-align:center;margin-top:10px">{{ vHint }}</div>
+    </sc-if>
+
+    <sc-if value="{{ vResult }}">
+      <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding-top:22px;min-height:0;animation:krise .35s cubic-bezier(.2,.8,.2,1)">
+        <div style="font-size:15px;color:#7F887C;line-height:1.5">«{{ vWords }}»</div>
+        <div style="font-size:24px;font-weight:500;letter-spacing:-0.4px">{{ vFound }}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;overflow-y:auto">
+          <sc-for list="{{ vItems }}" as="it" hint-placeholder-count="2">
+            <div style="background:#1E211C;border-radius:22px;padding:14px;box-shadow:inset 0 0 0 1px {{ it.ring }}">
+              <sc-if value="{{ it.isXfer }}">
+                <div onClick="{{ it.edit }}" style="display:flex;align-items:center;gap:10px;cursor:pointer">
+                  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:16px;background:#262A23"><div style="width:34px;height:34px;border-radius:11px;background:{{ it.fromColor }};display:grid;place-items:center;font-size:10.5px;font-weight:600">{{ it.fromMark }}</div><div style="font-size:13.5px">{{ it.fromName }}</div><div style="font-size:12px;color:#E2A58F;font-variant-numeric:tabular-nums">−{{ it.amt }}</div></div>
+                  <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1;color:#9FB0D6">arrow_forward</span>
+                  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:16px;background:#262A23"><div style="width:34px;height:34px;border-radius:11px;background:{{ it.toColor }};display:grid;place-items:center;font-size:10.5px;font-weight:600">{{ it.toMark }}</div><div style="font-size:13.5px">{{ it.toName }}</div><div style="font-size:12px;color:#9CCBB8;font-variant-numeric:tabular-nums">+{{ it.toAmt }}</div></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:#9FB0D6;margin-top:10px"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1">swap_horiz</span>{{ t.xferNote }}</div>
+              </sc-if>
+              <sc-if value="{{ it.notXfer }}">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div onClick="{{ it.edit }}" style="width:44px;height:44px;border-radius:14px;background:{{ it.tileBg }};color:{{ it.tileFg }};display:grid;place-items:center;flex:none;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">{{ it.icon }}</span></div>
+                  <div onClick="{{ it.edit }}" style="flex:1;min-width:0;cursor:pointer">
+                    <div style="font-size:16px;font-weight:500">{{ it.title }}</div>
+                    <div style="font-size:12.5px;color:#8D9689">{{ it.sub }}</div>
+                  </div>
+                  <div onClick="{{ it.edit }}" style="font-size:22px;font-weight:500;letter-spacing:-0.4px;font-variant-numeric:tabular-nums;color:{{ it.amtColor }};cursor:pointer;border-bottom:1.5px dashed #3A3F36;padding-bottom:1px">{{ it.amt }}</div>
+                </div>
+                <div onClick="{{ it.edit }}" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:5px 10px 5px 6px;border-radius:10px;background:#262A23;font-size:12.5px;cursor:pointer"><span style="width:14px;height:14px;border-radius:5px;background:{{ it.acctColor }}"></span>{{ it.acctLabel }}<span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1;color:#7F887C">expand_more</span></div>
+              </sc-if>
+              <sc-if value="{{ it.flag }}">
+                <div style="margin-top:12px;padding-top:12px;border-top:1px solid #2C3029">
+                  <div style="font-size:13.5px;color:#E2BE7A;display:flex;align-items:center;gap:6px;margin-bottom:10px"><span style="font-family:'Material Symbols Rounded';font-size:17px;line-height:1">help</span>{{ it.flagText }}</div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <sc-for list="{{ it.options }}" as="o" hint-placeholder-count="2">
+                      <div onClick="{{ o.go }}" style="padding:9px 14px;border-radius:12px;background:#2B2F27;color:#EDEBE5;font-size:15px;font-weight:500;cursor:pointer;font-variant-numeric:tabular-nums" style-hover="background:#363B31">{{ o.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <div style="font-size:12.5px;color:#6F786C;display:flex;align-items:center;gap:6px;padding:0 4px"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1">touch_app</span>{{ t.tapToFix }}</div>
+      </div>
+      <sc-if value="{{ vAuto }}">
+        <div style="height:3px;border-radius:2px;background:#2B2F27;overflow:hidden;margin-bottom:12px"><div style="height:100%;width:{{ vAutoW }}%;background:#9CCBB8;transition:width 2.6s linear"></div></div>
+      </sc-if>
+      <div style="display:flex;gap:10px">
+        <div onClick="{{ retryVoice }}" style="width:58px;height:58px;border-radius:20px;background:#22251F;display:grid;place-items:center;cursor:pointer;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:24px;line-height:1">mic</span></div>
+        <div onClick="{{ commitVoice }}" style="flex:1;height:58px;border-radius:20px;background:{{ vSaveBg }};color:{{ vSaveFg }};display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:500;cursor:pointer;transition:background .2s"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">check</span>{{ vSaveLabel }}</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ vProblem }}">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;padding:0 4px;animation:krise .35s">
+        <div style="width:60px;height:60px;border-radius:20px;background:#2A2620;color:#E2BE7A;display:grid;place-items:center"><span style="font-family:'Material Symbols Rounded';font-size:30px;line-height:1">{{ vProbIcon }}</span></div>
+        <div style="font-size:28px;font-weight:500;letter-spacing:-0.4px">{{ vProbTitle }}</div>
+        <div style="font-size:15.5px;color:#9AA396;max-width:300px;text-wrap:pretty">{{ vProbSub }}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div onClick="{{ vProbPrimary }}" style="height:58px;border-radius:20px;background:#EDEBE5;color:#131511;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:500;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">mic</span>{{ vProbPrimaryLabel }}</div>
+        <div onClick="{{ typeInstead }}" style="height:54px;border-radius:20px;background:#22251F;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:20px;line-height:1">keyboard</span>{{ t.typeInstead }}</div>
+      </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ editOpen }}">
+  <div onClick="{{ closeEdit }}" style="position:absolute;inset:0;z-index:70;background:rgba(15,16,14,.45);animation:kfade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:71;max-height:92%;overflow-y:auto;background:#F4F2EC;border-radius:30px 30px 0 0;padding:10px 18px 30px;animation:kup .32s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:14px">
+    <div style="width:38px;height:5px;border-radius:3px;background:#D6D3CA;margin:0 auto"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:15px;font-weight:600">{{ edTitle }}</div>
+      <div style="font-size:12.5px;color:#8C8D84">{{ edMeta }}</div>
+    </div>
+    <div style="display:flex;padding:3px;border-radius:12px;background:#E9E6DE">
+      <sc-for list="{{ edTypes }}" as="p" hint-placeholder-count="3">
+        <div onClick="{{ p.go }}" style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-size:14px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};box-shadow:{{ p.shadow }}">{{ p.label }}</div>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:baseline;justify-content:center;gap:6px;padding:4px 0">
+      <sc-if value="{{ edUsd }}"><span style="font-size:40px;color:#8C8D84">$</span></sc-if>
+      <input value="{{ ed.amount }}" onChange="{{ onEdAmount }}" inputMode="decimal" placeholder="0" style="width:{{ edAmtW }}ch;max-width:260px;border:none;outline:none;background:transparent;font:inherit;font-size:48px;font-weight:500;letter-spacing:-1.5px;text-align:center;color:#191A17;font-variant-numeric:tabular-nums"></input>
+      <sc-if value="{{ edKhr }}"><span style="font-size:34px;color:#8C8D84">៛</span></sc-if>
+    </div>
+    <div style="display:flex;padding:3px;border-radius:12px;background:#E9E6DE;align-self:center;width:220px">
+      <sc-for list="{{ edCurs }}" as="p" hint-placeholder-count="2">
+        <div onClick="{{ p.go }}" style="flex:1;text-align:center;padding:7px 0;border-radius:9px;font-size:13.5px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};box-shadow:{{ p.shadow }}">{{ p.label }}</div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ edIsXfer }}">
+      <div>
+        <div style="font-size:12.5px;color:#8C8D84;padding:0 2px 8px">{{ t.fromAcct }}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ edFrom }}" as="f" hint-placeholder-count="4">
+            <div onClick="{{ f.go }}" style="display:flex;align-items:center;gap:6px;padding:8px 12px 8px 8px;border-radius:12px;font-size:13.5px;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};box-shadow:0 0 0 1px {{ f.ring }}"><span style="width:16px;height:16px;border-radius:5px;background:{{ f.dot }}"></span>{{ f.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12.5px;color:#8C8D84;padding:0 2px 8px">{{ t.toAcct }}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ edTo }}" as="f" hint-placeholder-count="4">
+            <div onClick="{{ f.go }}" style="display:flex;align-items:center;gap:6px;padding:8px 12px 8px 8px;border-radius:12px;font-size:13.5px;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};box-shadow:0 0 0 1px {{ f.ring }}"><span style="width:16px;height:16px;border-radius:5px;background:{{ f.dot }}"></span>{{ f.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:16px;background:#E4E8F1;color:#33415F;font-size:13.5px">
+        <sc-for list="{{ edImpact }}" as="im" hint-placeholder-count="2">
+          <div style="display:flex;justify-content:space-between;font-variant-numeric:tabular-nums"><span>{{ im.label }}</span><span style="font-weight:500">{{ im.val }}</span></div>
+        </sc-for>
+        <div style="font-size:12.5px;color:#4A5E86;display:flex;align-items:center;gap:5px"><span style="font-family:'Material Symbols Rounded';font-size:15px;line-height:1">check</span>{{ t.xferNote }}</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ edNotXfer }}">
+      <div>
+        <div style="font-size:12.5px;color:#8C8D84;padding:0 2px 8px">{{ t.account }}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ edAccts }}" as="f" hint-placeholder-count="4">
+            <div onClick="{{ f.go }}" style="display:flex;align-items:center;gap:6px;padding:8px 12px 8px 8px;border-radius:12px;font-size:13.5px;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};box-shadow:0 0 0 1px {{ f.ring }}"><span style="width:16px;height:16px;border-radius:5px;background:{{ f.dot }}"></span>{{ f.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12.5px;color:#8C8D84;padding:0 2px 8px">{{ t.category }}</div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+          <sc-for list="{{ edCats }}" as="c" hint-placeholder-count="8">
+            <div onClick="{{ c.go }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 2px;border-radius:14px;cursor:pointer;background:{{ c.bg }};color:{{ c.fg }}">
+              <span style="font-family:'Material Symbols Rounded';font-size:21px;line-height:1">{{ c.icon }}</span>
+              <span style="font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%">{{ c.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="display:flex;align-items:center;gap:10px;height:50px;padding:0 14px;border-radius:14px;background:#FFFFFF">
+      <span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;color:#8C8D84">edit_note</span>
+      <input value="{{ ed.note }}" onChange="{{ onEdNote }}" placeholder="{{ t.noteOpt }}" style="flex:1;border:none;outline:none;background:transparent;font:inherit;font-size:15px;color:#191A17"></input>
+    </div>
+    <sc-if value="{{ hasEdDays }}">
+      <div style="display:flex;gap:8px">
+        <sc-for list="{{ edDays }}" as="d" hint-placeholder-count="3">
+          <div onClick="{{ d.go }}" style="padding:7px 13px;border-radius:99px;font-size:13.5px;cursor:pointer;background:{{ d.bg }};color:{{ d.fg }};box-shadow:0 0 0 1px {{ d.ring }}">{{ d.label }}</div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ edErr }}"><div style="font-size:13px;color:#B4483C">{{ edErrText }}</div></sc-if>
+    <div style="display:flex;gap:10px;margin-top:2px">
+      <sc-if value="{{ edCanDelete }}">
+        <div onClick="{{ edDelete }}" style="width:56px;height:56px;border-radius:18px;background:#FFFFFF;color:#B4483C;display:grid;place-items:center;cursor:pointer;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">delete</span></div>
+      </sc-if>
+      <div onClick="{{ edSave }}" style="flex:1;height:56px;border-radius:18px;background:{{ edSaveBg }};color:#F4F2EC;display:grid;place-items:center;font-size:16px;font-weight:500;cursor:pointer">{{ edSaveLabel }}</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ acctViewOpen }}">
+  <div onClick="{{ closeAcctView }}" style="position:absolute;inset:0;z-index:60;background:rgba(25,26,23,.35);animation:kfade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:61;max-height:90%;overflow-y:auto;background:#F4F2EC;border-radius:30px 30px 0 0;padding:10px 16px 30px;animation:kup .32s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:14px">
+    <div style="width:38px;height:5px;border-radius:3px;background:#D6D3CA;margin:0 auto"></div>
+    <div style="border-radius:24px;background:{{ av.color }};color:#FFFFFF;padding:18px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:34px;height:34px;border-radius:11px;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:11px;font-weight:600">
+          <sc-if value="{{ av.hasIcon }}"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1">{{ av.icon }}</span></sc-if>
+          <sc-if value="{{ av.noIcon }}">{{ av.mark }}</sc-if>
+        </div>
+        <div style="flex:1"><div style="font-size:16px;font-weight:500">{{ av.name }}</div><div style="font-size:12px;opacity:.75">{{ av.kindLabel }} · {{ av.curLabel }}</div></div>
+      </div>
+      <div style="font-size:36px;font-weight:500;letter-spacing:-1.2px;margin-top:18px;font-variant-numeric:tabular-nums">{{ av.bal }}</div>
+      <div style="font-size:12px;opacity:.75">{{ av.balNote }}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+      <sc-for list="{{ av.stats }}" as="st" hint-placeholder-count="3">
+        <div style="background:#FFFFFF;border-radius:16px;padding:10px 12px;min-width:0"><div style="font-size:11.5px;color:#8C8D84">{{ st.label }}</div><div style="font-size:14px;font-weight:500;color:{{ st.color }};font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ st.val }}</div></div>
+      </sc-for>
+    </div>
+    <div style="background:#FFFFFF;border-radius:22px;padding:8px 12px">
+      <sc-for list="{{ av.rows }}" as="r" hint-placeholder-count="4">
+        <div onClick="{{ r.open }}" style="display:flex;align-items:center;gap:12px;padding:8px 4px;cursor:pointer">
+          <div style="width:36px;height:36px;border-radius:11px;background:{{ r.tileBg }};color:{{ r.tileFg }};display:grid;place-items:center;flex:none"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1">{{ r.icon }}</span></div>
+          <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.title }}</div><div style="font-size:12px;color:#8C8D84">{{ r.when }}</div></div>
+          <div style="font-size:14.5px;font-weight:500;color:{{ r.amtColor }};font-variant-numeric:tabular-nums;white-space:nowrap">{{ r.amt }}</div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ av.noRows }}"><div style="padding:18px;text-align:center;font-size:14px;color:#8C8D84">{{ t.noAcctTx }}</div></sc-if>
+    </div>
+    <div style="display:flex;gap:8px">
+      <div onClick="{{ av.edit }}" style="flex:1;height:50px;border-radius:16px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14.5px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1">edit</span>{{ t.edit }}</div>
+      <div onClick="{{ av.xfer }}" style="flex:1;height:50px;border-radius:16px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14.5px;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1">swap_horiz</span>{{ t.transfer }}</div>
+      <div onClick="{{ av.archive }}" style="flex:1;height:50px;border-radius:16px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14.5px;cursor:pointer;color:#8A5A12"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1">inventory_2</span>{{ av.archiveLabel }}</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ acctFormOpen }}">
+  <div onClick="{{ closeAcctForm }}" style="position:absolute;inset:0;z-index:72;background:rgba(25,26,23,.35);animation:kfade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:73;max-height:92%;overflow-y:auto;background:#F4F2EC;border-radius:30px 30px 0 0;padding:10px 18px 30px;animation:kup .32s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:16px">
+    <div style="width:38px;height:5px;border-radius:3px;background:#D6D3CA;margin:0 auto"></div>
+    <div style="font-size:18px;font-weight:600">{{ afTitle }}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+      <sc-for list="{{ afKinds }}" as="k" hint-placeholder-count="6">
+        <div onClick="{{ k.go }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:16px;cursor:pointer;background:{{ k.bg }};color:{{ k.fg }};text-align:center">
+          <span style="font-family:'Material Symbols Rounded';font-size:22px;line-height:1">{{ k.icon }}</span>
+          <span style="font-size:12px;line-height:1.25">{{ k.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;height:52px;padding:0 14px;border-radius:14px;background:#FFFFFF">
+      <span style="font-size:13px;color:#8C8D84;width:70px">{{ t.name }}</span>
+      <input value="{{ af.name }}" onChange="{{ onAfName }}" placeholder="{{ t.namePh }}" style="flex:1;border:none;outline:none;background:transparent;font:inherit;font-size:15px;color:#191A17"></input>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;padding:3px;border-radius:12px;background:#E9E6DE;width:170px;flex:none">
+        <sc-for list="{{ afCurs }}" as="p" hint-placeholder-count="2">
+          <div onClick="{{ p.go }}" style="flex:1;text-align:center;padding:8px 0;border-radius:9px;font-size:13.5px;cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};box-shadow:{{ p.shadow }}">{{ p.label }}</div>
+        </sc-for>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;gap:6px;height:46px;padding:0 12px;border-radius:14px;background:#FFFFFF">
+        <span style="font-size:12px;color:#8C8D84;white-space:nowrap">{{ t.startBal }}</span>
+        <input value="{{ af.opening }}" onChange="{{ onAfOpening }}" inputMode="decimal" placeholder="0" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font:inherit;font-size:15px;text-align:right;color:#191A17;font-variant-numeric:tabular-nums"></input>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span style="font-size:13px;color:#8C8D84;width:70px">{{ t.color }}</span>
+      <sc-for list="{{ afColors }}" as="c" hint-placeholder-count="6">
+        <div onClick="{{ c.go }}" style="width:30px;height:30px;border-radius:10px;background:{{ c.color }};cursor:pointer;box-shadow:0 0 0 {{ c.ring }}px #F4F2EC,0 0 0 {{ c.ring2 }}px #191A17"></div>
+      </sc-for>
+    </div>
+    <div style="font-size:12.5px;color:#8C8D84;display:flex;gap:6px;line-height:1.5"><span style="font-family:'Material Symbols Rounded';font-size:16px;line-height:1.3">info</span><span style="text-wrap:pretty">{{ t.afNote }}</span></div>
+    <div onClick="{{ afSave }}" style="height:56px;border-radius:18px;background:#191A17;color:#F4F2EC;display:grid;place-items:center;font-size:16px;font-weight:500;cursor:pointer">{{ t.save }}</div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ importOpen }}">
+  <div onClick="{{ closeImport }}" style="position:absolute;inset:0;z-index:60;background:rgba(25,26,23,.35);animation:kfade .2s"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:61;max-height:90%;overflow-y:auto;background:#F4F2EC;border-radius:30px 30px 0 0;padding:10px 18px 30px;animation:kup .32s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;gap:14px">
+    <div style="width:38px;height:5px;border-radius:3px;background:#D6D3CA;margin:0 auto"></div>
+    <div style="display:flex;align-items:center;gap:8px"><div style="font-size:20px;font-weight:600">{{ t.importT }}</div><span style="font-size:11px;color:#8A5A12;background:#F6EAD3;padding:2px 8px;border-radius:6px">{{ t.soon }}</span></div>
+    <div style="font-size:14px;color:#5F6159;text-wrap:pretty">{{ t.importLead }}</div>
+    <div style="background:#FFFFFF;border-radius:22px;padding:8px 16px">
+      <sc-for list="{{ importSteps }}" as="st" hint-placeholder-count="7">
+        <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0">
+          <div style="width:26px;height:26px;border-radius:13px;background:#F0EEE7;color:#5F6159;display:grid;place-items:center;font-size:12.5px;font-weight:600;flex:none">{{ st.n }}</div>
+          <div style="flex:1;font-size:14.5px;padding-top:2px">{{ st.label }}</div>
+          <span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1;color:#A6A79E;padding-top:3px">{{ st.icon }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:10px;padding:12px 14px;border-radius:16px;background:#E3EDE8;color:#1F4F42;font-size:13px;line-height:1.5"><span style="font-family:'Material Symbols Rounded';font-size:18px;line-height:1.2">lock</span><span style="text-wrap:pretty">{{ t.noPassword }}</span></div>
+    <div onClick="{{ notifyMe }}" style="height:54px;border-radius:18px;background:#191A17;color:#F4F2EC;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15.5px;font-weight:500;cursor:pointer"><span style="font-family:'Material Symbols Rounded';font-size:19px;line-height:1">notifications</span>{{ t.notify }}</div>
+  </div>
+  </sc-if>
+
+  <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:{{ homeBar }};z-index:96;pointer-events:none"></div>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;onboarding&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;'home'|'onboarding'&quot;},&quot;language&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;km&quot;,&quot;en&quot;],&quot;default&quot;:&quot;km&quot;,&quot;tsType&quot;:&quot;'km'|'en'&quot;},&quot;khmerNumerals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const TODAY = new Date(2026, 10, 7);
+const KMD = '០១២៣៤៥៦៧៨៩';
+const KM_M = ['មករា','កុម្ភៈ','មីនា','មេសា','ឧសភា','មិថុនា','កក្កដា','សីហា','កញ្ញា','តុលា','វិច្ឆិកា','ធ្នូ'];
+const EN_M = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const KM_W = ['អាទិត្យ','ច័ន្ទ','អង្គារ','ពុធ','ព្រហស្បតិ៍','សុក្រ','សៅរ៍'];
+const EN_W = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const ACC='#2E6B5B', INK='#191A17', XF='#4A5E86', XFBG='#E4E8F1';
+const COLORS=['#33506E','#8A6A3A','#5E7A3A','#4A4B45','#7A4E5E','#2E6B5B'];
+const MIX=['#2E6B5B','#6E9C8C','#B9CFC6','#D9D5CA'];
+const CATS = {
+  food:{icon:'restaurant',km:'អាហារ',en:'Food'}, coffee:{icon:'local_cafe',km:'កាហ្វេ និងភេសជ្ជៈ',en:'Coffee & drinks'},
+  transport:{icon:'two_wheeler',km:'ធ្វើដំណើរ',en:'Transport'}, fuel:{icon:'local_gas_station',km:'សាំង',en:'Fuel'},
+  groceries:{icon:'shopping_basket',km:'ផ្សារ',en:'Groceries'}, shopping:{icon:'shopping_bag',km:'ទិញឥវ៉ាន់',en:'Shopping'},
+  bills:{icon:'bolt',km:'វិក្កយបត្រ',en:'Bills'}, phone:{icon:'smartphone',km:'ទូរស័ព្ទ',en:'Phone'},
+  rent:{icon:'home',km:'ថ្លៃជួល',en:'Rent'}, stock:{icon:'inventory_2',km:'ស្តុកទំនិញ',en:'Stock'},
+  delivery:{icon:'local_shipping',km:'ដឹកជញ្ជូន',en:'Delivery'}, wages:{icon:'badge',km:'ប្រាក់ឈ្នួល',en:'Wages'},
+  salary:{icon:'payments',km:'ប្រាក់ខែ',en:'Salary'}, sales:{icon:'storefront',km:'លក់',en:'Sales'},
+  other:{icon:'more_horiz',km:'ផ្សេងៗ',en:'Other'}, transfer:{icon:'swap_horiz',km:'ផ្ទេរ',en:'Transfer'}
+};
+const KINDS = {
+  aba:{km:'ធនាគារ ABA',en:'ABA Bank',mark:'ABA',name:'ABA',color:'#33506E'},
+  acleda:{km:'ធនាគារ ACLEDA',en:'ACLEDA Bank',mark:'AC',name:'ACLEDA',color:'#8A6A3A'},
+  wing:{km:'Wing',en:'Wing',mark:'W',name:'Wing',color:'#5E7A3A'},
+  cash:{km:'សាច់ប្រាក់',en:'Cash wallet',icon:'payments',name:'Cash',color:'#4A4B45'},
+  other:{km:'ធនាគារផ្សេង',en:'Other bank',icon:'account_balance',name:'Bank',color:'#7A4E5E'},
+  custom:{km:'កាបូបផ្ទាល់ខ្លួន',en:'Custom wallet',icon:'wallet',name:'Wallet',color:'#2E6B5B'}
+};
+const KW = [['salary',/salary|ប្រាក់ខែ/i],['sales',/sold|sale|sell|order|លក់|កុម្ម៉ង់/i],['coffee',/coffee|cafe|latte|tea|កាហ្វេ|តែ/i],['fuel',/gas|fuel|petrol|សាំង/i],['transport',/tuk|taxi|moto|bus|ride|តុកតុក|ម៉ូតូ/i],['groceries',/market|veg|grocer|ផ្សារ|បន្លែ/i],['phone',/top.?up|phone|data|កាតទូរស័ព្ទ/i],['bills',/electric|water|bill|internet|ភ្លើង|វិក្កយបត្រ/i],['rent',/rent|ជួល/i],['stock',/stock|ស្តុក/i],['delivery',/deliver|ship|ដឹក/i],['shopping',/shirt|clothes|shoe|bag|អាវ|ស្បែកជើង/i],['food',/lunch|dinner|breakfast|rice|food|noodle|meal|bai|បាយ|ម្ហូប|នំ|គុយទាវ|អាហារ/i]];
+const AKW = [['aba',/\baba\b/i],['acleda',/acleda|អេស៊ីលីដា/i],['wing',/\bwing\b|វីង/i],['cash',/\bcash\b|សាច់ប្រាក់|លុយសុទ្ធ/i]];
+
+const T = {
+  km: {
+    tagline:'ចាយ។\nនិយាយ។\nរួចរាល់។', obSub:'ធនាគារ និងសាច់ប្រាក់ទាំងអស់ នៅកន្លែងតែមួយ — គ្រាន់តែនិយាយជាភាសាខ្មែរ។', chooseLang:'ជ្រើសភាសា', cont:'បន្ត', obFood:'បាយ',
+    obMicT:'គ្រាន់តែនិយាយ', obMicS:'ប្រាប់ចំនួន អ្វីដែលបានទិញ និងគណនីដែលបានប្រើ។ យើងកត់ត្រាជូន។', allowMic:'អនុញ្ញាតមីក្រូហ្វូន', notNow:'ពេលក្រោយ — ខ្ញុំនឹងវាយបញ្ចូល',
+    greet:'សួស្តី, សុខា', userName:'សុខា ចាន់', personal:'ផ្ទាល់ខ្លួន', business:'អាជីវកម្ម',
+    tracked:'សមតុល្យសរុប · គ្រប់គណនី', accounts:'គណនី', seeAll:'មើលទាំងអស់', add:'បន្ថែម', recent:'ថ្មីៗ · គ្រប់គណនី', repeat:'ចុចម្ដង កត់ម្ដងទៀត',
+    qVoice:'និយាយ', qAdd:'បន្ថែម', qXfer:'ផ្ទេរ', qAccts:'គណនី',
+    tabHome:'ទំព័រដើម', tabTx:'ប្រតិបត្តិការ', tabAccts:'គណនី', tabInsights:'សង្ខេប', tabSettings:'ការកំណត់',
+    listening:'កំពុងស្ដាប់…', processing:'កំពុងស្វែងយល់…', sayIt:'និយាយពីអ្វីដែលអ្នកបានចាយ', sayEx:'ឧ. «ចំណាយ ៥ ដុល្លារ ទិញបាយ តាម ABA»', tapStop:'ចុចពេលនិយាយចប់', wait:'សូមរង់ចាំបន្តិច',
+    autoSaving:'កំពុងរក្សាទុក…', saveAll:'បញ្ជាក់ និងរក្សាទុក', resolve:'សូមជ្រើសខាងលើ', tapToFix:'ចុចលើតម្លៃណាមួយដើម្បីកែ',
+    whichCur:'រៀល ឬដុល្លារ?', whichAcct:'បង់តាមគណនីណា?', whichTo:'ផ្ទេរទៅគណនីណា?', xferNote:'ការផ្ទេរ — មិនរាប់ជាចំណាយ ឬចំណូលទេ',
+    failed:'ស្ដាប់មិនបានច្បាស់', failedSub:'សូមនិយាយម្ដងទៀតឲ្យជិតទូរស័ព្ទ ឬវាយបញ្ចូលវិញ។', tryAgain:'ព្យាយាមម្ដងទៀត', typeInstead:'វាយបញ្ចូលវិញ',
+    denied:'មីក្រូហ្វូនត្រូវបានបិទ', deniedSub:'បើកមីក្រូហ្វូន ដើម្បីកត់ត្រាដោយសំឡេង។ អ្នកនៅតែអាចវាយបញ្ចូលបាន។',
+    undo:'ត្រឡប់', deleted:'បានលុប', updated:'បានកែប្រែ', undone:'បានត្រឡប់វិញ', synced:'បានបញ្ជូនទាំងអស់',
+    search:'ស្វែងរកឈ្មោះ ហាង ឬចំនួន', all:'ទាំងអស់', allAccts:'គ្រប់គណនី', allCats:'គ្រប់ប្រភេទ', expense:'ចំណាយ', income:'ចំណូល', transfer:'ផ្ទេរប្រាក់', today:'ថ្ងៃនេះ', yesterday:'ម្សិលមិញ', noResults:'រកមិនឃើញទេ',
+    week:'៧ ថ្ងៃ', month:'៣០ ថ្ងៃ', byCat:'តាមប្រភេទ', byAcct:'ចំណាយតាមគណនី', inLbl:'ចូល', outLbl:'ចេញ', netLbl:'សល់',
+    askT:'សួរអំពីលុយរបស់អ្នក', demoTag:'DEMO', preferred:'គណនីដើម', manual:'កត់ដោយដៃ',
+    manualNote:'សមតុល្យទាំងនេះ គណនាពីអ្វីដែលអ្នកបានកត់ត្រា។ កត់ មិនភ្ជាប់ទៅធនាគាររបស់អ្នកទេ។',
+    transferSub:'ផ្លាស់ប្ដូរលុយរវាងគណនីរបស់អ្នក', importT:'នាំចូលរបាយការណ៍ធនាគារ', importSub:'ពីឯកសាររបាយការណ៍ដែលគាំទ្រ', soon:'ឆាប់ៗនេះ',
+    importLead:'នៅពេលក្រោយ អ្នកនឹងអាចផ្ទុកឯកសាររបាយការណ៍ ហើយយើងជួយរៀបចំប្រតិបត្តិការជូន។',
+    noPassword:'យើងនឹងមិនសុំលេខសម្ងាត់ធនាគាររបស់អ្នកឡើយ។ គ្មានការភ្ជាប់ផ្ទាល់ទៅធនាគារទេ។', notify:'ជូនដំណឹងខ្ញុំ', notified:'យើងនឹងជូនដំណឹង',
+    language:'ភាសា', rate:'អត្រាប្ដូរប្រាក់', rateSub:'ប្រើសម្រាប់តែសរុបប៉ាន់ស្មាន (≈)។ ចំនួនដើមមិនផ្លាស់ប្ដូរ។', modeT:'របៀប', modeSep:'គណនី និងប្រតិបត្តិការ រក្សាទុកដាច់ពីគ្នា',
+    personalSub:'ចំណាយប្រចាំថ្ងៃ ថវិកា និងសន្សំ', bizSub:'ការលក់ ចំណាយហាង និងលំហូរសាច់ប្រាក់',
+    kmDigits:'លេខខ្មែរ', kmDigitsSub:'បង្ហាញ ១២៣ ជំនួស 123', mic:'មីក្រូហ្វូន', micOn:'អនុញ្ញាត', micOff:'បិទ', offlineSim:'គ្មានអ៊ីនធឺណិត (សាកល្បង)', offlineSub:'កត់ត្រាទុកក្នុងទូរស័ព្ទ ហើយបញ្ជូនពេលក្រោយ',
+    privacy:'កត់ មិនមែនជាធនាគារ ហើយមិនដែលសុំលេខសម្ងាត់ធនាគារទេ។ ទិន្នន័យក្នុងគំរូនេះ ស្ថិតនៅលើឧបករណ៍នេះប៉ុណ្ណោះ។',
+    replay:'មើលការណែនាំម្ដងទៀត', emptyState:'ចាប់ផ្ដើមថ្មី (ទទេ)', restore:'ផ្ទុកទិន្នន័យគំរូ',
+    emptyT:'មិនទាន់មានកំណត់ត្រា', emptyS:'ចុចមីក្រូហ្វូន ហើយនិយាយ «បាយ ៨០០០ រៀល តាមសាច់ប្រាក់»។', loadSample:'មើលទិន្នន័យគំរូ',
+    textPh:'5k កាហ្វេ ABA, 2$ បាយ…', tryThese:'សាកល្បង', needAmt:'បន្ថែមចំនួនទឹកប្រាក់ ឧ. 5k ឬ 2$',
+    category:'ប្រភេទ', account:'គណនី', fromAcct:'ពីគណនី', toAcct:'ទៅគណនី', noteOpt:'កំណត់ចំណាំ (មិនចាំបាច់)', save:'រក្សាទុក', edit:'កែ', editTitle:'ព័ត៌មានលម្អិត', checkTitle:'ពិនិត្យ', newXfer:'ផ្ទេរប្រាក់',
+    sim:'សំឡេងសាកល្បង', offline:'គ្មានអ៊ីនធឺណិត', noAcctTx:'មិនទាន់មានប្រតិបត្តិការ', name:'ឈ្មោះ', namePh:'ឧ. ABA សន្សំ', startBal:'សមតុល្យដំបូង', color:'ពណ៌',
+    afNote:'បញ្ចូលសមតុល្យបច្ចុប្បន្នរបស់អ្នក។ ពេលក្រោយ យើងគណនាពីប្រតិបត្តិការដែលអ្នកកត់។', newAcct:'គណនីថ្មី', editAcct:'កែគណនី', archive:'ទុកចោល', unarchive:'យកមកវិញ', archived:'បានទុកចោល',
+    sameAcct:'សូមជ្រើសគណនីពីរផ្សេងគ្នា', needAmtShort:'សូមបញ្ចូលចំនួន'
+  },
+  en: {
+    tagline:'Spend.\nSay it.\nSaved.', obSub:'All your banks and cash in one place — just speak Khmer.', chooseLang:'Choose language', cont:'Continue', obFood:'Rice',
+    obMicT:'Just say it', obMicS:'Say the amount, what it was for, and which account you used. We write it down.', allowMic:'Allow microphone', notNow:'Not now — I’ll type',
+    greet:'Hello, Sokha', userName:'Sokha Chan', personal:'Personal', business:'Business',
+    tracked:'Total tracked · all accounts', accounts:'Accounts', seeAll:'See all', add:'Add', recent:'Recent · all accounts', repeat:'Tap to log again',
+    qVoice:'Speak', qAdd:'Add', qXfer:'Transfer', qAccts:'Accounts',
+    tabHome:'Home', tabTx:'Activity', tabAccts:'Accounts', tabInsights:'Insights', tabSettings:'Settings',
+    listening:'Listening…', processing:'Understanding…', sayIt:'Say what you spent', sayEx:'e.g. “5 dollars rice via ABA”', tapStop:'Tap when you’re done', wait:'One moment',
+    autoSaving:'Saving…', saveAll:'Confirm & save', resolve:'Choose above first', tapToFix:'Tap any value to fix it',
+    whichCur:'Riel or dollars?', whichAcct:'Which account paid?', whichTo:'Transfer to which account?', xferNote:'Transfer — not counted as spending or income',
+    failed:'Didn’t catch that', failedSub:'Try again a little closer to the phone, or type it instead.', tryAgain:'Try again', typeInstead:'Type instead',
+    denied:'Microphone is off', deniedSub:'Turn on the microphone to record by voice. You can still type anytime.',
+    undo:'Undo', deleted:'Deleted', updated:'Updated', undone:'Undone', synced:'All synced',
+    search:'Search merchant, note or amount', all:'All', allAccts:'All accounts', allCats:'All categories', expense:'Expense', income:'Income', transfer:'Transfer', today:'Today', yesterday:'Yesterday', noResults:'Nothing found',
+    week:'7 days', month:'30 days', byCat:'By category', byAcct:'Spending by account', inLbl:'In', outLbl:'Out', netLbl:'Net',
+    askT:'Ask about your money', demoTag:'DEMO', preferred:'Default', manual:'Manual',
+    manualNote:'These balances are calculated from what you record. Kat is not connected to your bank.',
+    transferSub:'Move money between your own accounts', importT:'Import bank statements', importSub:'From supported statement files', soon:'Coming soon',
+    importLead:'Later, you’ll be able to upload a statement file and we’ll help organise the transactions.',
+    noPassword:'We will never ask for your banking password. There is no live bank connection.', notify:'Notify me', notified:'We’ll let you know',
+    language:'Language', rate:'Exchange rate', rateSub:'Only used for approximate (≈) totals. Original amounts never change.', modeT:'Mode', modeSep:'Accounts and records stay separate',
+    personalSub:'Daily spending, budgets and savings', bizSub:'Sales, shop costs and cash flow',
+    kmDigits:'Khmer numerals', kmDigitsSub:'Show ១២៣ instead of 123', mic:'Microphone', micOn:'Allowed', micOff:'Off', offlineSim:'Simulate offline', offlineSub:'Save on this phone, sync later',
+    privacy:'Kat is not a bank and never asks for banking passwords. In this prototype, data stays on this device.',
+    replay:'Replay onboarding', emptyState:'Start fresh (empty)', restore:'Load sample data',
+    emptyT:'Nothing recorded yet', emptyS:'Tap the mic and say “rice 8,000 riel cash”.', loadSample:'Explore with sample data',
+    textPh:'5k coffee ABA, 2$ lunch…', tryThese:'Try', needAmt:'Add an amount, like 5k or 2$',
+    category:'Category', account:'Account', fromAcct:'From', toAcct:'To', noteOpt:'Note (optional)', save:'Save', edit:'Edit', editTitle:'Details', checkTitle:'Check', newXfer:'Transfer money',
+    sim:'SIMULATED SPEECH', offline:'Offline', noAcctTx:'No transactions yet', name:'Name', namePh:'e.g. ABA Savings', startBal:'Current balance', color:'Color',
+    afNote:'Enter today’s balance. After that, we calculate it from the transactions you record.', newAcct:'New account', editAcct:'Edit account', archive:'Archive', unarchive:'Restore', archived:'Archived',
+    sameAcct:'Choose two different accounts', needAmtShort:'Enter an amount'
+  }
+};
+
+const SCEN = {
+  aba:{km:'តាម ABA',en:'Via ABA',words:'ចំណាយ ៥ ដុល្លារ ទិញបាយ តាម ABA'.split(' '),items:[{type:'expense',cat:'food',note:{km:'បាយ',en:'Rice'},amount:5,cur:'USD',acctKind:'aba'}]},
+  acleda:{km:'រៀល · ACLEDA',en:'Riel · ACLEDA',words:'ចាយ ២០០០០ រៀល ទិញកាហ្វេ តាម ACLEDA'.split(' '),items:[{type:'expense',cat:'coffee',note:{km:'កាហ្វេ',en:'Coffee'},amount:20000,cur:'KHR',acctKind:'acleda'}]},
+  transfer:{km:'ផ្ទេរ',en:'Transfer',words:'ផ្ទេរ ១០០ ដុល្លារ ពី ABA ទៅ ACLEDA'.split(' '),items:[{type:'transfer',cat:'transfer',note:{km:'ផ្ទេរ',en:'Transfer'},amount:100,cur:'USD',fromKind:'aba',toKind:'acleda'}]},
+  multi:{km:'ពីរមុខ',en:'Two items',words:'ថ្ងៃនេះខ្ញុំចាយ ១៥០០០ រៀល ទិញបាយ ហើយ ២ ដុល្លារ ទិញកាហ្វេ'.split(' '),items:[
+    {type:'expense',cat:'food',note:{km:'បាយ',en:'Rice'},amount:15000,cur:'KHR'},{type:'expense',cat:'coffee',note:{km:'កាហ្វេ',en:'Coffee'},amount:2,cur:'USD'}]},
+  noacct:{km:'គណនីមិនច្បាស់',en:'Unclear account',words:'ទិញអាវ ១២ ដុល្លារ តាមកាត'.split(' '),items:[{type:'expense',cat:'shopping',note:{km:'អាវ',en:'Shirt'},amount:12,cur:'USD',flag:'acct'}]},
+  nocur:{km:'គ្មានរូបិយប័ណ្ណ',en:'No currency',words:'ចាក់សាំង ២០ តាម Wing'.split(' '),items:[{type:'expense',cat:'fuel',note:{km:'ចាក់សាំង',en:'Fuel'},amount:20,cur:null,acctKind:'wing',flag:'cur',options:[{amount:20000,cur:'KHR'},{amount:20,cur:'USD'}]}]},
+  mixed:{km:'ខ្មែរ+English',en:'Khmer + English',words:'Sold 300k today ហើយ ចំណាយ delivery ៥ ពាន់'.split(' '),items:[
+    {type:'income',cat:'sales',note:{km:'លក់',en:'Sales'},amount:300000,cur:'KHR'},{type:'expense',cat:'delivery',note:{km:'ថ្លៃដឹក',en:'Delivery'},amount:5000,cur:'KHR'}]},
+  fail:{km:'ស្ដាប់មិនឮ',en:'Fails',words:[],items:[]}
+};
+
+function seedAccts(){
+  return [
+    {id:'p_aba',mode:'personal',kind:'aba',name:'ABA',cur:'USD',opening:900,color:'#33506E'},
+    {id:'p_acl',mode:'personal',kind:'acleda',name:'ACLEDA',cur:'USD',opening:400,color:'#8A6A3A'},
+    {id:'p_wing',mode:'personal',kind:'wing',name:'Wing',cur:'KHR',opening:250000,color:'#5E7A3A'},
+    {id:'p_cash',mode:'personal',kind:'cash',name:{km:'សាច់ប្រាក់',en:'Cash'},cur:'KHR',opening:600000,color:'#4A4B45',preferred:true},
+    {id:'b_cash',mode:'business',kind:'cash',name:{km:'ថតលុយហាង',en:'Cash drawer'},cur:'KHR',opening:500000,color:'#4A4B45',preferred:true},
+    {id:'b_aba',mode:'business',kind:'aba',name:'ABA Shop',cur:'USD',opening:1200,color:'#33506E'},
+    {id:'b_wing',mode:'business',kind:'wing',name:'Wing',cur:'KHR',opening:150000,color:'#5E7A3A'}
+  ];
+}
+function emptyAccts(){ return [
+  {id:'p_cash',mode:'personal',kind:'cash',name:{km:'សាច់ប្រាក់',en:'Cash'},cur:'KHR',opening:0,color:'#4A4B45',preferred:true},
+  {id:'b_cash',mode:'business',kind:'cash',name:{km:'ថតលុយហាង',en:'Cash drawer'},cur:'KHR',opening:0,color:'#4A4B45',preferred:true}]; }
+function seedTx(){
+  let id=1; const L=[]; const P='personal', B='business', E='expense', I='income';
+  const a=(mode,acct,day,time,type,cat,km,en,amount,cur)=>L.push({id:id++,mode,acct,day,time,type,cat,note:{km,en},amount,cur});
+  const x=(mode,from,to,day,time,km,en,amount,cur,toAmount,toCur)=>L.push({id:id++,mode,type:'transfer',cat:'transfer',from,to,day,time,note:{km,en},amount,cur,toAmount,toCur});
+  a(P,'p_cash',0,'07:15',E,'food','បាយសាច់ជ្រូក','Pork & rice',6000,'KHR');
+  a(P,'p_aba',0,'08:40',E,'coffee','កាហ្វេទឹកដោះគោទឹកកក','Iced milk coffee',2.5,'USD');
+  a(P,'p_wing',0,'09:05',E,'transport','តុកតុកទៅការិយាល័យ','Tuk-tuk to office',8000,'KHR');
+  a(P,'p_cash',0,'12:20',E,'food','គុយទាវ','Kuy teav',10000,'KHR');
+  a(P,'p_cash',1,'07:30',E,'food','នំបញ្ចុក','Num banh chok',5000,'KHR');
+  a(P,'p_cash',1,'12:10',E,'food','បាយជាមួយមិត្ត','Lunch with friends',18000,'KHR');
+  a(P,'p_acl',1,'17:45',E,'fuel','ចាក់សាំង','Fuel',20000,'KHR');
+  a(P,'p_cash',1,'18:30',E,'groceries','ផ្សារ — ត្រី និងបន្លែ','Market — fish & veg',32000,'KHR');
+  a(P,'p_aba',1,'20:10',E,'phone','កាតទូរស័ព្ទ','Phone top-up',5,'USD');
+  a(P,'p_cash',2,'08:00',E,'coffee','កាហ្វេ','Coffee',4000,'KHR');
+  a(P,'p_cash',2,'12:20',E,'food','បាយ','Rice',7000,'KHR');
+  a(P,'p_acl',2,'18:30',E,'shopping','ស្បែកជើង','Sandals',12,'USD');
+  a(P,'p_wing',3,'09:00',E,'bills','ថ្លៃភ្លើង','Electricity bill',85000,'KHR');
+  a(P,'p_cash',3,'12:00',E,'food','អាហារថ្ងៃត្រង់','Lunch',8000,'KHR');
+  x(P,'p_aba','p_acl',3,'20:00','ដាក់សន្សំ','Move to savings',100,'USD',100,'USD');
+  a(P,'p_aba',4,'17:00',I,'salary','ប្រាក់ខែ វិច្ឆិកា','November salary',650,'USD');
+  a(P,'p_aba',4,'12:15',E,'food','ឡុកឡាក់','Lok lak',6,'USD');
+  a(P,'p_wing',4,'08:30',E,'transport','ម៉ូតូឌុប','Moto taxi',6000,'KHR');
+  a(P,'p_cash',5,'08:10',E,'coffee','កាហ្វេ','Coffee',4500,'KHR');
+  a(P,'p_cash',5,'12:30',E,'food','បាយសាច់មាន់','Chicken rice',15000,'KHR');
+  a(P,'p_cash',5,'18:00',E,'groceries','ផ្សារ','Market',22000,'KHR');
+  x(P,'p_aba','p_cash',5,'17:30','ដកលុយ ATM','ATM withdrawal',50,'USD',205000,'KHR');
+  a(P,'p_aba',6,'09:00',E,'rent','ថ្លៃផ្ទះ','Room rent',120,'USD');
+  a(P,'p_cash',6,'12:00',E,'food','បាយ','Rice',9000,'KHR');
+  x(P,'p_aba','p_wing',6,'10:00','បញ្ចូលលុយ Wing','Wing top-up',25,'USD',102500,'KHR');
+  for (let d=7; d<60; d++){
+    a(P,'p_cash',d,'12:10',E,'food','បាយ','Rice',6000+((d*37)%8)*1000,'KHR');
+    if (d%2) a(P,'p_cash',d,'08:20',E,'coffee','កាហ្វេ','Coffee',4000,'KHR'); else a(P,'p_aba',d,'08:20',E,'coffee','កាហ្វេ','Iced latte',2.5,'USD');
+    if (d<30 ? d%2===0 : d%4===0) a(P,'p_wing',d,'09:00',E,'transport','តុកតុក','Tuk-tuk',8000,'KHR');
+    if (d%5===0) a(P,'p_cash',d,'18:00',E,'groceries','ផ្សារ','Market',25000+(d%4)*5000,'KHR');
+    if (d%7===0) a(P,'p_acl',d,'19:00',E,'groceries','ផ្សារទំនើប','Supermarket',18,'USD');
+    if (d===34) a(P,'p_aba',d,'17:00',I,'salary','ប្រាក់ខែ តុលា','October salary',650,'USD');
+    if (d===36) a(P,'p_aba',d,'09:00',E,'rent','ថ្លៃផ្ទះ','Room rent',120,'USD');
+    if (d===33) a(P,'p_wing',d,'09:00',E,'bills','ថ្លៃភ្លើង','Electricity bill',80000,'KHR');
+    if (d%10===5) x(P,'p_aba','p_cash',d,'17:30','ដកលុយ ATM','ATM withdrawal',50,'USD',205000,'KHR');
+    if (d===26||d===46) x(P,'p_aba','p_wing',d,'10:00','បញ្ចូលលុយ Wing','Wing top-up',25,'USD',102500,'KHR');
+  }
+  a(B,'b_cash',0,'08:00',I,'sales','លក់អាវយឺត ៣','Sold 3 T-shirts',90000,'KHR');
+  a(B,'b_aba',0,'10:30',I,'sales','ការកុម្ម៉ង់អនឡាញ','Online order',18,'USD');
+  a(B,'b_cash',0,'11:00',E,'delivery','ថ្លៃដឹកជញ្ជូន','Delivery fee',6000,'KHR');
+  a(B,'b_cash',1,'18:00',I,'sales','លក់ប្រចាំថ្ងៃ','Daily sales',320000,'KHR');
+  a(B,'b_cash',1,'07:00',E,'stock','ទិញស្តុកពីផ្សារអូរឫស្សី','Stock from Orussey Market',450000,'KHR');
+  a(B,'b_wing',1,'14:00',E,'delivery','ថ្លៃដឹក','Delivery',8000,'KHR');
+  a(B,'b_cash',2,'18:00',I,'sales','លក់ប្រចាំថ្ងៃ','Daily sales',210000,'KHR');
+  a(B,'b_aba',2,'15:20',I,'sales','ការកុម្ម៉ង់អនឡាញ','Online order',25,'USD');
+  a(B,'b_aba',2,'09:00',E,'bills','ថ្លៃអ៊ីនធឺណិតហាង','Shop internet',15,'USD');
+  a(B,'b_cash',3,'18:00',I,'sales','លក់ប្រចាំថ្ងៃ','Daily sales',180000,'KHR');
+  a(B,'b_aba',3,'08:00',E,'rent','ថ្លៃជួលតូប','Stall rent',150,'USD');
+  a(B,'b_cash',4,'18:00',I,'sales','លក់ប្រចាំថ្ងៃ','Daily sales',260000,'KHR');
+  a(B,'b_cash',4,'10:00',E,'stock','ថង់វេចខ្ចប់','Packaging bags',35000,'KHR');
+  x(B,'b_cash','b_aba',4,'19:00','ដាក់លុយចូល ABA','Deposit to ABA',410000,'KHR',100,'USD');
+  a(B,'b_cash',5,'18:00',I,'sales','លក់ប្រចាំថ្ងៃ','Daily sales',195000,'KHR');
+  a(B,'b_cash',6,'18:00',I,'sales','លក់ប្រចាំថ្ងៃ','Daily sales',240000,'KHR');
+  a(B,'b_cash',6,'17:00',E,'wages','ប្រាក់ឈ្នួលបុគ្គលិក','Staff wages',40,'USD');
+  for (let d=7; d<60; d++){
+    a(B,'b_cash',d,'18:00',I,'sales','លក់ប្រចាំថ្ងៃ','Daily sales',150000+((d*53)%10)*20000,'KHR');
+    if (d%6===0) a(B,'b_cash',d,'07:00',E,'stock','ទិញស្តុក','Restock',300000,'KHR');
+    if (d%3===0) a(B,'b_aba',d,'15:00',I,'sales','ការកុម្ម៉ង់អនឡាញ','Online order',12+(d%4)*5,'USD');
+    if (d%9===0) a(B,'b_wing',d,'13:00',I,'sales','ទទួលតាម Wing','Wing payment',40000,'KHR');
+    if (d%4===2) a(B,'b_wing',d,'14:00',E,'delivery','ថ្លៃដឹក','Delivery',7000,'KHR');
+    if (d===36) a(B,'b_aba',d,'08:00',E,'rent','ថ្លៃជួលតូប','Stall rent',150,'USD');
+    if (d%7===6) a(B,'b_cash',d,'17:00',E,'wages','ប្រាក់ឈ្នួលបុគ្គលិក','Staff wages',40,'USD');
+    if (d%3===1) x(B,'b_cash','b_aba',d,'19:00','ដាក់លុយចូល ABA','Deposit to ABA',410000,'KHR',100,'USD');
+  }
+  return L;
+}
+
+class Component extends DCLogic {
+  state = {
+    onb: this.props.startScreen==='onboarding', obStep:0, tab:'home', lang: this.props.language==='en'?'en':'km',
+    kmDigits: this.props.khmerNumerals ?? true, mode:'personal', accts:seedAccts(), txs:seedTx(), nid:9000,
+    voice:null, scenario:'aba', textOpen:false, text:'', textFix:{}, textAcct:null, modeOpen:false, edit:null, toast:null,
+    offline:false, micAllowed:true, rate:4100, totalCur:'USD', q:'', fType:'all', fAcct:'all', fCat:'all', period:'month', insCur:'ALL', ask:null,
+    fresh:[], scale:1, wide:true, acctView:null, acctForm:null, importOpen:false, showArchived:false
+  };
+  textRef = React.createRef();
+
+  componentDidMount(){ this.onResize=()=>this.setState({scale:Math.min(1,(window.innerHeight-32)/864), wide:window.innerWidth>=760}); this.onResize(); window.addEventListener('resize',this.onResize); }
+  componentWillUnmount(){ window.removeEventListener('resize',this.onResize); this.clearVoice(); clearTimeout(this.tT); clearTimeout(this.fT); }
+  componentDidUpdate(pp,ps){ if (this.state.textOpen && !ps.textOpen) setTimeout(()=>this.textRef.current && this.textRef.current.focus(), 80); }
+
+  t(){ return T[this.state.lang]; }
+  km(){ return this.state.lang==='km'; }
+  dig(s){ return (this.km() && this.state.kmDigits) ? String(s).replace(/[0-9]/g,d=>KMD[d]) : String(s); }
+  num(n,dec=0){ return this.dig(Number(n).toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})); }
+  money(a,cur,sign=''){ if (cur==='USD') return sign+this.dig('$'+Number(a).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})); if (cur==='KHR') return sign+this.num(Math.round(a))+' ៛'; return sign+this.num(a,a%1?2:0)+' ?'; }
+  conv(v,f,to){ if (f===to||!f) return v; return f==='KHR' ? v/this.state.rate : v*this.state.rate; }
+  usd(x){ return this.conv(x.amount,x.cur,'USD'); }
+  disp(usd,sign=''){ return this.state.totalCur==='USD' ? this.money(usd,'USD',sign) : this.money(Math.round(usd*this.state.rate/100)*100,'KHR',sign); }
+  approx(usd,sign=''){ return '≈ '+this.disp(usd,sign); }
+  noteOf(x){ return typeof x.note==='string' ? (x.note||CATS[x.cat][this.state.lang]) : (x.note ? x.note[this.state.lang] : CATS[x.cat][this.state.lang]); }
+  catL(c){ return CATS[c][this.state.lang]; }
+  acct(id){ return this.state.accts.find(a=>a.id===id); }
+  aName(a){ if (!a) return '—'; return typeof a.name==='string' ? a.name : a.name[this.state.lang]; }
+  aMark(a){ return KINDS[a.kind].mark || this.aName(a).slice(0,2).toUpperCase(); }
+  live(mode){ return this.state.accts.filter(a=>a.mode===(mode||this.state.mode) && !a.archived); }
+  pref(){ const L=this.live(); return (L.find(a=>a.preferred)||L[0]||{}).id; }
+  findKind(k){ return k ? (this.live().find(a=>a.kind===k)||{}).id : null; }
+  bal(a){
+    let b=a.opening;
+    for (const x of this.state.txs){
+      if (x.type==='transfer'){ if (x.from===a.id) b-=this.conv(x.amount,x.cur,a.cur); if (x.to===a.id) b+=this.conv(x.toAmount,x.toCur,a.cur); }
+      else if (x.acct===a.id){ const v=this.conv(x.amount,x.cur,a.cur); b+= x.type==='income'?v:-v; }
+    }
+    return b;
+  }
+  dateOf(day){ const d=new Date(TODAY); d.setDate(d.getDate()-day); return d; }
+  dateShort(day){ const d=this.dateOf(day); return this.km() ? `${KM_W[d.getDay()]} ${this.dig(d.getDate())} ${KM_M[d.getMonth()]}` : `${EN_W[d.getDay()].slice(0,3)} ${d.getDate()} ${EN_M[d.getMonth()].slice(0,3)}`; }
+  dayLabel(day){ const t=this.t(); return day===0?t.today:day===1?t.yesterday:this.dateShort(day); }
+  now(){ const d=new Date(); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+  toLatin(s){ return s.replace(/[០-៩]/g,c=>KMD.indexOf(c)); }
+
+  toast(msg,undo,icon='check_circle'){ clearTimeout(this.tT); this.setState({toast:{msg,undo,icon}}); this.tT=setTimeout(()=>this.setState({toast:null}),5000); }
+  flash(ids){ clearTimeout(this.fT); this.setState({fresh:ids}); this.fT=setTimeout(()=>this.setState({fresh:[]}),1800); }
+
+  mkTx(x, nid){
+    const s=this.state, base={id:nid, mode:s.mode, day:x.day||0, time:x.time||this.now(), note:x.note, amount:x.amount, cur:x.cur, pending:s.offline};
+    if (x.type==='transfer'){
+      const to=this.acct(x.to), toCur=to?to.cur:x.cur;
+      return {...base, type:'transfer', cat:'transfer', from:x.from, to:x.to, toAmount:this.conv(x.amount,x.cur,toCur), toCur};
+    }
+    return {...base, type:x.type, cat:x.cat, acct:x.acct||this.pref()};
+  }
+  addTxs(items){
+    const s=this.state; let nid=s.nid;
+    const made=items.map(x=>this.mkTx(x,++nid)), ids=made.map(m=>m.id);
+    this.setState({txs:[...made,...s.txs], nid}); this.flash(ids);
+    const t=this.t(), n=made.length, m0=made[0];
+    const msg = n>1 ? (this.km()?`បានរក្សាទុក ${this.dig(n)}`:`${n} saved`) : (m0.type==='transfer' ? `${this.aName(this.acct(m0.from))} → ${this.aName(this.acct(m0.to))} · ${this.money(m0.amount,m0.cur)}` : `${this.noteOf(m0)} · ${this.money(m0.amount,m0.cur)}`);
+    this.toast(msg, ()=>{ this.setState(st=>({txs:st.txs.filter(x=>!ids.includes(x.id))})); this.toast(t.undone,null,'undo'); }, s.offline?'cloud_upload':'check_circle');
+  }
+
+  clearVoice(){ clearInterval(this.vI); ['vT0','vT1','vT2','aT','aT0'].forEach(k=>clearTimeout(this[k])); }
+  startVoice(sc){
+    this.clearVoice();
+    const scenario=sc||this.state.scenario;
+    const base={scenario, textOpen:false, edit:null, modeOpen:false, acctView:null, acctForm:null, importOpen:false};
+    if (!this.state.micAllowed){ this.setState({...base, voice:{phase:'denied'}}); return; }
+    this.setState({...base, voice:{phase:'listening',words:[]}});
+    const words=SCEN[scenario].words; let i=0;
+    this.vT0=setTimeout(()=>{ this.vI=setInterval(()=>{
+      if (i<words.length){ const w=words[i++]; this.setState(s=>s.voice?{voice:{...s.voice,words:[...s.voice.words,w]}}:null); }
+      else { clearInterval(this.vI); this.vT1=setTimeout(()=>this.stopVoice(), words.length?700:2600); }
+    },320); },700);
+  }
+  stopVoice(){
+    const v=this.state.voice; if (!v||v.phase!=='listening') return;
+    this.clearVoice(); this.setState({voice:{...v,phase:'processing'}});
+    this.vT2=setTimeout(()=>{
+      const sc=SCEN[this.state.scenario];
+      if (!v.words.length||!sc.items.length){ this.setState({voice:{...v,phase:'failed'}}); return; }
+      const items=sc.items.map(x=>{
+        const it={...x, options:x.options&&x.options.map(o=>({...o}))};
+        if (x.type==='transfer'){ it.from=this.findKind(x.fromKind)||this.pref(); it.to=this.findKind(x.toKind); if (!it.to){ it.flag='to'; } }
+        else if (x.flag==='acct'){ it.acct=null; }
+        else if (x.acctKind){ it.acct=this.findKind(x.acctKind); if (!it.acct){ it.flag=it.flag||'acct'; } }
+        else { it.acct=this.pref(); it.usedPref=true; }
+        return it;
+      });
+      const auto=items.every(x=>!x.flag && x.type!=='transfer');
+      this.setState({voice:{phase:'result',words:sc.words,items,auto,autoGo:false}});
+      if (auto){ this.aT0=setTimeout(()=>this.setState(s=>s.voice?{voice:{...s.voice,autoGo:true}}:null),60); this.aT=setTimeout(()=>this.commitVoice(),2700); }
+    },1200);
+  }
+  pauseAuto(){ clearTimeout(this.aT); clearTimeout(this.aT0); this.setState(s=>s.voice?{voice:{...s.voice,auto:false}}:null); }
+  commitVoice(){ const v=this.state.voice; if (!v||!v.items||v.items.some(x=>x.flag)) return; this.clearVoice(); this.setState({voice:null}); this.addTxs(v.items); }
+  resolveItem(i,o){ this.setState(s=>({voice:{...s.voice, items:s.voice.items.map((x,j)=>j===i?{...x,...o,flag:null}:x)}})); }
+
+  parseText(raw){ return raw.split(/,|\s+and\s+|\s*ហើយ\s*|\s\+\s/i).map(p=>p.trim()).filter(Boolean).map(p=>this.parseOne(p)); }
+  parseOne(raw){
+    const s=this.toLatin(raw);
+    const kinds=AKW.map(([k,re])=>{ const m=s.match(re); return m?{k,i:m.index}:null; }).filter(Boolean).sort((a,b)=>a.i-b.i).map(o=>o.k);
+    const m=s.match(/(\$\s*)?(\d[\d,]*(?:\.\d+)?)\s*(k(?![a-z])|\$|usd|dollars?|riels?|៛|រៀល|ដុល្លារ|ពាន់)?/i);
+    const isX=/transfer|move|withdraw|ផ្ទេរ|ដក/i.test(s) && kinds.length>=2;
+    const income=!isX && /received|salary|sold|sale|income|earn|got paid|ទទួល|លក់|ប្រាក់ខែ|ចំណូល/i.test(s);
+    let cat=null; if (!isX) for (const [c,re] of KW){ if (re.test(s)){ cat=c; break; } }
+    if (!cat) cat = isX?'transfer':income?(this.state.mode==='business'?'sales':'salary'):'other';
+    const type=isX?'transfer':income?'income':'expense';
+    if (!m) return {missing:true,type,cat};
+    let amount=parseFloat(m[2].replace(/,/g,'')); const u=(m[3]||'').toLowerCase(); let cur=null;
+    if (m[1]||/^\$|usd|dollar|ដុល្លារ/.test(u)) cur='USD';
+    else if (u==='k'||u==='ពាន់'){ amount*=1000; cur='KHR'; }
+    else if (/riel|៛|រៀល/.test(u)) cur='KHR';
+    else if (amount>=1000) cur='KHR';
+    let note=s.replace(m[0],' ');
+    AKW.forEach(([k,re])=>{ note=note.replace(re,' '); });
+    note=note.replace(/\b(received|spent|paid|for|on|today|i|bought|buy|got|sold|my|from|to|via|with|transfer|move)\b/gi,' ').replace(/ថ្ងៃនេះ|ខ្ញុំ|ចាយ|ទិញ|បាន|តាម|ពី|ទៅ|ផ្ទេរ/g,' ').replace(/\s+/g,' ').trim();
+    note = note ? note.charAt(0).toUpperCase()+note.slice(1) : CATS[cat][this.state.lang];
+    const it={type,cat,amount,cur,note};
+    if (isX){ it.from=this.findKind(kinds[0]); it.to=this.findKind(kinds[1]); if (it.from && !cur) { cur=this.acct(it.from).cur; it.cur=cur; } }
+    else { it.acctKind=kinds[0]||null; }
+    if (!it.cur){ it.flag='cur'; it.options=[{amount:amount*1000,cur:'KHR'},{amount,cur:'USD'}]; }
+    return it;
+  }
+  textItemsResolved(){
+    return this.parseText(this.state.text).map((x,i)=>{
+      const f=this.state.textFix[i]; let y=f?{...x,...f,flag:null}:x;
+      if (y.type!=='transfer' && !y.missing){ y={...y, acct: this.state.textAcct || this.findKind(y.acctKind) || this.pref(), usedPref: !this.state.textAcct && !this.findKind(y.acctKind)}; }
+      if (y.type==='transfer' && (!y.from||!y.to||y.from===y.to)) y={...y, bad:true};
+      return y;
+    });
+  }
+  saveText(){
+    const items=this.textItemsResolved();
+    if (!items.length||items.some(x=>x.missing||x.flag||x.bad)) return;
+    this.setState({textOpen:false,text:'',textFix:{},textAcct:null}); this.addTxs(items);
+  }
+  openText(prefill=''){ this.clearVoice(); this.setState({textOpen:true,text:prefill,textFix:{},textAcct:null,voice:null,acctView:null}); }
+
+  openEdit(tx){ this.setState({acctView:null, edit:{src:'tx',id:tx.id,type:tx.type,cat:tx.cat,amount:String(tx.amount),cur:tx.cur,note:this.noteOf(tx),day:tx.day,time:tx.time,acct:tx.acct,from:tx.from,to:tx.to}}); }
+  openEditVoice(i){ this.pauseAuto(); const x=this.state.voice.items[i]; this.setState({edit:{src:'voice',idx:i,type:x.type,cat:x.cat,amount:String(x.amount),cur:x.cur||'KHR',note:this.noteOf(x),day:0,acct:x.acct||this.pref(),from:x.from,to:x.to}}); }
+  openTransfer(from){
+    const L=this.live(), f=from||(L.find(a=>!a.preferred)||L[0]||{}).id, to=(L.find(a=>a.id!==f)||{}).id;
+    this.clearVoice();
+    this.setState({voice:null, acctView:null, edit:{src:'new',type:'transfer',cat:'transfer',amount:'',cur:(this.acct(f)||{}).cur||'USD',note:'',day:0,from:f,to,acct:this.pref()}});
+  }
+  setEd(p){ this.setState(s=>({edit:{...s.edit,...p}})); }
+  edValid(e){
+    const amount=parseFloat(this.toLatin(e.amount||'').replace(/,/g,''));
+    if (!(amount>0)) return {ok:false, err:this.t().needAmtShort};
+    if (e.type==='transfer' && (!e.from||!e.to||e.from===e.to)) return {ok:false, err:this.t().sameAcct};
+    return {ok:true, amount};
+  }
+  saveEdit(){
+    const e=this.state.edit, v=this.edValid(e); if (!v.ok){ this.setEd({tried:true}); return; }
+    const amount=v.amount, cat=e.type==='transfer'?'transfer':(e.cat==='transfer'?'other':e.cat);
+    const patch={type:e.type,cat,amount,cur:e.cur,note:e.note,day:e.day,acct:e.acct,from:e.from,to:e.to};
+    if (e.src==='voice'){ this.setState(s=>({edit:null, voice:{...s.voice, items:s.voice.items.map((x,j)=>j===e.idx?{...x,...patch,flag:null,usedPref:false}:x)}})); return; }
+    if (e.src==='new'){ this.setState({edit:null}); this.addTxs([patch]); return; }
+    const old=this.state.txs.find(x=>x.id===e.id);
+    const toAcc=this.acct(e.to), toCur=toAcc?toAcc.cur:e.cur;
+    this.setState(s=>({edit:null, txs:s.txs.map(x=>x.id===e.id?{...x,...patch, ...(e.type==='transfer'?{toAmount:this.conv(amount,e.cur,toCur),toCur}:{})}:x)}));
+    this.flash([e.id]);
+    this.toast(this.t().updated, ()=>{ this.setState(s=>({txs:s.txs.map(x=>x.id===old.id?old:x)})); this.toast(this.t().undone,null,'undo'); });
+  }
+  deleteEdit(){
+    const e=this.state.edit, idx=this.state.txs.findIndex(x=>x.id===e.id), old=this.state.txs[idx];
+    this.setState(s=>({edit:null, txs:s.txs.filter(x=>x.id!==e.id)}));
+    this.toast(this.t().deleted, ()=>{ this.setState(s=>{ const a=[...s.txs]; a.splice(idx,0,old); return {txs:a}; }); this.flash([old.id]); this.toast(this.t().undone,null,'undo'); }, 'delete');
+  }
+  newAcct(){ this.setState({acctForm:{kind:'aba',name:'',cur:'USD',opening:'',color:KINDS.aba.color}}); }
+  editAcct(a){ this.setState({acctForm:{id:a.id,kind:a.kind,name:this.aName(a),cur:a.cur,opening:String(a.opening),color:a.color}}); }
+  saveAcct(){
+    const f=this.state.acctForm, opening=parseFloat(this.toLatin(f.opening||'0').replace(/,/g,''))||0;
+    const name=f.name.trim()||KINDS[f.kind].name;
+    if (f.id){ this.setState(s=>({acctForm:null, accts:s.accts.map(a=>a.id===f.id?{...a,kind:f.kind,name,cur:f.cur,opening,color:f.color}:a)})); this.toast(this.t().updated); return; }
+    const id='a'+Date.now();
+    this.setState(s=>({acctForm:null, accts:[...s.accts,{id,mode:s.mode,kind:f.kind,name,cur:f.cur,opening,color:f.color}]}));
+    this.toast(name+' · '+this.money(opening,f.cur),null,'account_balance_wallet');
+  }
+  toggleArchive(a){
+    const was=!!a.archived;
+    this.setState(s=>({acctView:null, accts:s.accts.map(x=>x.id===a.id?{...x,archived:!was,preferred:was?x.preferred:false}:x)}));
+    this.toast(was?this.aName(a):this.t().archived+' · '+this.aName(a), ()=>{ this.setState(s=>({accts:s.accts.map(x=>x.id===a.id?a:x)})); }, 'inventory_2');
+  }
+  setOffline(v){
+    this.setState({offline:v});
+    if (!v && this.state.txs.some(x=>x.pending)) setTimeout(()=>{ this.setState(s=>({txs:s.txs.map(x=>x.pending?{...x,pending:false}:x)})); this.toast(this.t().synced,null,'cloud_done'); },1200);
+  }
+  go(tab){ this.clearVoice(); this.setState({tab,onb:false,voice:null,textOpen:false,edit:null,modeOpen:false,acctView:null,acctForm:null,importOpen:false}); }
+  seg(label,on,go){ return {label,go,bg:on?'#FFFFFF':'transparent',fg:on?INK:'#6E6F66',shadow:on?'0 1px 3px rgba(30,28,20,.12)':'none'}; }
+  chip(label,on,go,dot){ return {label,go,dot:dot||'transparent',bg:on?INK:'#FFFFFF',fg:on?'#F4F2EC':'#3B3C36',ring:on?INK:'#E6E3DA'}; }
+
+  row(x){
+    const s=this.state, fresh=s.fresh.includes(x.id), bg=fresh?'#E3EDE8':'rgba(255,255,255,0)';
+    if (x.type==='transfer'){
+      const f=this.acct(x.from), to=this.acct(x.to), cross=x.cur!==x.toCur;
+      return {id:x.id, icon:'swap_horiz', title:`${this.aName(f)} → ${this.aName(to)}`, sub:`${this.dig(x.time)} · ${this.noteOf(x)}`, dot:XF,
+        amt:this.money(x.amount,x.cur), amtColor:XF, tileBg:XFBG, tileFg:XF, hasConv:cross, conv:cross?'→ '+this.money(x.toAmount,x.toCur):'', pending:!!x.pending, bg, open:()=>this.openEdit(x)};
+    }
+    const inc=x.type==='income', a=this.acct(x.acct), cross=a&&a.cur!==x.cur;
+    return {id:x.id, icon:CATS[x.cat].icon, title:this.noteOf(x), sub:`${this.dig(x.time)} · ${this.aName(a)} · ${this.catL(x.cat)}`, dot:a?a.color:'#CCC',
+      amt:this.money(x.amount,x.cur,inc?'+':'−'), amtColor:inc?ACC:INK, tileBg:inc?'#E3EDE8':'#F0EEE7', tileFg:inc?ACC:'#5F6159',
+      hasConv:false, conv:'', pending:!!x.pending, bg, open:()=>this.openEdit(x)};
+  }
+  acctCard(a){
+    const k=KINDS[a.kind];
+    return {id:a.id, name:this.aName(a), color:a.color, mark:this.aMark(a), icon:k.icon||'', hasIcon:!!k.icon, noIcon:!k.icon, preferred:!!a.preferred,
+      kindLabel:k[this.state.lang], curLabel:a.cur==='USD'?(this.km()?'ដុល្លារ':'USD'):(this.km()?'រៀល':'KHR'), bal:this.money(this.bal(a),a.cur), open:()=>this.setState({acctView:a.id})};
+  }
+
+  wave(active){
+    const bars=[];
+    for (let i=0;i<34;i++){ const h=[.35,.6,.95,.5,.8,1,.45,.7,.3][i%9];
+      bars.push(React.createElement('div',{key:i,style:{width:4,height:64,borderRadius:2,background:'#9CCBB8',transformOrigin:'center',
+        animation:active?`kwave ${0.8+((i*7)%5)/10}s ease-in-out ${-(i*0.11)}s infinite`:'kblink 1.2s ease-in-out '+(i*0.04)+'s infinite',
+        transform:active?undefined:'scaleY(0.07)',opacity:active?1:.55,'--h':h}})); }
+    return React.createElement('div',{style:{display:'flex',alignItems:'center',gap:4,height:72}},bars);
+  }
+
+  rv(){
+    const s=this.state, t=this.t(), km=this.km(), isBiz=s.mode==='business';
+    const W=s.txs.filter(x=>x.mode===s.mode);
+    const NT=W.filter(x=>x.type!=='transfer');
+    const sumU=(arr,type)=>arr.filter(x=>x.type===type).reduce((a,x)=>a+this.usd(x),0);
+    const sumC=(arr,type,cur)=>arr.filter(x=>x.type===type&&x.cur===cur).reduce((a,x)=>a+x.amount,0);
+    const range=(arr,a,b)=>arr.filter(x=>x.day>=a&&x.day<=b);
+    const L=this.live();
+    const archived=s.accts.filter(a=>a.mode===s.mode&&a.archived);
+
+    // overview
+    const totU=L.reduce((a,x)=>a+this.conv(this.bal(x),x.cur,'USD'),0);
+    const usdAccts=L.filter(a=>a.cur==='USD').reduce((a,x)=>a+this.bal(x),0), khrAccts=L.filter(a=>a.cur==='KHR').reduce((a,x)=>a+this.bal(x),0);
+    const rateTxt=`${this.num(s.rate)} ៛ = $1`;
+    const totalBreak = `${this.money(usdAccts,'USD')} + ${this.money(khrAccts,'KHR')} · ${km?'អត្រា':'at'} ${rateTxt}`;
+    const m30=range(NT,0,29), inU=sumU(m30,'income'), outU=sumU(m30,'expense'), netU=inU-outU;
+    const flows=[
+      {label:t.inLbl+(km?' · ៣០ថ្ងៃ':' · 30d'), amt:this.approx(inU), color:ACC, dot:ACC},
+      {label:t.outLbl+(km?' · ៣០ថ្ងៃ':' · 30d'), amt:this.approx(outU), color:INK, dot:'#C9B48A'},
+      {label:isBiz?(km?'លំហូរសាច់ប្រាក់':'Cash flow'):t.netLbl, amt:this.approx(netU,netU>=0?'+':'−').replace('−-','−'), color:netU>=0?ACC:'#9A5B1E', dot:XF}
+    ];
+    flows[2].amt = this.approx(Math.abs(netU), netU>=0?'+':'−');
+    const overviewNote = isBiz ? (km?'លំហូរសាច់ប្រាក់ មិនមែនប្រាក់ចំណេញទេ · ការផ្ទេរមិនរាប់បញ្ចូល':'Cash flow, not profit · transfers excluded') : (km?'កត់ដោយដៃ · ការផ្ទេររវាងគណនីមិនរាប់ជាចំណាយ':'Manually tracked · transfers between accounts aren’t spending');
+
+    const td=W.filter(x=>x.day===0&&x.type!=='transfer'), yd=W.filter(x=>x.day===1&&x.type!=='transfer');
+    const ht=isBiz?'income':'expense', hK=sumC(td,ht,'KHR'), hU=sumC(td,ht,'USD');
+    const todayLine = `${isBiz?(km?'ចូលថ្ងៃនេះ':'In today'):(km?'ចាយថ្ងៃនេះ':'Spent today')} ${[hK?this.money(hK,'KHR'):'',hU?this.money(hU,'USD'):''].filter(Boolean).join(' + ')||this.money(0,'KHR')}`;
+    const tU=sumU(td,ht), yU=sumU(yd,ht);
+    let hasInsight=false, insightIcon='', insightText='';
+    if (yU>0&&td.length){ const p=Math.round(Math.abs(tU-yU)/yU*100), less=tU<yU; hasInsight=true; insightIcon=less?'trending_down':'trending_up';
+      insightText = km?`${less?'តិច':'ច្រើន'}ជាងម្សិលមិញ ${this.dig(p)}%`:`${p}% ${less?'less':'more'} than yesterday`; }
+
+    const repMap={};
+    NT.filter(x=>x.type==='expense'&&x.day<10).forEach(x=>{ const k=this.noteOf(x)+'|'+x.amount+x.cur+x.acct; (repMap[k]=repMap[k]||{x,n:0}).n++; });
+    const repeats=Object.values(repMap).sort((a,b)=>b.n-a.n).slice(0,5).map(({x})=>({icon:CATS[x.cat].icon, label:this.noteOf(x), amt:this.money(x.amount,x.cur), go:()=>this.addTxs([{type:x.type,cat:x.cat,note:x.note,amount:x.amount,cur:x.cur,acct:x.acct}])}));
+    const sorted=[...W].sort((a,b)=>a.day-b.day||b.time.localeCompare(a.time));
+    const pending=s.txs.filter(x=>x.pending).length;
+
+    const cmMap={}; m30.filter(x=>x.type==='expense').forEach(x=>{ cmMap[x.cat]=(cmMap[x.cat]||0)+this.usd(x); });
+    const cmE=Object.entries(cmMap).sort((a,b)=>b[1]-a[1]); const cmTop=cmE.slice(0,3); const cmRest=cmE.slice(3).reduce((a,x)=>a+x[1],0);
+    if (cmRest>0) cmTop.push(['__rest',cmRest]);
+    const catMix=cmTop.map(([c,v],i)=>({label:c==='__rest'?(km?'ផ្សេងទៀត':'Everything else'):this.catL(c), w:outU?v/outU*100:0, pct:this.dig(Math.round(outU?v/outU*100:0))+'%', color:MIX[i]}));
+
+    // transactions
+    const ql=this.toLatin(s.q.toLowerCase().trim());
+    const H=sorted.filter(x=>(s.fType==='all'||x.type===s.fType)
+      && (s.fAcct==='all'||x.acct===s.fAcct||x.from===s.fAcct||x.to===s.fAcct)
+      && (s.fCat==='all'||x.cat===s.fCat)
+      && (!ql||(this.noteOf(x)+' '+this.catL(x.cat)+' '+x.amount+' '+this.aName(this.acct(x.acct||x.from))+' '+this.aName(this.acct(x.to))).toLowerCase().includes(ql)));
+    const gm={}; H.forEach(x=>{ (gm[x.day]=gm[x.day]||[]).push(x); });
+    const groups=Object.keys(gm).map(Number).sort((a,b)=>a-b).slice(0,21).map(d=>{
+      const arr=gm[d], k=sumC(arr,'expense','KHR'), u=sumC(arr,'expense','USD');
+      return {label:this.dayLabel(d), sub:d<2?this.dateShort(d):'', total:[k?this.money(k,'KHR','−'):'',u?this.money(u,'USD','−'):''].filter(Boolean).join(' · '), rows:arr.map(x=>this.row(x))};
+    });
+    const usedCats=[...new Set(W.map(x=>x.cat))];
+
+    // insights
+    const C=s.insCur, per=s.period, span=per==='week'?7:30;
+    const val=x=>C==='ALL'?this.usd(x):(x.cur===C?x.amount:0);
+    const fmt=v=>C==='ALL'?this.approx(v):this.money(v,C);
+    const cur=range(NT,0,span-1), prev=range(NT,span,span*2-1), metric=isBiz?'income':'expense';
+    const sumV=(arr,type)=>arr.filter(x=>x.type===type).reduce((a,x)=>a+val(x),0);
+    let bars;
+    if (per==='week') bars=[6,5,4,3,2,1,0].map(d=>{ const dt=this.dateOf(d); return {label:km?KM_W[dt.getDay()].slice(0,2):EN_W[dt.getDay()].slice(0,1), v:sumV(NT.filter(x=>x.day===d),metric), hl:d===0}; });
+    else bars=[3,2,1,0].map(w=>({label:km?`សប្ដាហ៍ ${this.dig(4-w)}`:`Wk ${4-w}`, v:sumV(range(NT,w*7,w*7+6),metric), hl:w===0}));
+    const mx=Math.max(1,...bars.map(b=>b.v));
+    const short=v=>{ if (!v) return ''; const k=C==='ALL'?s.totalCur:C; const vv=C==='ALL'&&k==='KHR'?v*s.rate:v; return k==='USD'?this.dig('$'+Math.round(vv)):this.dig(Math.round(vv/1000)+'k'); };
+    const barsOut=bars.map(b=>({label:b.label,val:short(b.v),h:Math.round(b.v/mx*100),color:b.hl?ACC:'#D9D5CA',lblColor:b.hl?INK:'#8C8D84'}));
+    const total=sumV(cur,metric), ptotal=sumV(prev,metric);
+    const perW={week:km?'៧ ថ្ងៃចុងក្រោយ':'in the last 7 days', month:km?'៣០ ថ្ងៃចុងក្រោយ':'in the last 30 days'}[per];
+    const insHead=isBiz?(km?`${perW} លក់បាន ${fmt(total)}`:`You took in ${fmt(total)} ${perW}.`):(km?`${perW} អ្នកចាយ ${fmt(total)}`:`You spent ${fmt(total)} ${perW}.`);
+    let hasInsSub=false, insSub='', insSubIcon='', insSubColor='#5F6159';
+    if (ptotal>0){ const p=Math.round(Math.abs(total-ptotal)/ptotal*100), down=total<ptotal; hasInsSub=true; insSubIcon=down?'south_east':'north_east';
+      insSubColor=(isBiz?!down:down)?ACC:'#9A5B1E'; const pw=per==='week'?(km?'៧ ថ្ងៃមុន':'the 7 days before'):(km?'៣០ ថ្ងៃមុន':'the 30 days before');
+      insSub=km?`${down?'តិច':'ច្រើន'}ជាង${pw} ${this.dig(p)}%`:`${p}% ${down?'less':'more'} than ${pw}`; }
+    const insCurNote = C==='ALL' ? (km?`≈ បំប្លែងតាមអត្រា ${rateTxt} · ចំនួនដើមមិនផ្លាស់ប្ដូរ`:`≈ converted at ${rateTxt} · original amounts unchanged`) : (km?`បង្ហាញតែប្រតិបត្តិការជា${C==='USD'?'ដុល្លារ':'រៀល'}`:`Only transactions recorded in ${C==='USD'?'dollars':'riel'}`);
+    const cm={}; cur.filter(x=>x.type==='expense').forEach(x=>{ const v=val(x); if (v) cm[x.cat]=(cm[x.cat]||0)+v; });
+    const ce=Object.entries(cm).sort((a,b)=>b[1]-a[1]).slice(0,5), cmax=ce.length?ce[0][1]:1;
+    const cats=ce.map(([c,v],i)=>({icon:CATS[c].icon,label:this.catL(c),amt:fmt(v),w:Math.round(v/cmax*100),op:String(1-i*0.15)}));
+    const am={}; cur.filter(x=>x.type==='expense').forEach(x=>{ const v=val(x); if (v) am[x.acct]=(am[x.acct]||0)+v; });
+    const ae=Object.entries(am).sort((a,b)=>b[1]-a[1]), amax=ae.length?ae[0][1]:1;
+    const byAcct=ae.map(([id,v])=>{ const a=this.acct(id)||{kind:'custom',name:'?',color:'#999'}; return {label:this.aName(a),mark:this.aMark(a),color:a.color,amt:fmt(v),w:Math.round(v/amax*100)}; });
+    const inT=sumV(cur,'income'), outT=sumV(cur,'expense'), ioMax=Math.max(1,inT,outT), netT=inT-outT;
+    const ioRows=[{label:t.inLbl,amt:fmt(inT),w:Math.round(inT/ioMax*100),color:ACC},{label:t.outLbl,amt:fmt(outT),w:Math.round(outT/ioMax*100),color:'#C9B48A'}];
+    const ioNet=(C==='ALL'?'≈ ':'')+(netT>=0?'+':'−')+(C==='ALL'?this.disp(Math.abs(netT)):this.money(Math.abs(netT),C));
+
+    // demo insight cards (30d, converted)
+    const c30={}, c60={}, a30={};
+    range(NT,0,29).filter(x=>x.type==='expense').forEach(x=>{ c30[x.cat]=(c30[x.cat]||0)+this.usd(x); a30[x.acct]=(a30[x.acct]||0)+this.usd(x); });
+    range(NT,30,59).filter(x=>x.type==='expense').forEach(x=>{ c60[x.cat]=(c60[x.cat]||0)+this.usd(x); });
+    const topC=Object.entries(c30).sort((a,b)=>b[1]-a[1])[0];
+    const accR=Object.entries(a30).sort((a,b)=>b[1]-a[1]);
+    let incC=null; Object.keys(c30).forEach(c=>{ const p=c60[c]||0; if (p>0){ const ch=(c30[c]-p)/p; if (ch>0.15 && (!incC||ch>incC[1])) incC=[c,ch]; } });
+    const insCards=[];
+    if (topC) insCards.push({icon:CATS[topC[0]].icon,bg:'#E3EDE8',fg:ACC,text:km?`${this.catL(topC[0])} ជាប្រភេទចំណាយធំជាងគេក្នុង ៣០ ថ្ងៃនេះ — ${this.approx(topC[1])}។`:`${this.catL(topC[0])} is your biggest spending category this month — ${this.approx(topC[1])}.`});
+    if (accR.length>1){ const A=this.acct(accR[0][0]), B2=this.acct(accR[1][0]); insCards.push({icon:'account_balance_wallet',bg:'#F0EEE7',fg:'#5F6159',text:km?`អ្នកចាយតាម ${this.aName(A)} ច្រើនជាង ${this.aName(B2)} (${this.approx(accR[0][1])} ធៀបនឹង ${this.approx(accR[1][1])})។`:`You spent more using ${this.aName(A)} than ${this.aName(B2)} (${this.approx(accR[0][1])} vs ${this.approx(accR[1][1])}).`}); }
+    if (incC) insCards.push({icon:'north_east',bg:'#F6EAD3',fg:'#8A5A12',text:km?`ចំណាយលើ${this.catL(incC[0])} កើនឡើង ${this.dig(Math.round(incC[1]*100))}% ធៀបនឹងខែមុន។`:`Your ${this.catL(incC[0]).toLowerCase()} spending rose ${Math.round(incC[1]*100)}% compared with last month.`});
+
+    // ask
+    const ASK=[
+      ['food',km?'ខែនេះចាយលើម្ហូបប៉ុន្មាន?':'Food this month?'],
+      ['acct',km?'ចាយពីគណនីណាច្រើនជាងគេ?':'Which account did I spend most from?'],
+      ['all',km?'ចាយសរុបគ្រប់គណនីប៉ុន្មាន?':'Total spent across all accounts?'],
+      ['big',km?'ចំណាយធំជាងគេសប្ដាហ៍នេះ?':'Biggest expense this week?'],
+      ['save',isBiz?(km?'លំហូរសាច់ប្រាក់ខែនេះ?':'Cash flow this month?'):(km?'ខែនេះសន្សំបានប៉ុន្មាន?':'How much did I save this month?')]
+    ];
+    let answer='', answerFoot=km?`ផ្អែកលើប្រតិបត្តិការដែលអ្នកបានកត់ · ៣០ ថ្ងៃ · ≈ ${rateTxt}`:`Based on transactions you recorded · last 30 days · ≈ ${rateTxt}`;
+    const e30=m30.filter(x=>x.type==='expense');
+    if (s.ask==='food'){ const f=e30.filter(x=>x.cat==='food'||x.cat==='coffee'); const k=sumC(f,'expense','KHR'), u=sumC(f,'expense','USD'); const tot=f.reduce((a,x)=>a+this.usd(x),0);
+      answer=km?`អ្នកចាយ ${this.approx(tot)} លើម្ហូប និងភេសជ្ជៈ (${this.money(k,'KHR')} + ${this.money(u,'USD')})។`:`You spent ${this.approx(tot)} on food & drinks (${this.money(k,'KHR')} + ${this.money(u,'USD')}).`; }
+    if (s.ask==='acct' && accR.length){ const A=this.acct(accR[0][0]); answer=km?`${this.aName(A)} — ${this.approx(accR[0][1])} ក្នុង ៣០ ថ្ងៃ។`:`${this.aName(A)} — ${this.approx(accR[0][1])} in the last 30 days.`; }
+    if (s.ask==='all'){ const k=sumC(e30,'expense','KHR'), u=sumC(e30,'expense','USD'); answer=km?`${this.approx(outU)} នៅគ្រប់គណនី (${this.money(k,'KHR')} + ${this.money(u,'USD')})។ ការផ្ទេរមិនរាប់បញ្ចូលទេ។`:`${this.approx(outU)} across all accounts (${this.money(k,'KHR')} + ${this.money(u,'USD')}). Transfers aren’t counted.`; }
+    if (s.ask==='big'){ const b=range(NT,0,6).filter(x=>x.type==='expense').sort((a,b)=>this.usd(b)-this.usd(a))[0]; if (b){ answer=km?`${this.noteOf(b)} — ${this.money(b.amount,b.cur)} តាម ${this.aName(this.acct(b.acct))} (${this.dayLabel(b.day)})។`:`${this.noteOf(b)} — ${this.money(b.amount,b.cur)} via ${this.aName(this.acct(b.acct))} (${this.dayLabel(b.day)}).`; answerFoot=km?'៧ ថ្ងៃចុងក្រោយ':'Last 7 days'; } }
+    if (s.ask==='save'){ answer = isBiz ? (km?`លុយចូល ${this.approx(inU)} ចេញ ${this.approx(outU)} — លំហូរសាច់ប្រាក់ ${this.approx(Math.abs(netU),netU>=0?'+':'−')}។ នេះមិនមែនជាប្រាក់ចំណេញទេ។`:`Money in ${this.approx(inU)}, out ${this.approx(outU)} — cash flow ${this.approx(Math.abs(netU),netU>=0?'+':'−')}. This isn’t profit: stock on hand isn’t counted.`)
+      : (km?`អ្នករក្សាទុកបាន ${this.approx(Math.max(0,netU))} ពីចំណូល ${this.approx(inU)}។`:`You kept ${this.approx(Math.max(0,netU))} of ${this.approx(inU)} income.`); }
+
+    // goals
+    const goals = isBiz ? (()=>{ const sd=range(NT,0,29).filter(x=>x.type==='income'); const byDay={}; sd.forEach(x=>{ byDay[x.day]=(byDay[x.day]||0)+this.usd(x); }); const best=Object.entries(byDay).sort((a,b)=>b[1]-a[1])[0]; const avg=sd.reduce((a,x)=>a+this.usd(x),0)/30;
+        return [{icon:'storefront',title:km?'សង្ខេបការលក់':'Sales summary',left:(km?'មធ្យម/ថ្ងៃ ':'Avg/day ')+this.approx(avg),right:best?(km?'ល្អបំផុត ':'Best ')+this.dayLabel(+best[0]):'',w:best?Math.round(avg/best[1]*100):0,color:ACC,foot:km?'លុយចូលពីការលក់ទាំងអស់ ៣០ ថ្ងៃ':'All sales income over 30 days'}]; })()
+      : (()=>{ const budget=450, sv=this.acct('p_acl'), saved=sv&&!sv.archived?this.bal(sv):0; return [
+        {icon:'donut_large',title:km?'ថវិកាប្រចាំខែ':'Monthly budget',left:this.approx(outU)+(km?' បានចាយ':' spent'),right:this.money(budget,'USD'),w:Math.min(100,Math.round(outU/budget*100)),color:outU>budget?'#B4483C':ACC,foot:outU>budget?(km?'លើសថវិកា':'Over budget'):(km?`នៅសល់ ${this.approx(budget-outU)}`:`${this.approx(budget-outU)} left`)},
+        {icon:'savings',title:km?'គោលដៅសន្សំ · ម៉ូតូថ្មី':'Savings goal · New moto',left:this.money(saved,'USD'),right:this.money(1500,'USD'),w:Math.min(100,Math.round(saved/1500*100)),color:'#8A6A3A',foot:km?'តាមដាននៅក្នុងគណនី ACLEDA':'Tracked in your ACLEDA account'}]; })();
+
+    // voice
+    const v=s.voice;
+    const vItems=v&&v.items?v.items.map((x,i)=>{
+      const a=this.acct(x.acct), F=this.acct(x.from), To=this.acct(x.to);
+      const pick=(key,excl)=>L.filter(o=>o.id!==excl && (key!=='acct'||x.flag!=='acct'||o.kind!=='cash')).map(o=>({label:this.aName(o), go:()=>{ this.pauseAuto(); this.resolveItem(i,{[key]:o.id}); }}));
+      return {isXfer:x.type==='transfer', notXfer:x.type!=='transfer',
+        icon:CATS[x.cat].icon, title:this.noteOf(x), sub:`${this.catL(x.cat)} · ${x.type==='income'?t.income:t.expense}`,
+        amt:this.money(x.amount,x.cur,x.type==='income'?'+':''), amtColor:x.flag==='cur'?'#E2BE7A':(x.type==='income'?'#9CCBB8':'#EDEBE5'),
+        tileBg:x.type==='income'?'#24362F':'#2A2E27', tileFg:x.type==='income'?'#9CCBB8':'#CFD6CB', ring:x.flag?'#5A4A2A':'transparent',
+        acctLabel:a?(this.aName(a)+(x.usedPref?' · '+t.preferred:'')):(km?'ជ្រើសគណនី':'Choose account'), acctColor:a?a.color:'#5A4A2A',
+        fromName:this.aName(F), fromColor:F?F.color:'#333', fromMark:F?this.aMark(F):'?', toName:To?this.aName(To):'?', toColor:To?To.color:'#3A3F36', toMark:To?this.aMark(To):'?',
+        toAmt:To?this.money(this.conv(x.amount,x.cur,To.cur),To.cur):'—',
+        flag:!!x.flag, flagText:x.flag==='cur'?t.whichCur:x.flag==='acct'?t.whichAcct:x.flag==='to'?t.whichTo:(km?`${this.money(x.amount,x.cur)} ហាក់តិចពេក។ តើមានន័យថា…`:`${this.money(x.amount,x.cur)} seems low. Did you mean…`),
+        options:x.flag==='acct'?pick('acct'):x.flag==='to'?pick('to',x.from):(x.options||[]).map(o=>({label:this.money(o.amount,o.cur), go:()=>{ this.pauseAuto(); this.resolveItem(i,o); }})),
+        edit:()=>this.openEditVoice(i)};
+    }):[];
+    const vUnres=vItems.some(x=>x.flag);
+    const listening=v&&v.phase==='listening', processing=v&&v.phase==='processing', nWords=v&&v.words?v.words.length:0;
+
+    // text
+    const tItems=s.textOpen?this.textItemsResolved():[];
+    const textItems=tItems.filter(x=>!x.missing).map((x,i)=>{
+      const isX=x.type==='transfer', a=this.acct(x.acct), F=this.acct(x.from), To=this.acct(x.to);
+      return {icon:CATS[x.cat].icon, title:isX?`${this.aName(F)} → ${this.aName(To)}`:x.note,
+        sub:isX?t.transfer:`${this.aName(a)}${x.usedPref?' ('+t.preferred+')':''} · ${this.catL(x.cat)}`, dot:isX?XF:(a?a.color:'#ccc'),
+        amt:this.money(x.amount,x.cur,x.type==='income'?'+':''), amtColor:x.flag?'#B7791F':isX?XF:(x.type==='income'?ACC:INK),
+        tileBg:isX?XFBG:x.type==='income'?'#E3EDE8':'#F0EEE7', tileFg:isX?XF:x.type==='income'?ACC:'#5F6159',
+        flag:!!x.flag||!!x.bad, flagText:x.bad?t.sameAcct:t.whichCur,
+        options:(x.options||[]).map(o=>({label:this.money(o.amount,o.cur), go:()=>this.setState(st=>({textFix:{...st.textFix,[i]:o}}))}))};
+    });
+    const textCanSave=tItems.length>0&&tItems.every(x=>!x.missing&&!x.flag&&!x.bad);
+    const curTextAcct=tItems.find(x=>x.acct)?.acct;
+    const sugg=isBiz?['Sold 300k today','15$ delivery ABA','Stock 450k cash','Transfer 400k cash to ABA']:['5k coffee','2$ lunch ABA','15k gas Wing','Received $200 salary ABA','Transfer $100 ABA to ACLEDA'];
+
+    // edit
+    const e=s.edit, ev=e?this.edValid(e):{ok:false};
+    const edCats=(isBiz?['sales','stock','delivery','rent','wages','bills','transport','other']:['food','coffee','transport','fuel','groceries','shopping','bills','phone','rent','salary','sales','other'])
+      .map(c=>({icon:CATS[c].icon,label:this.catL(c),bg:e&&e.cat===c?INK:'#FFFFFF',fg:e&&e.cat===c?'#F4F2EC':'#3B3C36',go:()=>this.setEd({cat:c})}));
+    const acChips=(key)=>L.map(a=>this.chip(this.aName(a), e&&e[key]===a.id, ()=>this.setEd(key==='from'?{from:a.id,cur:a.cur}:{[key]:a.id}), a.color));
+    let edImpact=[];
+    if (e&&e.type==='transfer'&&ev.ok&&e.from&&e.to&&e.from!==e.to){ const F=this.acct(e.from), To=this.acct(e.to);
+      edImpact=[{label:this.aName(F),val:this.money(this.conv(ev.amount,e.cur,F.cur),F.cur,'−')},{label:this.aName(To),val:this.money(this.conv(ev.amount,e.cur,To.cur),To.cur,'+')}];
+      if (F.cur!==To.cur||F.cur!==e.cur) edImpact.push({label:km?'អត្រា':'Rate',val:rateTxt}); edImpact.push({label:km?'សរុបទាំងអស់':'Total balance',val:km?'មិនប្រែប្រួល':'Unchanged'}); }
+
+    // account view / form
+    const avA=s.acctView?this.acct(s.acctView):null;
+    let av={stats:[],rows:[]};
+    if (avA){ const c=this.acctCard(avA), mine=s.txs.filter(x=>x.acct===avA.id||x.from===avA.id||x.to===avA.id).sort((a,b)=>a.day-b.day||b.time.localeCompare(a.time));
+      const r30=range(mine,0,29), inA=r30.filter(x=>x.type==='income'&&x.acct===avA.id).reduce((a,x)=>a+this.conv(x.amount,x.cur,avA.cur),0), outA=r30.filter(x=>x.type==='expense'&&x.acct===avA.id).reduce((a,x)=>a+this.conv(x.amount,x.cur,avA.cur),0);
+      const xf=r30.filter(x=>x.type==='transfer').reduce((a,x)=>a+(x.to===avA.id?this.conv(x.toAmount,x.toCur,avA.cur):-this.conv(x.amount,x.cur,avA.cur)),0);
+      av={...c, balNote:(km?'កត់ដោយដៃ · ចាប់ផ្ដើមពី ':'Manually tracked · started at ')+this.money(avA.opening,avA.cur),
+        stats:[{label:t.inLbl+(km?' ៣០ថ្ងៃ':' 30d'),val:this.money(inA,avA.cur),color:ACC},{label:t.outLbl+(km?' ៣០ថ្ងៃ':' 30d'),val:this.money(outA,avA.cur),color:INK},{label:t.transfer,val:this.money(Math.abs(xf),avA.cur,xf>=0?'+':'−'),color:XF}],
+        rows:mine.slice(0,6).map(x=>{ const r=this.row(x); let amt=r.amt; if (x.type==='transfer') amt=x.to===avA.id?this.money(x.toAmount,x.toCur,'+'):this.money(x.amount,x.cur,'−'); return {...r, amt, when:`${this.dayLabel(x.day)} · ${this.dig(x.time)}`}; }),
+        noRows:mine.length===0, edit:()=>this.editAcct(avA), xfer:()=>this.openTransfer(avA.id), archive:()=>this.toggleArchive(avA), archiveLabel:avA.archived?t.unarchive:t.archive};
+    }
+    const af=s.acctForm;
+    const setAf=p=>this.setState(st=>({acctForm:{...st.acctForm,...p}}));
+
+    const tg=(label,sub,on,go)=>({label,sub,go,bg:on?ACC:'#D9D6CC',x:on?18:0});
+    const modeStat=m=>{ const A=this.live(m); const u=A.reduce((a,x)=>a+this.conv(this.bal(x),x.cur,'USD'),0); return `${this.dig(A.length)} ${km?'គណនី':'accounts'} · ${this.approx(u)}`; };
+    const tab=(k,icon,label)=>({icon,label,color:s.tab===k?INK:'#A3A49B',fill:s.tab===k?1:0,go:()=>this.go(k)});
+    const G=(fn)=>()=>{ this.go('home'); setTimeout(fn,0); };
+    const guide=[
+      ['waving_hand','Onboarding',()=>{this.go('home'); this.setState({onb:true,obStep:0});}],
+      ['home','Home · personal',()=>{this.go('home'); this.setState({mode:'personal'});}],
+      ['storefront','Home · business',()=>{this.go('home'); this.setState({mode:'business'});}],
+      ['mic','Voice · $5 via ABA',()=>this.setState({micAllowed:true,mode:'personal'},()=>this.startVoice('aba'))],
+      ['mic','Voice · riel via ACLEDA',()=>this.setState({micAllowed:true,mode:'personal'},()=>this.startVoice('acleda'))],
+      ['swap_horiz','Voice · transfer',()=>this.setState({micAllowed:true,mode:'personal'},()=>this.startVoice('transfer'))],
+      ['star','Voice · default account',()=>this.setState({micAllowed:true,mode:'personal'},()=>this.startVoice('multi'))],
+      ['help','Voice · unclear account',()=>this.setState({micAllowed:true,mode:'personal'},()=>this.startVoice('noacct'))],
+      ['currency_exchange','Voice · missing currency',()=>this.setState({micAllowed:true,mode:'personal'},()=>this.startVoice('nocur'))],
+      ['hearing_disabled','Voice · failed',()=>this.setState({micAllowed:true},()=>this.startVoice('fail'))],
+      ['mic_off','Mic permission denied',()=>this.setState({micAllowed:false},()=>this.startVoice())],
+      ['sync_alt','Transfer form',G(()=>this.openTransfer())],
+      ['keyboard','Quick text entry',G(()=>this.openText('2$ lunch ABA'))],
+      ['receipt_long','Activity (all accounts)',()=>this.go('tx')],
+      ['account_balance_wallet','Accounts',()=>this.go('accounts')],
+      ['credit_card','Account detail',()=>{this.go('accounts'); setTimeout(()=>this.setState({acctView:(this.live()[0]||{}).id}),0);}],
+      ['add_card','Add account',()=>{this.go('accounts'); setTimeout(()=>this.newAcct(),0);}],
+      ['upload_file','Import (coming soon)',()=>{this.go('accounts'); setTimeout(()=>this.setState({importOpen:true}),0);}],
+      ['bar_chart','Insights',()=>this.go('insights')],
+      ['cloud_off','Offline / pending sync',()=>{this.go('home'); this.setOffline(true);}],
+      ['inbox','Empty state',()=>{this.go('home'); this.setState({txs:[],accts:emptyAccts()});}],
+      ['settings','Settings',()=>this.go('settings')]
+    ].map(([icon,label,go])=>({icon,label,go}));
+
+    const dark=!!v&&!s.onb;
+    return {
+      scale:s.scale, wide:s.wide, t, guide,
+      statusColor:dark?'#EDEBE5':INK, homeBar:dark?'#EDEBE5':INK, wifiIcon:s.offline?'wifi_off':'wifi',
+      isOnb:s.onb, obStep0:s.onb&&s.obStep===0, obStep1:s.onb&&s.obStep===1, obKmBorder:km?INK:'transparent', obEnBorder:km?'transparent':INK,
+      obAccts:['aba','acleda','wing','cash'].map(k=>({label:k==='cash'?KINDS.cash[s.lang]:KINDS[k].name, color:KINDS[k].color})),
+      setLangKm:()=>this.setState({lang:'km'}), setLangEn:()=>this.setState({lang:'en'}), segKm:this.seg('',km), segEn:this.seg('',!km),
+      obNext:()=>this.setState({obStep:1}), obBack:()=>this.setState({obStep:0}),
+      obAllow:()=>this.setState({onb:false,micAllowed:true,txs:[],accts:emptyAccts(),tab:'home',mode:'personal'}),
+      obSkip:()=>this.setState({onb:false,micAllowed:false,txs:[],accts:emptyAccts(),tab:'home',mode:'personal'}),
+      isHome:s.tab==='home', isTx:s.tab==='tx', isAccounts:s.tab==='accounts', isInsights:s.tab==='insights', isSettings:s.tab==='settings', showDock:!s.onb,
+      tabsL:[tab('home','home',t.tabHome),tab('tx','receipt_long',t.tabTx)], tabsR:[tab('accounts','account_balance_wallet',t.tabAccts),tab('insights','bar_chart',t.tabInsights)],
+      goSettings:()=>this.go('settings'), goHome:()=>this.go('home'), goTx:()=>this.go('tx'), goInsights:()=>this.go('insights'), goAccounts:()=>this.go('accounts'),
+      dateLong:km?`ថ្ងៃ${KM_W[6]} ទី${this.dig(7)} ${KM_M[10]}`:'Saturday, 7 November',
+      modeName:isBiz?t.business:t.personal, modeIcon:isBiz?'storefront':'person', modeTile:isBiz?'#8A6A3A':ACC,
+      openModes:()=>this.setState({modeOpen:true}), closeModes:()=>this.setState({modeOpen:false}), modeOpen:s.modeOpen,
+      modeCards:['personal','business'].map(m=>({name:m==='business'?t.business:t.personal, sub:m==='business'?t.bizSub:t.personalSub, icon:m==='business'?'storefront':'person', tile:m==='business'?'#8A6A3A':ACC, stat:modeStat(m), active:s.mode===m, ringW:s.mode===m?1.5:0, go:()=>this.setState({mode:m,modeOpen:false,fAcct:'all',fCat:'all',ask:null})})),
+      offline:s.offline, offlineText:pending?(km?`រង់ចាំ ${this.dig(pending)}`:`${pending} waiting to sync`):t.offline,
+      totalBal:this.approx(totU), totalBreak, totalCurLabel:s.totalCur==='USD'?'USD':'KHR', flipTotalCur:()=>this.setState({totalCur:s.totalCur==='USD'?'KHR':'USD'}),
+      flows, overviewNote,
+      acctCards:L.map(a=>this.acctCard(a)), acctList:L.map(a=>{ const c=this.acctCard(a); const r=range(s.txs.filter(x=>x.acct===a.id),0,29);
+        return {...c, in30:this.money(r.filter(x=>x.type==='income').reduce((q,x)=>q+this.conv(x.amount,x.cur,a.cur),0),a.cur), out30:this.money(r.filter(x=>x.type==='expense').reduce((q,x)=>q+this.conv(x.amount,x.cur,a.cur),0),a.cur)}; }),
+      newAcct:()=>this.newAcct(), openTransfer:()=>this.openTransfer(), openImport:()=>this.setState({importOpen:true}), closeImport:()=>this.setState({importOpen:false}),
+      notifyMe:()=>{ this.setState({importOpen:false}); this.toast(t.notified,null,'notifications'); },
+      importSteps:(km?['ជ្រើសគណនីធនាគារ','ផ្ទុកឯកសាររបាយការណ៍ដែលគាំទ្រ','AI ទាញយកប្រតិបត្តិការ','AI ណែនាំប្រភេទ','អ្នកពិនិត្យចំណុចមិនច្បាស់','រកឃើញការស្ទួន និងការផ្ទេរ','បញ្ចូលទៅក្នុងផ្ទាំងរួម']:['Choose a bank account','Upload a supported statement file','AI extracts the transactions','AI suggests categories','You review anything uncertain','Duplicates and transfers are detected','Confirmed items join your dashboard'])
+        .map((label,i)=>({n:this.dig(i+1),label,icon:['account_balance','upload_file','document_scanner','category','rule','content_copy','dashboard'][i]})),
+      hasArchived:archived.length>0, showArchived:s.showArchived, archList:archived.map(a=>this.acctCard(a)),
+      archivedLabel:`${t.archived} (${this.dig(archived.length)})`, archivedIcon:s.showArchived?'expand_less':'expand_more', toggleArchived:()=>this.setState({showArchived:!s.showArchived}),
+      quick:[
+        {icon:'mic',label:t.qVoice,bg:INK,fg:'#F4F2EC',go:()=>this.startVoice()},
+        {icon:'edit',label:t.qAdd,bg:'#FFFFFF',fg:INK,go:()=>this.openText('')},
+        {icon:'swap_horiz',label:t.qXfer,bg:'#FFFFFF',fg:INK,go:()=>this.openTransfer()},
+        {icon:'account_balance_wallet',label:t.qAccts,bg:'#FFFFFF',fg:INK,go:()=>this.go('accounts')}],
+      repeats, hasRepeats:repeats.length>0,
+      catMix, hasCatMix:catMix.length>0, catMixTitle:km?'ចំណាយតាមប្រភេទ · ៣០ ថ្ងៃ':'Spending by category · 30 days', catMixTotal:this.approx(outU),
+      todayLine, hasInsight, insightIcon, insightText,
+      recentRows:sorted.slice(0,6).map(x=>this.row(x)), noTx:W.length===0,
+      loadSample:()=>this.setState({txs:seedTx(),accts:seedAccts()}),
+      q:s.q, hasQ:!!s.q, onQ:ev=>this.setState({q:ev.target.value}), clearQ:()=>this.setState({q:''}),
+      typeFilters:[['all',t.all,'transparent'],['expense',t.expense,INK],['income',t.income,ACC],['transfer',t.transfer,XF]].map(([k,l,d])=>{ const c=this.chip(l,s.fType===k,()=>this.setState({fType:k}),d); if (s.fType===k&&k!=='all') c.dot='#F4F2EC'; return c; }),
+      acctFilters:[this.chip(t.allAccts,s.fAcct==='all',()=>this.setState({fAcct:'all'}),'#D9D5CA')].concat(s.accts.filter(a=>a.mode===s.mode).map(a=>this.chip(this.aName(a),s.fAcct===a.id,()=>this.setState({fAcct:s.fAcct===a.id?'all':a.id}),a.color))),
+      catFilters:[{...this.chip(t.allCats,s.fCat==='all',()=>this.setState({fCat:'all'})),icon:'apps'}].concat(usedCats.map(c=>({...this.chip(this.catL(c),s.fCat===c,()=>this.setState({fCat:s.fCat===c?'all':c})),icon:CATS[c].icon}))),
+      groups, noResults:groups.length===0,
+      periods:[['week',t.week],['month',t.month]].map(([k,l])=>this.seg(l,per===k,()=>this.setState({period:k}))),
+      curs:[['ALL','≈ '+(s.totalCur==='USD'?'$':'៛')],['KHR','៛'],['USD','$']].map(([k,l])=>this.seg(l,C===k,()=>this.setState({insCur:k}))),
+      insHead, hasInsSub, insSub, insSubIcon, insSubColor, insCurNote, bars:barsOut, chartTitle:(isBiz?(km?'ការលក់':'Sales'):(km?'ចំណាយ':'Spending'))+' · '+(per==='week'?t.week:(km?'៤ សប្ដាហ៍':'4 weeks')),
+      asks:ASK.map(([k,l])=>({label:l,bg:s.ask===k?'#EDEBE5':'#2B2E28',fg:s.ask===k?INK:'#D6DBD2',go:()=>this.setState({ask:s.ask===k?null:k})})), hasAnswer:!!answer&&!!s.ask, answer, answerFoot,
+      insCards, cats, hasCats:cats.length>0, byAcct, hasByAcct:byAcct.length>0,
+      ioTitle:isBiz?(km?'លំហូរសាច់ប្រាក់':'Cash flow'):(km?'ចូល និងចេញ':'In vs out'), ioRows, ioNet, ioNetLabel:isBiz?(km?'លំហូរសាច់ប្រាក់សុទ្ធ':'Net cash flow'):(km?'នៅសល់':'Kept'), ioNetColor:netT>=0?ACC:'#9A5B1E',
+      ioFoot:isBiz?(km?'នេះមិនមែនជាប្រាក់ចំណេញគណនេយ្យទេ — ស្តុកដែលនៅសល់ និងថ្លៃដើមផ្សេងទៀត មិនទាន់គណនាបញ្ចូល។':'This isn’t accounting profit — unsold stock and other costs aren’t accounted for.'):(km?'ការផ្ទេររវាងគណនីរបស់អ្នក មិនរាប់បញ្ចូលទេ។':'Transfers between your own accounts are excluded.'),
+      goals,
+      rates:[4000,4050,4100].map(r=>({label:this.num(r)+' ៛',bg:s.rate===r?INK:'#F0EEE7',fg:s.rate===r?'#F4F2EC':'#3B3C36',go:()=>this.setState({rate:r})})),
+      toggles:[tg(t.kmDigits,t.kmDigitsSub,s.kmDigits,()=>this.setState({kmDigits:!s.kmDigits})),tg(t.mic,s.micAllowed?t.micOn:t.micOff,s.micAllowed,()=>this.setState({micAllowed:!s.micAllowed})),tg(t.offlineSim,t.offlineSub,s.offline,()=>this.setOffline(!s.offline))],
+      actions:[['waving_hand',t.replay,()=>this.setState({onb:true,obStep:0})],['inbox',t.emptyState,()=>{this.setState({txs:[],accts:emptyAccts()}); this.go('home');}],['dataset',t.restore,()=>{this.setState({txs:seedTx(),accts:seedAccts()}); this.go('home');}]].map(([icon,label,go])=>({icon,label,go})),
+      micGo:()=>this.startVoice(),
+      toastOpen:!!s.toast, toastMsg:s.toast?s.toast.msg:'', toastIcon:s.toast?s.toast.icon:'', toastHasUndo:!!(s.toast&&s.toast.undo), toastUndo:()=>{ const u=s.toast&&s.toast.undo; if (u) u(); },
+      voiceOpen:!!v, vCapture:listening||processing, vResult:v&&v.phase==='result', vProblem:v&&(v.phase==='failed'||v.phase==='denied'),
+      vStatus:listening?t.listening:t.processing, vHint:listening?t.tapStop:t.wait,
+      vWords:v&&v.words?v.words.join(' '):'', hasWords:nWords>0, noWords:(listening||processing)&&nWords===0, vWordsColor:processing?'#6F786C':'#EDEBE5',
+      wave:this.wave(listening), ring:listening?React.createElement('div',{style:{position:'absolute',inset:0,borderRadius:39,border:'2px solid #9CCBB8',animation:'kring 1.6s ease-out infinite'}}):null,
+      stopVoice:()=>this.stopVoice(), closeVoice:()=>{ this.clearVoice(); this.setState({voice:null}); },
+      scenarios:Object.keys(SCEN).map(k=>({label:SCEN[k][s.lang],bg:s.scenario===k?'#EDEBE5':'#22251F',fg:s.scenario===k?'#131511':'#B5BDB0',go:()=>this.startVoice(k)})),
+      vItems, vFound:km?`រកឃើញ ${this.dig(vItems.length)} ប្រតិបត្តិការ`:`Found ${vItems.length} transaction${vItems.length===1?'':'s'}`,
+      vAuto:!!(v&&v.auto), vAutoW:v&&v.autoGo?100:0,
+      vSaveLabel:vUnres?t.resolve:(v&&v.auto?t.autoSaving:t.saveAll), vSaveBg:vUnres?'#2B2F27':'#9CCBB8', vSaveFg:vUnres?'#7F887C':'#131511',
+      commitVoice:()=>this.commitVoice(), retryVoice:()=>this.startVoice(),
+      vProbIcon:v&&v.phase==='denied'?'mic_off':'hearing_disabled', vProbTitle:v&&v.phase==='denied'?t.denied:t.failed, vProbSub:v&&v.phase==='denied'?t.deniedSub:t.failedSub,
+      vProbPrimaryLabel:v&&v.phase==='denied'?t.allowMic:t.tryAgain, vProbPrimary:()=>{ if (v&&v.phase==='denied') this.setState({micAllowed:true},()=>this.startVoice()); else this.startVoice(); },
+      typeInstead:()=>this.openText(''),
+      textOpen:s.textOpen, text:s.text, textRef:this.textRef, onText:ev=>this.setState({text:ev.target.value,textFix:{}}),
+      onTextKey:ev=>{ if (ev.key==='Enter') this.saveText(); }, textSave:()=>this.saveText(), closeText:()=>this.setState({textOpen:false}),
+      textItems, hasTextItems:textItems.length>0, textNeedAmt:tItems.some(x=>x.missing), textBtnBg:textCanSave?ACC:'#C9C6BC',
+      showTextAccts:tItems.some(x=>x.type!=='transfer'&&!x.missing), textAccts:L.map(a=>this.chip(this.aName(a),curTextAcct===a.id,()=>this.setState({textAcct:a.id}),a.color)),
+      textSuggestions:sugg.map(l=>({label:l,go:()=>this.setState({text:l,textFix:{},textAcct:null})})),
+      editOpen:!!e, ed:e||{amount:'',note:''},
+      edTitle:e?(e.src==='voice'?t.checkTitle:e.src==='new'?t.newXfer:t.editTitle):'', edMeta:e&&e.src!=='new'?`${this.dayLabel(e.day)}${e.time?' · '+this.dig(e.time):''}`:'',
+      edUsd:!!(e&&e.cur==='USD'), edKhr:!e||e.cur!=='USD', edAmtW:Math.max(2,((e&&e.amount)||'').length+0.5),
+      onEdAmount:ev2=>this.setEd({amount:ev2.target.value.replace(/[^0-9០-៩.,]/g,'')}), onEdNote:ev2=>this.setEd({note:ev2.target.value}),
+      edCurs:[['KHR','៛ '+(km?'រៀល':'Riel')],['USD','$ '+(km?'ដុល្លារ':'Dollar')]].map(([k,l])=>this.seg(l,e&&e.cur===k,()=>this.setEd({cur:k}))),
+      edTypes:[['expense',t.expense],['income',t.income],['transfer',t.transfer]].map(([k,l])=>this.seg(l,e&&e.type===k,()=>this.setEd(k==='transfer'?{type:k,from:e.from||e.acct,to:e.to||(L.find(a=>a.id!==(e.from||e.acct))||{}).id}:{type:k,acct:e.acct||e.from||this.pref(),cat:e.cat==='transfer'?(k==='income'?(isBiz?'sales':'salary'):'other'):e.cat}))),
+      edIsXfer:!!(e&&e.type==='transfer'), edNotXfer:!e||e.type!=='transfer',
+      edCats, edAccts:acChips('acct'), edFrom:acChips('from'), edTo:acChips('to'), edImpact,
+      hasEdDays:!!(e&&e.src!=='voice'), edDays:e&&e.src!=='voice'?[0,1,2].map(d=>this.chip(this.dayLabel(d),e.day===d,()=>this.setEd({day:d}))):[],
+      edErr:!!(e&&e.tried&&!ev.ok), edErrText:ev.err||'', edSaveBg:ev.ok?INK:'#B5B2A8', edSaveLabel:e&&e.type==='transfer'?(km?'ផ្ទេរ':'Save transfer'):t.save,
+      edCanDelete:!!(e&&e.src==='tx'), edSave:()=>this.saveEdit(), edDelete:()=>this.deleteEdit(), closeEdit:()=>this.setState({edit:null}),
+      acctViewOpen:!!avA, av, closeAcctView:()=>this.setState({acctView:null}),
+      acctFormOpen:!!af, af:af||{name:'',opening:''}, afTitle:af&&af.id?t.editAcct:t.newAcct, closeAcctForm:()=>this.setState({acctForm:null}),
+      afKinds:Object.keys(KINDS).map(k=>({icon:KINDS[k].icon||'account_balance',label:KINDS[k][s.lang],bg:af&&af.kind===k?INK:'#FFFFFF',fg:af&&af.kind===k?'#F4F2EC':'#3B3C36',go:()=>setAf({kind:k,color:KINDS[k].color,cur:k==='cash'||k==='wing'?'KHR':af.cur})})),
+      afCurs:[['USD','$ USD'],['KHR','៛ KHR']].map(([k,l])=>this.seg(l,af&&af.cur===k,()=>setAf({cur:k}))),
+      afColors:COLORS.map(c=>({color:c,ring:af&&af.color===c?2:0,ring2:af&&af.color===c?4:0,go:()=>setAf({color:c})})),
+      onAfName:ev3=>setAf({name:ev3.target.value}), onAfOpening:ev3=>setAf({opening:ev3.target.value.replace(/[^0-9០-៩.,]/g,'')}), afSave:()=>this.saveAcct()
+    };
+  }
+
+  renderVals(){ return this.rv(); }
+}
+</script>
+</body>
+</html>
